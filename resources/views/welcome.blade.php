@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>SportTime</title>
+        <title>Fitness Time</title>
         <link href="https://fonts.googleapis.com/css?family=DM+Sans:300,400,700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="fonts/icomoon/style.css">
@@ -44,16 +44,16 @@
         <div class="container mb-3">
           <div class="d-flex align-items-center">
             <div class="site-logo mr-auto">
-              <a href="index.html">Noxen<span class="text-primary">.</span></a>
+              <a href="/">Fitness Time<span class="text-primary">.</span></a>
             </div>
             <div class="site-quick-contact d-none d-lg-flex ml-auto ">
               <div class="d-flex site-info align-items-center mr-5">
                 <span class="block-icon mr-3"><span class="icon-map-marker"></span></span>
-                <span>34 Street Name, City Name Here, <br> United States</span>
+                <span>Фонтанская дорога 16/8 <br> +38(042)772 7262</span>
               </div>
               <div class="d-flex site-info align-items-center">
                 <span class="block-icon mr-3"><span class="icon-clock-o"></span></span>
-                <span>Sunday - Friday 8:00AM - 4:00PM <br> Saturday CLOSED</span>
+                <span>пн-пт 9:00-22:00 <br> сб-вс 9:00-21:00</span>
               </div>
               
             </div>
@@ -64,17 +64,16 @@
         <div class="container">
           <div class="menu-wrap d-flex align-items-center">
             <span class="d-inline-block d-lg-none"><a href="#" class="text-black site-menu-toggle js-menu-toggle py-5"><span class="icon-menu h3 text-black"></span></a></span>
-
-              
+             
 
               <nav class="site-navigation text-left mr-auto d-none d-lg-block" role="navigation">
                 <ul class="site-menu main-menu js-clone-nav mr-auto ">
-                  <li class="active"><a href="index.html" class="nav-link">Home</a></li>
-                  <li><a href="services.html" class="nav-link">Services</a></li>
-                  <li><a href="projects.html" class="nav-link">Projects</a></li>
-                  <li><a href="about.html" class="nav-link">About</a></li>
-                  <li><a href="blog.html" class="nav-link">Blog</a></li>
-                  <li><a href="contact.html" class="nav-link">Contact</a></li>
+                  <li class="active"><a href="/" class="nav-link">Главная</a></li>
+                  <li><a href="services.html" class="nav-link">Фитнес</a></li>
+                  <li><a href="projects.html" class="nav-link">Цены</a></li>
+                  <li><a href="about.html" class="nav-link">О нас</a></li>
+                  
+                  <li><a href="contact.html" class="nav-link">Контакты</a></li>
                 </ul>
               </nav>
 
@@ -95,9 +94,10 @@
         <div class="container">
           <div class="row align-items-center ">
             <div class="col-md-5 mt-5 pt-5">
-              <h1 class="mb-3">Digital Agency with Excellent Services.</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta veritatis in tenetur doloremque, maiores doloribus officia iste. Dolores.</p>
-              <p class="mt-5"><a href="#" class="btn btn-primary">About Us</a></p>
+              <h1 class="mb-3">Fitness Time - это уютный просторный фитнес-клуб.</h1>
+              <p> Наш фитнес-клуб - это  место для тех, кто заботится о своём здоровье и физической форме.
+Мы открываем двери для тех, кто ведет здоровый образ жизни и следит за своим телом.</p>
+              <p class="mt-5"><a href="#" class="btn btn-primary">Больше подробностей</a></p>
             </div>
             <div class="col-md-6 ml-auto">
               <div class="white-dots">
