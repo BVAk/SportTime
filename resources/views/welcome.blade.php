@@ -1,5 +1,6 @@
-@extends('layouts.app')
-<div class="ftco-blocks-cover-1">
+@extends('layouts.apps')
+
+    <div class="ftco-blocks-cover-1">
       <div class="site-section-cover overlay" data-stellar-background-ratio="0.5" style="background-image: url('images/hero_1.jpg')">
         <div class="container">
           <div class="row align-items-center ">
@@ -506,4 +507,4 @@
 
     </div>
 
-   
+
