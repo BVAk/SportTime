@@ -45,7 +45,7 @@
             <div class="site-quick-contact d-none d-lg-flex ml-auto ">
               <div class="d-flex site-info align-items-center mr-5">
                 <span class="block-icon mr-3"><span class="icon-map-marker"></span></span>
-                <span>Фонтанская дорога 16/8 <br> +38(042)772 7262</span>
+                <span>Фонтанська дорога 16/8 <br> +38(042)772 7262</span>
               </div>
               <div class="d-flex site-info align-items-center">
                 <span class="block-icon mr-3"><span class="icon-clock-o"></span></span>
@@ -64,15 +64,17 @@
 
               <nav class="site-navigation text-left mr-auto d-none d-lg-block" role="navigation">
                 <ul class="site-menu main-menu js-clone-nav mr-auto ">
-                  <li class="active"><a href="/" class="nav-link">Главная</a></li>
-                  <li><a href="services.html" class="nav-link">Фитнес</a></li>
-                  <li><a href="projects.html" class="nav-link">Цены</a></li>
-                  <li><a href="about.html" class="nav-link">О нас</a></li>
-                  
-                  <li><a href="contact.html" class="nav-link">Контакты</a></li>
-                        @guest
-                            <li><a href="{{ route('login') }}">Войти</a></li>
-                            <li><a href="{{ route('register') }}">Зарегистрироваться</a></li>
+                  <li class="active"><a href="/" class="nav-link">Головна</a></li>
+                  <li><a href="/fitness" class="nav-link">Послуги</a></li>
+                  <li><a href="/price" class="nav-link">Ціни</a></li>
+ 
+                </ul>
+                </nav>
+
+              <div class="top-social ml-auto">
+              @guest
+                            <a href="{{ route('login') }}">Увійти</a>
+                            <a href="{{ route('register') }}">Зареєструватися</a>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
@@ -84,7 +86,7 @@
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            Выйти
+                                            Вийти
                                         </a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -94,19 +96,9 @@
                                 </ul>
                             </li>
                         @endguest
-                </ul>
-              </nav>
-
-              <div class="top-social ml-auto">
-                <a href="#"><span class="icon-facebook"></span></a>
-                <a href="#"><span class="icon-twitter"></span></a>
-                <a href="#"><span class="icon-linkedin"></span></a>
               </div>
           </div>
         </div>
-
-       
-
       </header>
 
     <div class="ftco-blocks-cover-1">
@@ -114,10 +106,10 @@
         <div class="container">
           <div class="row align-items-center ">
             <div class="col-md-5 mt-5 pt-5">
-              <h1 class="mb-3">Fitness Time - это уютный просторный фитнес-клуб.</h1>
-              <p> Наш фитнес-клуб - это  место для тех, кто заботится о своём здоровье и физической форме.
-Мы открываем двери для тех, кто ведет здоровый образ жизни и следит за своим телом.</p>
-              <p class="mt-5"><a href="#" class="btn btn-primary">Больше подробностей</a></p>
+              <h1 class="mb-3">Fitness Time - це затишний просторий фітнес-клуб </ h1>
+               <h4 class="text-white"> Наш фітнес-клуб - це місце для тих, хто піклується про своє здоров'я і фізичну форму.
+Ми відкриваємо двері для тих, хто веде здоровий спосіб життя і стежить за своїм тілом</h4>
+             
             </div>
             <div class="col-md-6 ml-auto">
               <div class="white-dots">
@@ -133,18 +125,19 @@
       <div class="container">
         <div class="row justify-content-center text-center">
           <div class="col-md-7 mb-5">
-            <h5 class="subtitle">Features</h5>
-            <h2>A creative digital agency with excellence services</h2>
+            <h5 class="subtitle">Послуги</h5>
+            <h2><b>Обери свій шлях до мети</b></h2>
           </div>
         </div>
         <div class="row">
           <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
             <div class="feature-1">
-              <span class="wrap-icon">
+              <span class="wrap-icon" >
                 <span class="icon-home"></span>
               </span>
-              <h3>Recusandae Cumque</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas ullam, cumque a debitis reiciendis dolorum ad minus error.</p>
+              <h3>Тренажерний зал</h3>      
+              <p>Тренажерний зал в нашому клубі оснащений тренажерами для всіх видів груп м'язів</p>
+
             </div>
           </div>
           <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
@@ -152,8 +145,8 @@
               <span class="wrap-icon">
                 <span class="icon-face"></span>
               </span>
-              <h3>Voluptas Ullam</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas ullam, cumque a debitis reiciendis dolorum ad minus error.</p>
+              <h3>Групові заняття</h3>
+              <p>Ексклюзивні напрямки і авторські програми на всі смаки</p>
             </div>
           </div>
           <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
@@ -161,82 +154,14 @@
               <span class="wrap-icon">
                 <span class="icon-drafts"></span>
               </span>
-              <h3>Reiciendis Dolorum Minu</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas ullam, cumque a debitis reiciendis dolorum ad minus error.</p>
+              <h3>Заняття для дітей</h3>
+               <p>Особливий підхід до кожної дитини та підлітка. Карате, рукопашні бої та танці </p>             
             </div>
           </div>
         </div>
         <div class="row mt-5">
           <div class="col-lg-12 text-center">
-            <a href="#" class="btn btn-primary">View All Services</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-
-    <div class="site-section bg-light">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-5">
-            <h2 class="h5 mb-4">Your digital partner starts here.</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente reprehenderit aspernatur, reiciendis explicabo doloribus aperiam sed sequi, aut repudiandae magni nobis voluptatem!</p>
-
-            <div class="d-flex align-items-center">
-              <span class="sign mr-4">
-                <img src="images/signature.svg" alt="" class="img-fluid">
-              </span>
-              <div>
-                <span class="d-block font-weight-bold">Mr. John Doe</span>
-                <span>CEO &amp; Co-Founder </span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 ml-auto">
-            <h2 class="h5 mb-4">Our expertise and skills</h2>
-
-            <div class="progress-wrap mb-4">
-              <div class="d-flex">
-                <span>Writing</span>
-                <span class="ml-auto">55%</span>
-              </div>
-              <div class="progress rounded-0" style="height: 7px;">
-                <div class="progress-bar" role="progressbar" style="width: 55%;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-            <div class="progress-wrap mb-4">
-              <div class="d-flex">
-                <span>WordPress</span>
-                <span class="ml-auto">85%</span>
-              </div>
-              <div class="progress rounded-0" style="height: 7px;">
-                <div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-            <div class="progress-wrap mb-4">
-              <div class="d-flex">
-                <span>Bootstrap</span>
-                <span class="ml-auto">93%</span>
-              </div>
-              <div class="progress rounded-0" style="height: 7px;">
-                <div class="progress-bar" role="progressbar" style="width: 93%;" aria-valuenow="93" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-            <div class="progress-wrap mb-4">
-              <div class="d-flex">
-                <span>jQuery</span>
-                <span class="ml-auto">83%</span>
-              </div>
-              <div class="progress rounded-0" style="height: 7px;">
-                <div class="progress-bar" role="progressbar" style="width: 83%;" aria-valuenow="83" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
+            <a href="/fitness" class="btn btn-primary">Більше подробиць</a>
           </div>
         </div>
       </div>
@@ -246,8 +171,8 @@
       <div class="container">
         <div class="row justify-content-center text-center">
           <div class="col-7 text-center mb-5">
-            <p class="lead text-white">Suscipit libero voluptate</p>
-            <h2 class="text-white">Get ready to start your exciting journey. Our agency</h2>
+            <p class="lead text-white">Fitness Time</p>
+            <h2 class="text-white">Приведе тебе до форми</h2>
           </div>
         </div>
         
@@ -261,8 +186,8 @@
             <div class="d-flex align-items-center counter">
               <span class="icon-building-o wrap-icon mr-3"></span>
               <div class="text">
-                <span class="d-block number">14k</span>
-                <span class="caption">number of firms</span>
+                <span class="d-block number">10</span>
+                <span class="caption">тренерів</span>
               </div>
             </div>
           </div>
@@ -270,8 +195,8 @@
             <div class="d-flex align-items-center counter">
               <span class="icon-home2 wrap-icon mr-3"></span>
               <div class="text">
-                <span class="d-block number">2k</span>
-                <span class="caption">in house crews</span>
+                <span class="d-block number">15</span>
+                <span class="caption">різновидів тренувань</span>
               </div>
             </div>
           </div>
@@ -279,8 +204,8 @@
             <div class="d-flex align-items-center counter">
               <span class="icon-code wrap-icon mr-3"></span>
               <div class="text">
-                <span class="d-block number">3920k</span>
-                <span class="caption">line of codes</span>
+                <span class="d-block number">4</span>
+                <span class="caption">великих залів</span>
               </div>
             </div>
           </div>
@@ -288,68 +213,7 @@
       </div>
     </div>
 
-
-
-    <div class="site-section bg-light">
-      <div class="container">
-        <div class="row justify-content-center  mb-5">
-          <div class="col-md-7 text-center">
-            <h3 class="section-heading text-center">News &amp; Events</h3>
-            <p class="mb-5 lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure nesciunt nemo vel earum maxime neque!</p>
-
-          </div>
-
-        </div>
-        <div class="row">
-          <div class="col-12">
-
-            <div class="nonloop-block-13 owl-carousel">
-              <div class="news-1" style="background-image: url('images/img_1.jpg');">
-                <div class="text">
-                  <h3><a href="#">Consectetur adipisicing elit</a></h3>
-                  <span class="category d-block mb-3">Web Development</span>
-                  <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                  <a href="#" class="d-block arrow-wrap"><span class="icon-arrow_forward"></span></a>
-                </div>
-              </div>
-
-              <div class="news-1" style="background-image: url('images/img_2.jpg');">
-                <div class="text">
-                  <h3><a href="#">Consectetur adipisicing elit</a></h3>
-                  <span class="category d-block mb-3">Web Development</span>
-                  <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                  <a href="#" class="d-block arrow-wrap"><span class="icon-arrow_forward"></span></a>
-                </div>
-              </div>
-
-              <div class="news-1" style="background-image: url('images/img_3.jpg');">
-                <div class="text">
-                  <h3><a href="#">Consectetur adipisicing elit</a></h3>
-                  <span class="category d-block mb-3">Web Development</span>
-                  <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                  <a href="#" class="d-block arrow-wrap"><span class="icon-arrow_forward"></span></a>
-                </div>
-              </div>
-
-              <div class="news-1" style="background-image: url('images/img_3.jpg');">
-                <div class="text">
-                  <h3><a href="#">Consectetur adipisicing elit</a></h3>
-                  <span class="category d-block mb-3">Web Development</span>
-                  <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                  <a href="#" class="d-block arrow-wrap"><span class="icon-arrow_forward"></span></a>
-                </div>
-              </div>
-            </div>
-            
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    
-
-    <div class="site-section section-3" data-stellar-background-ratio="0.5" style="background-image: url('images/hero_2.jpg');">
+    <div class="site-section section-3" data-stellar-background-ratio="0.5" style="background-image: url('images/hero_3.jpg');">
       <div class="container">
         <div class="row justify-content-center text-center">
           <div class="col-7 text-center mb-5">
@@ -364,9 +228,8 @@
                 <span class="icon-attach_money"></span>
               </span>
               <div class="service-1-contents">
-                <h3>Consectetur Adipisicing Elit</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, laboriosam.</p>
-              </div>
+                <h3>Укрепить сердечно-сосудистую систему</h3>
+                </div>
             </div>
           </div>
           <div class="col-lg-4 col-md-6 mb-4">
@@ -375,9 +238,8 @@
                 <span class="icon-build"></span>
               </span>
               <div class="service-1-contents">
-                <h3>Obcaecati Laboriosam</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, laboriosam.</p>
-              </div>
+                <h3>Нарастить мышечную массу</h3>
+               </div>
             </div>
           </div>
           <div class="col-lg-4 col-md-6 mb-4">
@@ -386,9 +248,8 @@
                 <span class="icon-photo_camera"></span>
               </span>
               <div class="service-1-contents">
-                <h3>Nostrum Suscipit Nobis</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, laboriosam.</p>
-              </div>
+                <h3>Откорректировать вес</h3>
+                </div>
             </div>
           </div>
 
@@ -398,9 +259,8 @@
                 <span class="icon-redeem"></span>
               </span>
               <div class="service-1-contents">
-                <h3>Harum Molestiae Optio</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, laboriosam.</p>
-              </div>
+                <h3>Приобрести мышечный тонус</h3>
+                 </div>
             </div>
           </div>
           <div class="col-lg-4 col-md-6 mb-4">
@@ -495,121 +355,18 @@
     </div>
 
 
-    <div class="site-section bg-white">
-      <div class="container">
-        <div class="row justify-content-center text-center mb-5">
-          <div class="col-7 text-center mb-5">
-            <h2 class="section-heading text-center">Our Blog</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo assumenda, dolorum necessitatibus eius earum voluptates sed!</p>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="post-entry-1 h-100">
-              <a href="single.html">
-                <img src="images/img_1.jpg" alt="Image"
-                 class="img-fluid">
-              </a>
-              <div class="post-entry-1-contents">
-                
-                <h2><a href="single.html">Lorem ipsum dolor sit amet</a></h2>
-                <span class="meta d-inline-block mb-3">July 17, 2019 <span class="mx-2">by</span> <a href="#">Admin</a></span>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores eos soluta, dolore harum molestias consectetur.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="post-entry-1 h-100">
-              <a href="single.html">
-                <img src="images/img_2.jpg" alt="Image"
-                 class="img-fluid">
-              </a>
-              <div class="post-entry-1-contents">
-                
-                <h2><a href="single.html">Lorem ipsum dolor sit amet</a></h2>
-                <span class="meta d-inline-block mb-3">July 17, 2019 <span class="mx-2">by</span> <a href="#">Admin</a></span>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores eos soluta, dolore harum molestias consectetur.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="post-entry-1 h-100">
-              <a href="single.html">
-                <img src="images/img_3.jpg" alt="Image"
-                 class="img-fluid">
-              </a>
-              <div class="post-entry-1-contents">
-                
-                <h2><a href="single.html">Lorem ipsum dolor sit amet</a></h2>
-                <span class="meta d-inline-block mb-3">July 17, 2019 <span class="mx-2">by</span> <a href="#">Admin</a></span>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores eos soluta, dolore harum molestias consectetur.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    
-
-    
-
     <footer class="site-footer">
       <div class="container">
-        <div class="row">
-          <div class="col-lg-4">
-            <h2 class="footer-heading mb-3">About Us</h2>
-                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-
-                <h2 class="footer-heading mb-4">Newsletter</h2>
-                <form action="#" class="d-flex" class="subscribe">
-                  <input type="text" class="form-control mr-3" placeholder="Email">
-                  <input type="submit" value="Send" class="btn btn-primary">
-                </form>
-          </div>
-          <div class="col-lg-8 ml-auto">
-            <div class="row">
-              <div class="col-lg-4 ml-auto">
-                <h2 class="footer-heading mb-4">Navigation</h2>
-                <ul class="list-unstyled">
-                  <li><a href="#">About Us</a></li>
-                  <li><a href="#">Testimonials</a></li>
-                  <li><a href="#">Terms of Service</a></li>
-                  <li><a href="#">Privacy</a></li>
-                  <li><a href="#">Contact Us</a></li>
-                </ul>
-              </div>
-              <div class="col-lg-4">
-                <h2 class="footer-heading mb-4">Navigation</h2>
-                <ul class="list-unstyled">
-                  <li><a href="#">About Us</a></li>
-                  <li><a href="#">Testimonials</a></li>
-                  <li><a href="#">Terms of Service</a></li>
-                  <li><a href="#">Privacy</a></li>
-                  <li><a href="#">Contact Us</a></li>
-                </ul>
-                
-              </div>
-
-              
-              
-            </div>
-          </div>
-        </div>
         <div class="row pt-5 mt-5 text-center">
           <div class="col-md-12">
             <div class="border-top pt-5">
               <p>
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+            &copy; Copyright Fitness Time <script>document.write(new Date().getFullYear());</script>. Developed and designed by Bekk
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
             </div>
           </div>
-
         </div>
       </div>
     </footer>

@@ -67,9 +67,6 @@
                   <li class="active"><a href="/" class="nav-link">Главная</a></li>
                   <li><a href="services.html" class="nav-link">Фитнес</a></li>
                   <li><a href="projects.html" class="nav-link">Цены</a></li>
-                  <li><a href="about.html" class="nav-link">О нас</a></li>
-                  
-                  <li><a href="contact.html" class="nav-link">Контакты</a></li>
                         @guest
                             <li><a href="{{ route('login') }}">Войти</a></li>
                             <li><a href="{{ route('register') }}">Зарегистрироваться</a></li>
