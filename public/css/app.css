@@ -8852,8 +8852,7 @@ body,
 }
 
 .brand-link {
-  padding: 0px 0px 10px;
-  margin:10px 10px 10px;
+  padding: 0.8125rem 0.5rem;
   font-size: 1.25rem;
   display: block;
   line-height: 1.5;
@@ -8878,18 +8877,17 @@ body,
 .brand-image {
   float: left;
   line-height: .8;
-  max-height: 30px;
+  max-height: 34px;
   width: auto;
+  margin-left: .8rem;
   margin-right: .5rem;
-  margin-top: -5px;
-  background-color:white;
+  margin-top: -3px;
 }
 
 /**
  * Component: Sidebar
  * ------------------
  */
-
 .main-sidebar {
   z-index: 1100;
   height: 100vh;
@@ -8901,7 +8899,7 @@ body,
   padding-top: 0;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  
+  overflow-y: auto;
   height: calc(100% - 4rem);
 }
 
@@ -8929,10 +8927,8 @@ body,
 }
 
 .user-panel img {
-  max-width: 30px;
+  width: 2.1rem;
   height: auto;
-  background-color: white;
-  margin: 0px 5px 0px 0px;
 }
 
 .user-panel .info {
@@ -12928,7 +12924,7 @@ a.text-muted:hover {
 }
 
 .img-circle {
-  border-radius: 100%;
+  border-radius: 50%;
 }
 
 .img-size-64,
@@ -14574,7 +14570,7 @@ img {
 }
 
 .img-circle {
-  border-radius: 35%;
+  border-radius: 50%;
 }
 
 hr {
