@@ -25,7 +25,7 @@ const routes = [
 const router = new VueRouter({
     routes // сокращённая запись для `routes: routes`
   })
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('example-component', require('../components/ExampleComponent.vue'));
 
 const app = new Vue({
     el: '#app',
