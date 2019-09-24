@@ -76,7 +76,7 @@
                             <a href="{{ route('login') }}">Увійти</a>
                             <a href="{{ route('register') }}">Зареєструватися</a>
                         @else
-                            <li class="dropdown">
+                            <div class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
@@ -94,7 +94,7 @@
                                         </form>
                                     </li>
                                 </ul>
-                            </li>
+                        </div>
                         @endguest
               </div>
           </div>

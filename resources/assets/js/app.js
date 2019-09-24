@@ -12,10 +12,7 @@ window.Vue = require('vue');
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
-const routes = [
-    { path: '/dashboard', component: require('./components/dashboard.vue') }
-   
-  ]
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

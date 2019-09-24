@@ -62,7 +62,7 @@
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" >
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
@@ -74,7 +74,7 @@
             </router-link>
            
           </li>
-          <li class="nav-item has-treeview">
+          <li class="nav-item has-treeview active">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>
@@ -84,7 +84,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="admin/clients" class="nav-link">
+                <a href="admin/clients" class="nav-link active">
                 <i class="fas fa-address-card"></i>
                   <p>Перегляд клієнтів</p>
                 </a>
@@ -147,16 +147,71 @@
     <!-- /.sidebar -->
   </aside>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+
+<div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content">
       <div class="container-fluid">
-     
+      <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3><? echo $users->count()?></h3>
+
+                <p>Зареєстрованих користувачів</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-person-add"></i>
+              </div>
+              <a href="" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+      </div>
+
+          <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">База клієнтів</h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" id="myInput" name="table_search" class="form-control float-right" onkeyup="myFunction()" placeholder="Search">
+
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover" id="myTable">
+                  <thead>
+                    <tr>
+                      <th>ФІО</th>
+                      <th>Пошта</th>
+                      <th>Мобільний зв'язок</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  @foreach($users as $user)
+                    <tr>
+                      <td> {{$user->name}}</td>
+                      <td>{{$user->email}}</td>
+                      <td>{{$user->phone}}</td>
+                     </tr>
+                     @endforeach
+                    </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+   
       </div>
     </div>
-  </div>
-  
+</div>
+
   <footer class="main-footer">
   &copy; Copyright Fitness Time 2019. Developed and designed by Bekk
   </footer>
@@ -170,7 +225,29 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
+<script>
+function myFunction() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
 
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
 <script src="/js/app.js"></script>
 </body>
 </html>

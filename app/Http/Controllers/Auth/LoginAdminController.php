@@ -23,6 +23,7 @@ class LoginAdminController extends Controller
 
 		if(Auth::guard('admin')->attempt(['email'=>$request->email,'password'=>$request->password],$request->remember)){
 			return redirect()->intended(route('admin'));
+			$this->middleware('guest')->except('logout');
 		}
 		return redirect()->back()->withInput($request->only('email','remember'));
 	}
