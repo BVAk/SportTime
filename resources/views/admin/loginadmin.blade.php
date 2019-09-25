@@ -76,13 +76,16 @@
                             <a href="{{ route('login') }}">Увійти</a>
                             <a href="{{ route('register') }}">Зареєструватися</a>
                         @else
-                            <li class="dropdown">
+                            <div class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu">
                                     <li>
+                                    <a href="{{ route('home') }}"
+                                            Профіль>
+                                        </a>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -94,7 +97,7 @@
                                         </form>
                                     </li>
                                 </ul>
-                            </li>
+</div>
                         @endguest
               </div>
           </div>
@@ -103,7 +106,7 @@
 
 
 <div class="ftco-blocks-cover-1">
-<div class="site-section-cover overlay" data-stellar-background-ratio="0.5" style="background-image: url('images/hero_1.jpg')">
+<div class="site-section-cover overlay" data-stellar-background-ratio="0.5" style="background-image: url('/images/hero_1.jpg')">
 </div> 
 </div>
 <div class="site-section">

@@ -23,16 +23,7 @@
       </li>
     </ul>
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
-      <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-        <div class="input-group-append">
-          <button class="btn btn-navbar" type="submit">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
+
 
     <!-- Right navbar links -->
    
@@ -189,6 +180,7 @@
                       <th>ФІО</th>
                       <th>Пошта</th>
                       <th>Мобільний зв'язок</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -197,6 +189,7 @@
                       <td> {{$user->name}}</td>
                       <td>{{$user->email}}</td>
                       <td>{{$user->phone}}</td>
+                      <td><a href="editprofile/{{$user->id}}"><button type="button" class="btn btn-warning">Редагувати</button></a></td>
                      </tr>
                      @endforeach
                     </tbody>
