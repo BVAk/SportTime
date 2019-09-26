@@ -21,11 +21,12 @@ class UsersTableSeeder extends Seeder
             DB::table('users')
                 ->insert([
                     'name' => $faker->name,
-                    'email' => $faker->unique()->safeEmail,
+                    'email' => $faker->unique()->freeEmail,
                     'phone' => $faker->unique()->phoneNumber,
+                    'card' => $faker->unique()->numberBetween(1,999),
                     'password' => bcrypt($faker->password()),  
-                    'created_at' => $faker->dateTime(),              ]);
+                    'created_at' => $faker->date,              ]);
         endfor;
-    }
-    
+         
+    }    
 }

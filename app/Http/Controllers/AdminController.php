@@ -40,6 +40,13 @@ class AdminController extends Controller
         return view('admin.components.clients')->with ('users', $users);
     }
 
+    public function showTrainers(){
+        $this->middleware('auth:admin');
+        $trainers=DB::table('trainers')->get();
+        $traintrain=DB::table('trainers')->join('traintrain','trainers.id','=','traintrain.trainer_id')->join('trainings','trainings.id','=','traintrain.training_id')->get(); 
+        return view('admin.components.trainers')->with ('trainers', $trainers);
+    }
+
    
 }
 

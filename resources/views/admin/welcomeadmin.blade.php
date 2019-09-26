@@ -72,8 +72,8 @@
                 Dashboard
               </p>
             </router-link>
-           
           </li>
+              <!-- Clients -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
@@ -94,10 +94,34 @@
                 <i class="fas fa-user-plus"></i>
                   <p>Створити нового клієнта</p>
                 </a>
-              </li>
-             
+              </li>   
             </ul>
           </li>
+    <!-- Trainers -->
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+              Тренери
+                <i class="fas fa-angle-left right"></i>  
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="admin/trainers" class="nav-link">
+                <i class="fas fa-address-card"></i>
+                  <p>Перегляд тренерів</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/layout/boxed.html" class="nav-link">
+                <i class="fas fa-user-plus"></i>
+                  <p>Створити нового тренера</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>

@@ -65,7 +65,7 @@
             </router-link>
            
           </li>
-          <li class="nav-item has-treeview active">
+          <li class="nav-item has-treeview ">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>
@@ -75,7 +75,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="admin/clients" class="nav-link active">
+                <a href="/admin/clients" class="nav-link ">
                 <i class="fas fa-address-card"></i>
                   <p>Перегляд клієнтів</p>
                 </a>
@@ -90,7 +90,7 @@
             </ul>
           </li>
 
-          <li class="nav-item has-treeview ">
+          <li class="nav-item has-treeview active">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>
@@ -100,7 +100,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/admin/trainers" class="nav-link ">
+                <a href="/admin/trainers" class="nav-link active">
                 <i class="fas fa-address-card"></i>
                   <p>Перегляд тренерів</p>
                 </a>
@@ -114,6 +114,7 @@
              
             </ul>
           </li>
+
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
@@ -172,9 +173,9 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3><? echo $users->count()?></h3>
+                <h3><? echo $trainers->count()?></h3>
 
-                <p>Зареєстрованих користувачів</p>
+                <p>Тренерів</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -188,7 +189,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">База клієнтів</h3>
+                <h3 class="card-title">База тренерів</h3>
 
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">
@@ -203,18 +204,18 @@
                   <thead>
                     <tr>
                       <th>ФІО</th>
-                      <th>Пошта</th>
-                      <th>Мобільний зв'язок</th>
+                      <th>Стаж роботи</th>
+                      <th>Фото</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                  @foreach($users as $user)
+                  @foreach($trainers as $trainers)
                     <tr>
-                      <td> {{$user->name}}</td>
-                      <td>{{$user->email}}</td>
-                      <td>{{$user->phone}}</td>
-                      <td><a href="editprofile/{{$user->id}}"><button type="button" class="btn btn-warning">Редагувати</button></a></td>
+                      <td> {{$trainers->name}}</td>
+                      <td>{{$trainers->start}}</td>
+                      <td><img width=100px src="{{asset($trainers->image)}}"/></td>
+                      <td><a href="editprofile/{{$trainers->id}}"><button type="button" class="btn btn-warning">Редагувати</button></a></td>
                      </tr>
                      @endforeach
                     </tbody>
