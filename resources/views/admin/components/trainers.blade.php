@@ -9,6 +9,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="stylesheet" href="/css/app.css">
+  
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper" id="app" >
@@ -57,12 +59,12 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <router-link to="/dashboard" class="nav-link">
+          <a href="/admin" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
               </p>
-            </router-link>
+</a>
            
           </li>
           <li class="nav-item has-treeview ">
@@ -180,7 +182,7 @@
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="/admin/trainers/add" class="small-box-footer"> Зареєструвати тренера<i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
       </div>
