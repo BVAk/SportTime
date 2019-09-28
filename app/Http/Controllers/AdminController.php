@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Charts;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
@@ -30,7 +31,16 @@ class AdminController extends Controller
     public function dashboard()
     {
       if($this->middleware('auth:admin')){
-        return view('admin.welcomeadmin');}
+        $users = DB::table('users')->where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"),date('Y'))
+        ->get();
+$chart = Charts::database($users, 'bar', 'highcharts')
+      ->title("Monthly new Register Users")
+      ->elementLabel("Total Users")
+      ->dimensions(1000, 500)
+      ->responsive(false)
+      ->groupByMonth(date('Y'), true);
+return view('admin.welcomeadmin',compact('chart'));
+        }
         else{ return view('admin.loginadmin');}
     }
 

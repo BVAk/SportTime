@@ -166,54 +166,21 @@
       <div class="container-fluid">
        <!-- Custom tabs (Charts with tabs)-->
        <div class="card">
-              <div class="card-header d-flex p-0">
-                <h3 class="card-title p-3">
-                  <i class="fas fa-chart-pie mr-1"></i>
-                  Sales
-                </h3>
-                <ul class="nav nav-pills ml-auto p-2">
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                  </li>
-                </ul>
-              </div><!-- /.card-header -->
+              
               <div class="card-body">
-                <div class="tab-content p-0">
-                  <!-- Morris chart - Sales -->
-                  <div class="chart tab-pane active" id="revenue-chart"
-                       style="position: relative; height: 300px;">
-                      <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>                         
-                   </div>
-                  <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                    <canvas id="sales-chart-canvas" height="300" style="height: 300px;">
-                  
-                    <?php 
-$line = array(array('user', 12), array('admin', 3), array('user2', 1), array('user3', 1));
+              <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Chart Demo</div>
 
-$pc = new C_PhpChartX(array($line),'user_chart');
-$pc->add_plugins(array('canvasTextRenderer'));
-//set series
-$pc->add_series(array('renderer'=>'plugin::BarRenderer'));
-//set axes
-$pc->set_axes(array(
-    'xaxis'  => array(
-        'renderer'=>'plugin::CategoryAxisRenderer',
-        'tickRenderer'=>'plugin::CanvasAxisTickRenderer'),
-    'yaxis'  => array(
-        'autoscale'=>true,
-        'tickRenderer'=>'plugin::CanvasAxisTickRenderer')
-));
-
-$pc->draw(800,500);
-?>
-                  
-                  </canvas>                         
-                  </div>  
+                <div class="panel-body">
+                    {!! $chart->html() !!}
                 </div>
-              </div><!-- /.card-body -->
+            </div>
+        </div>
+              </div>
+              
+{!! Charts::scripts() !!}
+{!! $chart->script() !!}<!-- /.card-body -->
             </div>
       </div>
     </div>
