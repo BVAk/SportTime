@@ -56,6 +56,9 @@ return view('admin.welcomeadmin',compact('chart'));
         $traintrain=DB::table('trainers')->join('traintrain','trainers.id','=','traintrain.trainer_id')->join('trainings','trainings.id','=','traintrain.training_id')->get(); 
         return view('admin.components.trainers')->with ('trainers', $trainers);
     }
+    public function addTrainers(){
+        return view('admin.components.traineradd');
+    }
 
    
 }

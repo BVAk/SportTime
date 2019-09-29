@@ -165,3 +165,144 @@
     </div>
     <!-- /.sidebar -->
   </aside>
+  
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content">
+      <div class="container-fluid">
+      <form role="form" class="col-md-12 go-right" action="{{ url('/admin/inserttrainer') }}" method="post"
+                  enctype="multipart/form-data">
+                {{ csrf_field() }}
+
+                <div class="form-group">
+                    <label for="name">ФІО</label>
+                    <input id="Trainer_name" name="Trainer_name" type="text" class="form-control" value="" required>
+
+                </div>
+
+
+                <div class="form-group">
+                    <label for="Yacht_builtin">Год постройки</label>
+                    <input id="Yacht_builtin" name="Yacht_builtin" type="text" class="form-control" value="" required>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="Yacht_cabins_count">Кол-во кают</label>
+                    <input id="Yacht_cabins_count" name="Yacht_cabins_count" type="text" class="form-control" value=""
+                           required>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="Yacht_toilets_count">Кол-во гальюнов</label>
+                    <input id="Yacht_toilets_count" name="Yacht_toilets_count" type="text" class="form-control" value=""
+                           required>
+
+                </div>
+
+
+                <div class="form-group">
+                    <label for="Yacht_guests_count">Кол-во людей</label>
+                    <input id="Yacht_guests_count" name="Yacht_guests_count" type="text" class="form-control" value=""
+                           required>
+
+                </div>
+
+
+                <div class="form-group">
+                    <label for="Yacht_length">Длина яхты</label>
+                    <input id="Yacht_length" name="Yacht_length" type="text" class="form-control" value="" required>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="Yacht_price">Цена аренды яхты на неделю (цена в евро)</label>
+                    <input id="Yacht_price" name="Yacht_price" type="text" class="form-control" value="" required>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="Yacht_owner_name">Владелец яхты</label>
+                    <input id="Yacht_owner_name" name="Yacht_owner_name" type="text" class="form-control" value=""
+                           required>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="Yacht_date_contract">Контракт с яхтой действет до</label>
+                    <input id="Yacht_date_contract" name="Yacht_date_contract" type="date" class="form-control" value=""
+                           required>
+
+                </div>
+
+
+                <div class="form-group">
+                    <label for="Yacht_type">Выбрать тип яхты</label>
+                    <input id="Yacht_type" name="Yacht_type" type="text" class="form-control" value="моторная яхта|парусная яхта|катамаран"
+                           required>
+
+
+                </div>
+
+                <div class="panel panel-default">
+
+                    <div class="panel-body">
+                        <div class="col-md-6">
+
+
+                            <p style="font-size: 20px;">Выбор марины</p>
+
+                            <select id="select" name="Yacht_marina" class="selectpicker" style="font-size: 20px;"
+                                    required>
+                                <option value=""> ---</option>
+                              </select>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Yacht_about">Описание</label>
+                    <input id="Yacht_about" name="Yacht_about" type="text" class="form-control" value="" required>
+
+                </div>
+                <div class="form-group">
+                    <label for="Yacht_main_photo">Выбрать главное фото</label>
+                    <input type="file" name="Yacht_main_photo"><br>
+                </div>
+
+                <div class="form-group">
+                    <label for="Yacht_structure">Выбрать фото со структурой яхты </label>
+                    <input type="file" name="Yacht_structure"><br>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-success center-block btn-lg" type="submit" value="Добавить">
+                </div>
+
+
+            </form>
+
+
+      </div>
+      </div>
+    </div>
+</div>
+
+  <footer class="main-footer">
+  &copy; Copyright Fitness Time 2019. Developed and designed by Bekk
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="/js/app.js"></script>
+</body>
+</html>
