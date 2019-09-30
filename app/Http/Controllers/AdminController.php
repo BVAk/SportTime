@@ -57,7 +57,32 @@ return view('admin.welcomeadmin',compact('chart'));
         return view('admin.components.trainers')->with ('trainers', $trainers);
     }
     public function addTrainers(){
-        return view('admin.components.traineradd');
+        $training=DB::table('trainings')->get();
+        return view('admin.components.traineradd')->with('training',$training);
+    }
+    public function inserttrainer(Request $request){
+        $Trainer_name = $request->input('Trainer_name');
+        $Trainer_birth = $request->input('Trainer_birth');
+        $Trainer_start = $request->input('Trainer_start');
+        $Trainer_phone = $request->input('Trainer_phone');
+     
+        $Trainer_training=$request->get('Trainer_training');
+        $Trainer_photo = $request->file('Trainer_photo');
+        if ($Trainer_photo) {
+            $filename = $Trainer_photo->getClientOriginalName();
+            $a = 'images/trainers/'.$filename;
+            Storage::disk('local')->put($filename, File::get($Trainer_photo));
+        }
+        $newTrainer=array('name'=>$Trainer_name, 'birth'=>$Trainer_birth, 'start'=>$Trainer_start, 'phone'=>$Trainer_phone, 'image'=>$a);
+        DB::table('trainers')->insert($newTrainer);
+       
+       $traintrain=DB::table('trainers')->where('name',$Trainer_name)->value('id');
+       $newTraintrain=array('trainer_id'=>$traintrain, 'training_id'=>$Trainer_training);
+       DB::table('traintrain')->insert($newTraintrain);
+      
+        return redirect('/admin/trainers');
+
+
     }
 
    

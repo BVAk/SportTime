@@ -28,4 +28,5 @@ Route::prefix('/admin')->group(function () {
     Route::get('/clients', 'AdminController@showClients')->name('admin.clients');
     Route::get('/trainers', 'AdminController@showTrainers')->name('admin.trainers');
     Route::get('/trainers/add', 'AdminController@addTrainers')->name('admin.trainers.add');
+    Route::post('/inserttrainer', 'AdminController@inserttrainer')->name('admin.inserttrainer.submit');
 });

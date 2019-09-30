@@ -20,6 +20,7 @@ class TrainersTableSeeder extends Seeder
                         'name' => $faker-> name($gender = 'male'),
                         'birth' => $faker->dateTimeBetween($startDate = '-30 years', $endDate = '-18 years', $timezone = null),
                         'start' => $faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now', $timezone = null),
+                        'phone' => $faker->unique()->phoneNumber,
                         'image' => "images/trainers/man$i.jpg",
                ]); endfor;
                for($i=0; $i<=10; $i++):
@@ -27,6 +28,7 @@ class TrainersTableSeeder extends Seeder
                             'name' => $faker-> name($gender = 'female'),
                             'birth' => $faker->dateTimeBetween($startDate = '-30 years', $endDate = '-18 years', $timezone = null),
                             'start' => $faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now', $timezone = null),
+                            'phone' => $faker->unique()->phoneNumber,
                             'image' => "images/trainers/woman$i.jpg",
                    ]); endfor;
     }    

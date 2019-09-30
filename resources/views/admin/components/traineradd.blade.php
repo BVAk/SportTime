@@ -182,68 +182,24 @@
 
 
                 <div class="form-group">
-                    <label for="Yacht_builtin">Год постройки</label>
-                    <input id="Yacht_builtin" name="Yacht_builtin" type="text" class="form-control" value="" required>
+                    <label for="Trainer_birth">Дата народження</label>
+                    <input id="Trainer_birth" name="Trainer_birth" type="date" class="form-control" value="" required>
 
                 </div>
 
                 <div class="form-group">
-                    <label for="Yacht_cabins_count">Кол-во кают</label>
-                    <input id="Yacht_cabins_count" name="Yacht_cabins_count" type="text" class="form-control" value=""
+                    <label for="Trainer_start">Початок роботи</label>
+                    <input id="Trainer_start" name="Trainer_start" type="date" class="form-control" value=""
                            required>
 
                 </div>
 
                 <div class="form-group">
-                    <label for="Yacht_toilets_count">Кол-во гальюнов</label>
-                    <input id="Yacht_toilets_count" name="Yacht_toilets_count" type="text" class="form-control" value=""
-                           required>
+                    <label for="Trainer_phone">Мобільний номер телефону</label>
+                    <input id="Trainer_phone" name="Trainer_phone" type="text" class="form-control" value="" required>
 
                 </div>
 
-
-                <div class="form-group">
-                    <label for="Yacht_guests_count">Кол-во людей</label>
-                    <input id="Yacht_guests_count" name="Yacht_guests_count" type="text" class="form-control" value=""
-                           required>
-
-                </div>
-
-
-                <div class="form-group">
-                    <label for="Yacht_length">Длина яхты</label>
-                    <input id="Yacht_length" name="Yacht_length" type="text" class="form-control" value="" required>
-
-                </div>
-
-                <div class="form-group">
-                    <label for="Yacht_price">Цена аренды яхты на неделю (цена в евро)</label>
-                    <input id="Yacht_price" name="Yacht_price" type="text" class="form-control" value="" required>
-
-                </div>
-
-                <div class="form-group">
-                    <label for="Yacht_owner_name">Владелец яхты</label>
-                    <input id="Yacht_owner_name" name="Yacht_owner_name" type="text" class="form-control" value=""
-                           required>
-
-                </div>
-
-                <div class="form-group">
-                    <label for="Yacht_date_contract">Контракт с яхтой действет до</label>
-                    <input id="Yacht_date_contract" name="Yacht_date_contract" type="date" class="form-control" value=""
-                           required>
-
-                </div>
-
-
-                <div class="form-group">
-                    <label for="Yacht_type">Выбрать тип яхты</label>
-                    <input id="Yacht_type" name="Yacht_type" type="text" class="form-control" value="моторная яхта|парусная яхта|катамаран"
-                           required>
-
-
-                </div>
 
                 <div class="panel panel-default">
 
@@ -251,11 +207,14 @@
                         <div class="col-md-6">
 
 
-                            <p style="font-size: 20px;">Выбор марины</p>
+                            <p style="font-size: 20px;">Тренування</p>
 
-                            <select id="select" name="Yacht_marina" class="selectpicker" style="font-size: 20px;"
+                            <select id="select" name="Trainer_training" class="selectpicker" style="font-size: 20px;"
                                     required>
                                 <option value=""> ---</option>
+                                @foreach ($training as $training)
+                                <option value="{{$training->id}}"> {{$training->name}}</option>
+                                @endforeach
                               </select>
 
                         </div>
@@ -263,22 +222,14 @@
                     </div>
                 </div>
 
+               
                 <div class="form-group">
-                    <label for="Yacht_about">Описание</label>
-                    <input id="Yacht_about" name="Yacht_about" type="text" class="form-control" value="" required>
-
-                </div>
-                <div class="form-group">
-                    <label for="Yacht_main_photo">Выбрать главное фото</label>
-                    <input type="file" name="Yacht_main_photo"><br>
+                    <label for="Trainer_photo">Фото тренера</label>
+                    <input type="file" name="Trainer_photo"><br>
                 </div>
 
                 <div class="form-group">
-                    <label for="Yacht_structure">Выбрать фото со структурой яхты </label>
-                    <input type="file" name="Yacht_structure"><br>
-                </div>
-                <div class="form-group">
-                    <input class="btn btn-success center-block btn-lg" type="submit" value="Добавить">
+                    <input class="btn btn-success center-block btn-lg" type="submit" value="Додати">
                 </div>
 
 
