@@ -16,6 +16,10 @@ Route::get('/', function () {
 });
 
 
+Route::get('/fitness', function () {
+    return view('fitnessabout');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

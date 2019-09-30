@@ -220,10 +220,7 @@
     <div class="site-section section-3" data-stellar-background-ratio="0.5" style="background-image: url('images/hero_3.jpg');">
       <div class="container">
         <div class="row justify-content-center text-center">
-          <div class="col-7 text-center mb-5">
-            <h2 class="text-white section-heading primary-color-icon text-center">More Services</h2>
-            <p class="lead text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam quo doloribus, suscipit libero, voluptate aliquam.</p>
-          </div>
+          <h2 class="text-white">Фізична підготовленість складається з наступних елементів:</h2>
         </div>
         <div class="row">
           <div class="col-lg-4 col-md-6 mb-4">
@@ -232,7 +229,7 @@
                 <span class="icon-attach_money"></span>
               </span>
               <div class="service-1-contents">
-                <h3>Укрепить сердечно-сосудистую систему</h3>
+                <h3>Зміцнення серцево-судинної системи</h3>
                 </div>
             </div>
           </div>
@@ -242,7 +239,7 @@
                 <span class="icon-build"></span>
               </span>
               <div class="service-1-contents">
-                <h3>Нарастить мышечную массу</h3>
+                <h3>Нарощення м'язової маси</h3>
                </div>
             </div>
           </div>
@@ -252,7 +249,7 @@
                 <span class="icon-photo_camera"></span>
               </span>
               <div class="service-1-contents">
-                <h3>Откорректировать вес</h3>
+                <h3>Коригування ваги</h3>
                 </div>
             </div>
           </div>
@@ -263,33 +260,34 @@
                 <span class="icon-redeem"></span>
               </span>
               <div class="service-1-contents">
-                <h3>Приобрести мышечный тонус</h3>
+                <h3>Швидкість і сила</h3>
                  </div>
             </div>
           </div>
+
+          
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="service-1">
               <span class="service-1-icon">
-                <span class="icon-phonelink"></span>
+                <span class="icon-redeem"></span>
               </span>
               <div class="service-1-contents">
-                <h3>Nostrum Suscipit Nobis</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, laboriosam.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="service-1">
-              <span class="service-1-icon">
-                <span class="icon-child_friendly"></span>
-              </span>
-              <div class="service-1-contents">
-                <h3>Eaque Odit Molestias</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, laboriosam.</p>
-              </div>
+                <h3>Розвиток почуття рівноваги</h3>
+                 </div>
             </div>
           </div>
 
+          
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="service-1">
+              <span class="service-1-icon">
+                <span class="icon-redeem"></span>
+              </span>
+              <div class="service-1-contents">
+                <h3>Пришвидшення реакції</h3>
+                 </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -297,67 +295,6 @@
 
     
     
-    <div class="site-section bg-light">
-      <div class="container">
-        <div class="row justify-content-center text-center mb-5">
-          <div class="col-7 text-center mb-5">
-            <h2 class="section-heading text-center">Our Top Client Says</h2>
-            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo assumenda, dolorum necessitatibus eius earum voluptates sed!</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-4 mb-4 mb-lg-0">
-            <div class="testimonial-2 text-center">
-              <div class="v-card mb-4 text-center">
-                <img src="images/person_1.jpg" alt="Image" class="img-fluid mx-auto d-block">
-                <span>Mike Fisher</span>
-              </div>
-              <blockquote>
-                <p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, deserunt eveniet veniam. Ipsam, nam, voluptatum"</p>
-              </blockquote>
-              
-            </div>
-          </div>
-          <div class="col-lg-4 mb-4 mb-lg-0">
-            <div class="testimonial-2 text-center">
-              <div class="v-card mb-4 text-center">
-                <img src="images/person_2.jpg" alt="Image" class="img-fluid mx-auto d-block">
-                <span>Jean Stanley</span>
-              </div>
-              <blockquote>
-                <p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, deserunt eveniet veniam. Ipsam, nam, voluptatum"</p>
-              </blockquote>
-              
-            </div>
-          </div>
-          <div class="col-lg-4 mb-4 mb-lg-0">
-            <div class="testimonial-2 text-center">
-              <div class="v-card mb-4 text-center">
-                <img src="images/person_3.jpg" alt="Image" class="img-fluid mx-auto d-block">
-                <span>Katie Rose</span>
-              </div>
-              <blockquote>
-                <p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, deserunt eveniet veniam. Ipsam, nam, voluptatum"</p>
-              </blockquote>
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="site-section section-3" data-stellar-background-ratio="0.5" style="background-image: url('images/hero_1.jpg');">
-      <div class="container">
-        <div class="row justify-content-center text-center">
-          <div class="col-7 text-center mb-5">
-            <h2 class="text-white section-heading primary-color-icon text-center">Quality Services</h2>
-            <p class="lead text-white mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam quo doloribus, suscipit libero, voluptate aliquam.</p>
-            <p><a href="#" class="btn btn-primary">Contact Us Now</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
 
     <footer class="site-footer">
       <div class="container">
