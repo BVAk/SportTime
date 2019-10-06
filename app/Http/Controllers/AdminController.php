@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use Charts;
+use App\Trainer;
+use App\Training;
+use App\User;
+use Illuminate\Support\Facades\DB;
+use ConsoleTVs\Charts\Facades\Charts;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
-use Admin;
+use App\Admin;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,7 +23,7 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin');
+         $this->middleware('auth:admin');
     }
 
     /**
@@ -30,62 +33,82 @@ class AdminController extends Controller
      */
     public function dashboard()
     {
-      if($this->middleware('auth:admin')){
-        $users = DB::table('users')->where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"),date('Y'))
-        ->get();
-$chart = Charts::database($users, 'bar', 'highcharts')
-      ->title("Monthly new Register Users")
-      ->elementLabel("Total Users")
-      ->dimensions(1000, 500)
-      ->responsive(false)
-      ->groupByMonth(date('Y'), true);
-return view('admin.welcomeadmin',compact('chart'));
-        }
-        else{ return view('admin.loginadmin');}
+        $users = User::where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"), date('Y'))->get();
+        $chart = Charts::database($users, 'bar', 'highcharts')
+            ->title("Monthly new Register Users")
+            ->elementLabel("Total Users")
+            ->dimensions(1000, 500)
+            ->responsive(false)
+            ->groupByMonth(date('Y'), true);
+        return view('admin.welcomeadmin', compact('chart'));
+
     }
 
-    public function showClients(){
-        $this->middleware('auth:admin');
-        $users=DB::table('users')->get(); 
-        return view('admin.components.clients')->with ('users', $users);
+    /**
+     * Get the list of the clients
+     *
+     * @rapam Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function showClients(Request $request)
+    {
+        // better to user pagination => instated of $users = User::all();
+        $users = User::where('name', 'like', "%$request->search%")->orWhere('email', 'like', "%$request->search%")->orWhere('phone', 'like', "%$request->search%")->paginate(10);
+        return view('admin.components.clients', compact('users'));
     }
 
-    public function showTrainers(){
-        $this->middleware('auth:admin');
-        $trainers=DB::table('trainers')->get();
-        $traintrain=DB::table('trainers')->join('traintrain','trainers.id','=','traintrain.trainer_id')->join('trainings','trainings.id','=','traintrain.training_id')->get(); 
-        return view('admin.components.trainers')->with ('trainers', $trainers);
+    public function showTrainers(Request $request)
+    {
+        $trainers = Trainer::with('trainings')->get();
+        return view('admin.components.trainers', compact('trainers'));
     }
-    public function addTrainers(){
-        $training=DB::table('trainings')->get();
-        return view('admin.components.traineradd')->with('training',$training);
+
+    public function addTrainers()
+    {
+        $training = Training::all();
+        return view('admin.components.traineradd', compact('training'));
     }
-    public function inserttrainer(Request $request){
-        $Trainer_name = $request->input('Trainer_name');
-        $Trainer_birth = $request->input('Trainer_birth');
-        $Trainer_start = $request->input('Trainer_start');
-        $Trainer_phone = $request->input('Trainer_phone');
-     
-        $Trainer_training=$request->get('Trainer_training');
-        $Trainer_photo = $request->file('Trainer_photo');
-        if ($Trainer_photo) {
-            $filename = $Trainer_photo->getClientOriginalName();
-            $a = 'images/trainers/'.$filename;
-            Storage::disk('local')->put($filename, File::get($Trainer_photo));
-        }
-        $newTrainer=array('name'=>$Trainer_name, 'birth'=>$Trainer_birth, 'start'=>$Trainer_start, 'phone'=>$Trainer_phone, 'image'=>$a);
-        DB::table('trainers')->insert($newTrainer);
-       
-       $traintrain=DB::table('trainers')->where('name',$Trainer_name)->value('id');
-       $newTraintrain=array('trainer_id'=>$traintrain, 'training_id'=>$Trainer_training);
-       DB::table('traintrain')->insert($newTraintrain);
-      
+
+    public function inserttrainer(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|max:255',
+            'phone' => 'required|unique:trainers',
+            'start' => 'required',
+            'birth' => 'required'
+        ]);
+
+        if ($request->hasFile('photo')) $image = $this->uploadImage($request, 'photo', 'images/trainers/');
+        $request['image'] = isset($image) ? $image : null;
+        $trainer = Trainer::create($request->only(['name', 'birth', 'start', 'phone', 'image']));
+
+        $trainer->trainings()->sync($request->trainings);
+
         return redirect('/admin/trainers');
 
 
     }
 
-   
+    /**
+     * Validate and store image.
+     *
+     * @param Request $request
+     * @param string $filename
+     * @param string $path
+     *
+     * @return string
+     * */
+    private function uploadImage(Request $request, $filename, $path)
+    {
+        $request->validate([
+            $filename => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        return $request->file($filename)->store(
+            $path, 'public'
+        );
+    }
+
+
 }
 
-?>

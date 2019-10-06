@@ -17,7 +17,7 @@ class Trainings extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('type');
-            $table->string('description');
+            $table->text('description'); // string field is too small
             $table->rememberToken();
             $table->timestamps();
             
