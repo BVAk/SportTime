@@ -31,17 +31,13 @@
             <input id="phone" name="phone" type="text" class="form-control" value="" required>
 
         </div>
-
+        <label for="phone">Тренування</label>
 
         <div class="panel panel-default">
 
             <div class="panel-body">
                 <div class="col-md-6">
-
-
-                    <p style="font-size: 20px;">Тренування</p>
-
-                    <select multiple id="select" name="trainings[]" class="selectpicker" style="font-size: 20px;"
+                    <select id="select" name="trainings[]" class="selectpicker" style="font-size: 20px;"
                             required>
                         <option value=""> ---</option>
                         @foreach ($training as $training)

@@ -98,10 +98,7 @@
                     <li class="nav-item has-treeview ">
                         <a href="#" class="nav-link {{in_array(request()->path(), ['admin/trainers', 'admin/trainers/add']) ? 'active' : ''}}">
                             <i class="nav-icon fas fa-user"></i>
-                            <p>
-                                Тренери
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
+                            <p>Тренери<i class="fas fa-angle-left right"></i></p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
@@ -119,6 +116,36 @@
 
                         </ul>
                     </li>
+
+                    <li class="nav-item has-treeview ">
+                        <a href="#" class="nav-link {{in_array(request()->path(), ['admin/schedule/private', 'admin/trainers/group', 'admin/trainers/child']) ? 'active' : ''}}">
+                            <i class="nav-icon fas fa-table"></i>
+                            <p>Розклад<i class="fas fa-angle-left right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="/admin/schedule/group" class="nav-link {{request()->path() == 'admin/schedule/group' ? 'active' : ''}}">
+                                    <i class="fas fa-users"></i>
+                                    <p>Группові заняття</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/schedule/private" class="nav-link {{request()->path() == 'admin/schedule/private' ? 'active' : ''}}">
+                                    <i class="fas fa-user"></i>
+                                    <p>Індивідуальні заняття</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/schedule/child" class="nav-link {{request()->path() == 'admin/schedule/child' ? 'active' : ''}}">
+                                    <i class="fas fa-child"></i>
+                                    <p>Дитячі заняття</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-chart-pie"></i>

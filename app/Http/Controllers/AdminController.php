@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Trainer;
 use App\Training;
 use App\User;
+use App\Group;
 use Illuminate\Support\Facades\DB;
 use ConsoleTVs\Charts\Facades\Charts;
 use Carbon\Carbon;
@@ -107,6 +108,14 @@ class AdminController extends Controller
         return $request->file($filename)->store(
             $path, 'public'
         );
+    }
+
+    public function schedulegroup()
+    {
+        $training = Training::where('type','!=','дитячі')->where('type','!=','')->get();
+        $groupschedule = DB::table('groupshedule')->join('trainings','groupshedule.train_id','=','trainings.id')->where('type','!=','дитячі')->where('type','!=','')->get();
+        return view('admin.components.schedulegroup',compact('training'))->with('groupschedule',$groupschedule);
+
     }
 
 

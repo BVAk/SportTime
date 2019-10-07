@@ -33,4 +33,7 @@ Route::prefix('/admin')->group(function () {
     Route::get('/trainers', 'AdminController@showTrainers')->name('admin.trainers');
     Route::get('/trainers/add', 'AdminController@addTrainers')->name('admin.trainers.add');
     Route::post('/inserttrainer', 'AdminController@inserttrainer')->name('admin.inserttrainer.submit');
+
+    Route::get('/schedule/group', 'AdminController@schedulegroup')->name('admin.schedulegroup');
+    Route::get('/schedule/private', 'AdminController@scheduleprivate')->name('admin.scheduleprivate');
 });

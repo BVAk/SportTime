@@ -21,7 +21,7 @@ class GroupSchedule extends Migration
             $table->timestamp('end')->nullable();
             $table->date('weekday')->format('d');
             
-            $table->foreign('traintrain_id')->references('id')->on('traintrain');
+            $table->foreign('traintrain_id')->references('id')->on('trainings');
             $table->foreign('room_id')->references('id')->on('rooms');
           
         });
