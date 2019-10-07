@@ -18,7 +18,7 @@ class GroupSchedule extends Migration
             $table->integer('traintrain_id')->unsigned();
             $table->integer('room_id')->unsigned();
             $table->timestamp('start');
-            $table->timestamp('end');
+            $table->timestamp('end')->nullable();
             $table->date('weekday')->format('d');
             
             $table->foreign('traintrain_id')->references('id')->on('traintrain');

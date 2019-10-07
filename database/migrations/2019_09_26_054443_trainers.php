@@ -19,7 +19,7 @@ class Trainers extends Migration
             $table->date('birth');
             $table->date('start');
             $table->string('phone')->unique();
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->rememberToken();
             $table->timestamps();
             
