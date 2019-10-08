@@ -138,6 +138,7 @@
     eventSources:[ {events: [
       @foreach ($groupschedule as $groupschedule)
     {
+      id:'{{$groupschedule->id}}',
       title  : '{{$groupschedule->name}}',
       start  : '{{$groupschedule->start}}',
       end:'{{$groupschedule->end}}',
@@ -147,12 +148,38 @@
   ],
   color: 'greenyellow',     // an option!
       textColor: 'black' // an option!
-    }]
+    }],
+    eventDrop: function(event, delta, revertFunc) { // si changement de position
+
+edit(event);
+
+},
     });
     calendar.render();
 
   });
 
+  function edit(event){
+			start = event.start.format('YYYY-MM-DD HH:mm:ss');
+			if(event.end){
+				end = event.end.format('YYYY-MM-DD HH:mm:ss');
+			}else{
+				end = start;
+			}
+			
+			id =  event.id;
+			
+			Event = [];
+			Event[0] = id;
+			Event[1] = start;
+			Event[2] = end;
+			
+			$.ajax({
+			 url: 'editEventDate.php',
+			 type: "POST",
+			 data: {Event:Event}
+			});
+		}
 </script>
 
 @endsection
