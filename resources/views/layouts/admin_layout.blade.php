@@ -208,9 +208,6 @@
     </div>
 </div>
 
-<footer class="main-footer">
-    &copy; Copyright Fitness Time 2019. Developed and designed by Bekk
-</footer>
 
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">

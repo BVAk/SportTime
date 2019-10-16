@@ -119,16 +119,16 @@ class AdminController extends Controller
     }
 
     public function schedulegroupupdate(Request $request){
-        if (isset($_POST['Event'][0]) && isset($_POST['Event'][1]) && isset($_POST['Event'][2])){
-
-            $id = $_POST['Event'][0];
-            $start = $_POST['Event'][1];
-            $end = $_POST['Event'][2];
-            $sql = "UPDATE events SET  start = '$start', end = '$end' WHERE id = $id ";
-            
+       
+        $id=$request['Event'][0];
+        $start=$request['Event'][1];
+        $end=$request['Event'][2];
+        
+        Training::where('id','=',$id)->update('start'->$start,'end'->$end);        
+          
+        
         }
     }
 
 
-}
 

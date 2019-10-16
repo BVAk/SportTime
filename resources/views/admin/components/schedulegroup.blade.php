@@ -67,9 +67,14 @@
     @endforeach
   </div>
 </div>
-
+<form >
 <div id='calendar'></div>
+<div class="form-group">
 
+<button class="btn btn-success btn-submit">Submit</button>
+
+</div>
+</form>
 <div style='clear:both'></div>
 
 </div>
@@ -86,7 +91,8 @@
 <script src="{{asset('packages/daygrid/main.js')}}"></script>
 <script src="{{asset('packages/timegrid/main.js')}}"></script>
 <script src="{{asset('packages/list/main.js')}}"></script>
-<script>
+
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script><script>
 
   document.addEventListener('DOMContentLoaded', function() {
     var Calendar = FullCalendar.Calendar;
@@ -131,19 +137,25 @@
       },
       minTime: "09:00:00",
       maxTime:"23:00:00",
-      
-      
       editable: true,
-      droppable: false, // this allows things to be dropped onto the calendar
+      droppable: true, // this allows things to be dropped onto the calendar
     eventSources:[ {events: [
-      @foreach ($groupschedule as $groupschedule)
-    {
+      @foreach ($groupschedule as $groupschedule){
+      $start={{$groupschedule->start}},
+      $end={{$groupschedule->end}},
+      $date=new DateTime('now'),
+    
+      @if($start<$date){
+        $start=strtotime("+7 day",strtotime($start)),
+        $end=strtotime("+7 day", strtotime($end)),
+      }
+     @else{
       id:'{{$groupschedule->id}}',
       title  : '{{$groupschedule->name}}',
-      start  : '{{$groupschedule->start}}',
-      end:'{{$groupschedule->end}}',
+      start  : '$start',
+      end:'$end',
       allDay : false
-    },
+    }@endif},
     @endforeach
   ],
   color: 'greenyellow',     // an option!
@@ -175,9 +187,16 @@ edit(event);
 			Event[2] = end;
 			
 			$.ajax({
-			 url: 'editEventDate.php',
+			 url: 'admin/schedule/group',
 			 type: "POST",
-			 data: {Event:Event}
+			 data: {Event:Event},
+       success: function(rep) {
+					if(rep == 'OK'){
+						alert('Saved');
+					}else{
+						alert('Could not be saved. try again.'); 
+					}
+				}
 			});
 		}
 </script>
