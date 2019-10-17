@@ -5,7 +5,7 @@
     <form role="form" class="col-md-12 go-right" action="{{ url('/admin/inserttrainer') }}" method="post"
           enctype="multipart/form-data">
         {{ csrf_field() }}
-
+<label>Створення нового тренера</label>
         <div class="form-group">
             <label for="name">ФІО</label>
             <input id="name" name="name" type="text" class="form-control" value="" required>

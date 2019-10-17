@@ -110,6 +110,31 @@ class AdminController extends Controller
         );
     }
 
+    
+    public function addClients()
+    {
+        $users = User::all();
+        return view('admin.components.clientadd', compact('users'));
+    }
+
+    public function insertclient(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|unique:users',
+            'phone' => 'required|unique:users',
+            'card' => 'required',
+            'created_at'=>'required',
+        ]);
+
+        $trainer = User::create($request->only(['name', 'email', 'phone', 'card', 'created_at']));
+        
+        return redirect('/admin/clients');
+
+
+    }
+
+
     public function schedulegroup()
     {
         $training = Training::where('type','!=','дитячі')->where('type','!=','')->get();

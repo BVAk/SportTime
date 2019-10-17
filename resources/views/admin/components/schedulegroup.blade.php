@@ -141,21 +141,13 @@
       droppable: true, // this allows things to be dropped onto the calendar
     eventSources:[ {events: [
       @foreach ($groupschedule as $groupschedule){
-      $start={{$groupschedule->start}},
-      $end={{$groupschedule->end}},
-      $date=new DateTime('now'),
     
-      @if($start<$date){
-        $start=strtotime("+7 day",strtotime($start)),
-        $end=strtotime("+7 day", strtotime($end)),
-      }
-     @else{
       id:'{{$groupschedule->id}}',
       title  : '{{$groupschedule->name}}',
-      start  : '$start',
-      end:'$end',
+      start  : '{{$groupschedule->start}}',
+      end:'{{$groupschedule->end}}',
       allDay : false
-    }@endif},
+    },
     @endforeach
   ],
   color: 'greenyellow',     // an option!

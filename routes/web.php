@@ -33,7 +33,8 @@ Route::prefix('/admin')->group(function () {
     Route::get('/trainers', 'AdminController@showTrainers')->name('admin.trainers');
     Route::get('/trainers/add', 'AdminController@addTrainers')->name('admin.trainers.add');
     Route::post('/inserttrainer', 'AdminController@inserttrainer')->name('admin.inserttrainer.submit');
-
+    Route::get('/clients/add', 'AdminController@addClients')->name('admin.clients.add');
+    Route::post('/insertclient', 'AdminController@insertclient')->name('admin.insertclient.submit');
     Route::get('/schedule/group', 'AdminController@schedulegroup')->name('admin.schedulegroup');
     Route::post('/schedule/group', 'AdminController@schedulegroupupdate')->name('admin.schedulegroupupdate');
     Route::get('/schedule/private', 'AdminController@scheduleprivate')->name('admin.scheduleprivate');
