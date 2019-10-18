@@ -47798,11 +47798,6 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   routes: routes // сокращённая запись для `routes: routes`
 
 });
-Vue.component('example-component', __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module '../components/ExampleComponent.vue'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())));
-var app = new Vue({
-  el: '#app',
-  router: router
-});
 
 /***/ }),
 

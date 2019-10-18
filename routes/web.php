@@ -14,7 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/registerclient', function () {
+    return view('auth/registerclient');
+});
+Route::post('/loginclient','LoginClientController@loginclient')->name('loginclient');
 
 Route::get('/fitness', function () {
     return view('fitnessabout');

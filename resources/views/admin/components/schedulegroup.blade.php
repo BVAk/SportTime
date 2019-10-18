@@ -136,6 +136,7 @@
         center: 'title',
       },
       minTime: "09:00:00",
+      defaultDate: '2019-10-06',
       maxTime:"23:00:00",
       editable: true,
       droppable: true, // this allows things to be dropped onto the calendar

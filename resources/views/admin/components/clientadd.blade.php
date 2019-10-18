@@ -2,8 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-    <form role="form" class="col-md-12 go-right" action="{{ url('/admin/insertclient') }}" method="post"
-          enctype="multipart/form-data">
+    <form role="form" class="col-md-12 go-right" action="{{ url('/admin/insertclient') }}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         <label>Створення нового клієнта</label>
         <div class="form-group">
@@ -21,8 +20,7 @@
 
         <div class="form-group">
             <label for="phone">Телефон</label>
-            <input id="phone" name="phone" type="text" class="form-control" value=""
-                   required>
+            <input id="phone" name="phone" type="text" class="form-control" value="" required>
 
         </div>
 
