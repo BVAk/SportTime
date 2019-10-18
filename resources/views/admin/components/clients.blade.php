@@ -85,6 +85,7 @@
                             <th>ФІО</th>
                             <th>Пошта</th>
                             <th>Мобільний зв'язок</th>
+                            <th>Картка</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -94,6 +95,7 @@
                                 <td> {{$user->name}}</td>
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->phone}}</td>
+                                <td>{{$user->card}}</td>
                                 <td><a href="editprofile/{{$user->id}}">
                                         <button type="button" class="btn btn-warning">Редагувати</button>
                                     </a></td>
