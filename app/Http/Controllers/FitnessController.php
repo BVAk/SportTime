@@ -20,7 +20,9 @@ class FitnessController extends Controller
     public function fitnessabout()
     {
 $trainings = DB::table('trainings')->get();
-return view('fitnessabout', compact('trainings'));
+$groupschedule = DB::table('groupshedule')->join('trainings','groupshedule.train_id','=','trainings.id')->where('type','!=','дитячі')->where('type','!=','')->get();
+       
+return view('fitnessabout', compact('trainings'))->with('groupschedule',$groupschedule);
 
 }
 }
