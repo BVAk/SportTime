@@ -19,9 +19,7 @@ Route::get('/registerclient', function () {
 });
 Route::post('/loginclient','LoginClientController@loginclient')->name('loginclient');
 
-Route::get('/fitness', function () {
-    return view('fitnessabout');
-});
+Route::get('/fitness', 'FitnessController@fitnessabout');
 
 Auth::routes();
 
