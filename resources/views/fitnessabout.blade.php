@@ -16,9 +16,58 @@
   <link href="{{ asset('css/aos.css') }}" rel="stylesheet">
   <link href="{{ asset('css/welcome.css') }}" rel="stylesheet">
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="/css/app.css">
+  
+<link href="{{asset('packages/core/main.css')}}" rel="stylesheet"/>
+<link href="{{asset('packages/daygrid/main.css')}}" rel="stylesheet" />
+<link href="{{asset('packages/timegrid/main.css')}}" rel="stylesheet" />
+<link href="{{asset('packages/list/main.css')}}" rel="stylesheet" />
 
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
+  <style>
+#wrap {
+    width: 1100px;
+    margin: 0 auto;
+  }
 
+  #external-events {
+    float: left;
+    width: 150px;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    background: #eee;
+    text-align: left;
+  }
+
+  #external-events h4 {
+    font-size: 16px;
+    margin-top: 0;
+    padding-top: 1em;
+  }
+
+  #external-events .fc-event {
+    margin: 10px 0;
+    cursor: pointer;
+  }
+
+  #external-events p {
+    margin: 1.5em 0;
+    font-size: 11px;
+    color: #666;
+  }
+
+  #external-events p input {
+    margin: 0;
+    vertical-align: middle;
+  }
+
+  #calendar {
+    float: right;
+    width: 900px;
+  }
+
+</style>
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -114,10 +163,7 @@
                               
             </div>
             <div class="col-md-6 ml-auto">
-              <div class="white-dots">
-                <img src="images/img_2.jpg" alt="" class="img-fluid">
-              </div>
-            </div>
+             </div>
           </div>
         </div>
       </div>
@@ -126,10 +172,6 @@
 
     <div class="site-section">
       <div class="container">
-
-
-
-
         <div class="row">
           @foreach ($trainings as $trainings)
           <div class="col-md-6 col-lg-4 mb-4">
@@ -165,28 +207,25 @@
 
 
     <div class="site-section">
-      <div class="container">
-        
-      <div class="row">
-        <table>
-          <caption>Розклад групових тренувань </caption>
-          <thead>
-            <tr> @foreach($groupschedule as $groupschedule)
-              <th>{{$groupschedule->start}}</th>
-              @endforeach
-</tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-      </div>
+      <div class="container">  
+      
+       
+      <div class="row justify-content-center text-center">
+      <h1>Групові заняття </h1>
+      <div id='wrap'> 
+  <div id='external-events-list'>
+  </div>
+<form >
+<div id='calendar'>
+</div>
+<div class="form-group"></div>
+</form>
+<div style='clear:both'></div>
+</div>
       </div>
     </div>
-
-
-
-
-  </div>
+</div>
+  
 
 
   <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
@@ -203,7 +242,63 @@
   <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
   <script src="{{ asset('js/aos.js') }}"></script>
   <script src="{{ asset('js/main.js') }}"></script>
+  <script src="{{asset('packages/core/main.js')}}"></script>
+<script src="{{asset('packages/interaction/main.js')}}"></script>
+<script src="{{asset('packages/daygrid/main.js')}}"></script>
+<script src="{{asset('packages/timegrid/main.js')}}"></script>
+<script src="{{asset('packages/list/main.js')}}"></script>
 
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var Calendar = FullCalendar.Calendar;
+    var Draggable = FullCalendarInteraction.Draggable
+
+    /* initialize the external events
+    -----------------------------------------------------------------*/
+
+    var containerEl = document.getElementById('external-events-list');
+    new Draggable(containerEl, {
+      itemSelector: '.fc-event',
+      eventData: function(eventEl) {
+        return {
+          title: eventEl.innerText.trim()
+        }
+      }
+    });
+
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new Calendar(calendarEl, {
+      plugins: [ 'interaction', 'timeGridWeek', 'timeGrid', 'list' ],
+      header: {
+        left:'',
+        right:'',
+        center: 'title',
+      },
+      minTime: "09:00:00",
+      defaultDate: '2019-10-06',
+      maxTime:"22:00:00",
+      editable: false,
+      droppable: true, // this allows things to be dropped onto the calendar
+    eventSources:[ {events: [
+      @foreach ($groupschedule as $groupschedule){
+    
+      id:'{{$groupschedule->id}}',
+      title  : '{{$groupschedule->name}}',
+      start  : '{{$groupschedule->start}}',
+      end:'{{$groupschedule->end}}',
+      allDay : false
+    },
+    @endforeach
+  ],
+  color: 'greenyellow',     // an option!
+      textColor: 'black' // an option!
+    }],
+    });
+    calendar.render();
+  });
+  </script>
 
 
 </body>
