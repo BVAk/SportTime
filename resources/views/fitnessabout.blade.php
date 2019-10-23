@@ -30,6 +30,15 @@
     width: 1100px;
     margin: 0 auto;
   }
+  .text-block {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: black;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+}
 
   #external-events {
     float: left;
@@ -176,8 +185,12 @@
           @foreach ($trainings as $trainings)
           <div class="col-md-6 col-lg-4 mb-4">
             <div class="news-1" style="background-image:url('images/trainings/{{$trainings->name}}.png')">
-              <div class="text">
-                <h3>{{$trainings->name}}</h3>
+            <div class="text-block">
+    <h4>{{$trainings->name}}</h4>
+  </div>
+            
+            <div class="text">
+                <h3 style="visibility:visible;">{{$trainings->name}}</h3>
                 <span class="category d-block mb-3">{{$trainings->type}}</span>
                 <p class="mb-4">{{$trainings->description}}</p>
                 <a href="#" class="d-block arrow-wrap"><span class="icon-arrow_forward"></span></a>
