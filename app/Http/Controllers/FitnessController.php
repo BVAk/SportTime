@@ -19,12 +19,13 @@ class FitnessController extends Controller
      */
     public function fitnessabout()
     {
-$trainings = DB::table('trainings')->where('type','!=','дитячі')->get();
+        $trainings = DB::table('trainings')->where('type','=','')->get();
+        $trainingsgroup = DB::table('trainings')->where('type','!=','дитячі')->where('type','!=','')->get();
 $trainingschild = DB::table('trainings')->where('type','=','дитячі')->get();
 $groupschedule = DB::table('groupshedule')->join('trainings','groupshedule.train_id','=','trainings.id')->where('type','!=','дитячі')->where('type','!=','')->get();
 $childschedule = DB::table('groupshedule')->join('trainings','groupshedule.train_id','=','trainings.id')->where('type','=','дитячі')->get();
        
-return view('fitnessabout', compact('trainings'),['groupschedule'=>$groupschedule,'childschedule' => $childschedule,'trainingschild'=>$trainingschild]);
+return view('fitnessabout', compact('trainings'),['groupschedule'=>$groupschedule,'childschedule' => $childschedule,'trainingschild'=>$trainingschild,'trainingsgroup'=>$trainingsgroup]);
 
 }
 }

@@ -182,11 +182,11 @@
     <div class="site-section">
       <div class="container">
       <div class="row justify-content-center text-center">
-      <h1 class="mb-3"><b>Групові заняття </b></h1>
+      <h1 class="mb-3"><b>Індивідуальні заняття </b></h1>
       </div>
         <div class="row">
           @foreach ($trainings as $trainings)
-          <div class="col-md-6 col-lg-4 mb-4">
+          <div class="col mb-4">
             <div class="news-1" style="background-image:url('images/trainings/{{$trainings->name}}.png')">
             <div class="text-block">
     <h4>{{$trainings->name}}</h4>
@@ -196,6 +196,34 @@
                 <h3 style="visibility:visible;">{{$trainings->name}}</h3>
                 <span class="category d-block mb-3">{{$trainings->type}}</span>
                 <p class="mb-4">{{$trainings->description}}</p>
+                <a href="#" class="d-block arrow-wrap"><span class="icon-arrow_forward"></span></a>
+              </div>
+            </div>
+
+          </div>
+          @endforeach
+
+        </div>
+      </div>
+    </div>
+    
+    <div class="site-section">
+      <div class="container">
+      <div class="row justify-content-center text-center">
+      <h1 class="mb-3"><b>Групові заняття </b></h1>
+      </div>
+        <div class="row">
+          @foreach ($trainingsgroup as $trainingsgroup)
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="news-1" style="background-image:url('images/trainings/{{$trainingsgroup->name}}.png')">
+            <div class="text-block">
+    <h4>{{$trainingsgroup->name}}</h4>
+  </div>
+            
+            <div class="text">
+                <h3 style="visibility:visible;">{{$trainingsgroup->name}}</h3>
+                <span class="category d-block mb-3">{{$trainingsgroup->type}}</span>
+                <p class="mb-4">{{$trainingsgroup->description}}</p>
                 <a href="#" class="d-block arrow-wrap"><span class="icon-arrow_forward"></span></a>
               </div>
             </div>

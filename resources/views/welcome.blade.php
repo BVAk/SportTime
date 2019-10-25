@@ -190,7 +190,7 @@
             <div class="d-flex align-items-center counter">
               <span class="icon-building-o wrap-icon mr-3"></span>
               <div class="text">
-                <span class="d-block number">10</span>
+                <span class="d-block number">більше 20</span>
                 <span class="caption">тренерів</span>
               </div>
             </div>
@@ -199,7 +199,7 @@
             <div class="d-flex align-items-center counter">
               <span class="icon-home2 wrap-icon mr-3"></span>
               <div class="text">
-                <span class="d-block number">15</span>
+                <span class="d-block number">17</span>
                 <span class="caption">різновидів тренувань</span>
               </div>
             </div>
