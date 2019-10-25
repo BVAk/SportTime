@@ -208,7 +208,7 @@
             <div class="d-flex align-items-center counter">
               <span class="icon-code wrap-icon mr-3"></span>
               <div class="text">
-                <span class="d-block number">4</span>
+                <span class="d-block number">3</span>
                 <span class="caption">великих залів</span>
               </div>
             </div>

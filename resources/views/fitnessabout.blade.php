@@ -181,6 +181,9 @@
 
     <div class="site-section">
       <div class="container">
+      <div class="row justify-content-center text-center">
+      <h1 class="mb-3"><b>Групові заняття </b></h1>
+      </div>
         <div class="row">
           @foreach ($trainings as $trainings)
           <div class="col-md-6 col-lg-4 mb-4">
@@ -202,8 +205,22 @@
 
         </div>
       </div>
+      <div class="container">  
+      <div class="row justify-content-center text-center">
+      <h1 class="mb-3"><b>Розклад групових тренувань</b></h1>
+      <div id='wrap'> 
+  <div id='external-events-list'>
+  </div>
+<form >
+<div id='calendar-group'>
+</div>
+<div class="form-group"></div>
+</form>
+<div style='clear:both'></div>
+</div>
+      </div>
     </div>
-
+</div>
 
 
     <div class="site-section section-3" data-stellar-background-ratio="0.5" style="background-image: url('images/hero_2.jpg');">
@@ -219,17 +236,44 @@
     </div>
 
 
-    <div class="site-section">
-      <div class="container">  
-      
-       
+
+
+
+<div class="site-section">
+      <div class="container">
       <div class="row justify-content-center text-center">
-      <h1>Групові заняття </h1>
+      <h1 class="mb-3"><b>Заняття для дітей</b></h1>
+      </div>
+        <div class="row">
+          @foreach ($trainingschild as $trainingschild)
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="news-1" style="background-image:url('images/trainings/{{$trainingschild->name}}.png')">
+            <div class="text-block">
+    <h4>{{$trainingschild->name}}</h4>
+  </div>
+            
+            <div class="text">
+                <h3 style="visibility:visible;">{{$trainingschild->name}}</h3>
+                <span class="category d-block mb-3">{{$trainingschild->type}}</span>
+                <p class="mb-4">{{$trainingschild->description}}</p>
+                <a href="#" class="d-block arrow-wrap"><span class="icon-arrow_forward"></span></a>
+              </div>
+            </div>
+
+          </div>
+          @endforeach
+
+        </div>
+      </div>
+      
+      <div class="row justify-content-center text-center">
+      <div class="container">  
+      <h1 class="mb-3"><b>Розклад тренувань для дітей</b></h1>
       <div id='wrap'> 
   <div id='external-events-list'>
   </div>
 <form >
-<div id='calendar'>
+<div id='calendar-child'>
 </div>
 <div class="form-group"></div>
 </form>
@@ -238,6 +282,10 @@
       </div>
     </div>
 </div>
+
+  </div>
+  
+  
   
 
 
@@ -281,7 +329,7 @@
       }
     });
 
-    var calendarEl = document.getElementById('calendar');
+    var calendarEl = document.getElementById('calendar-group');
     var calendar = new Calendar(calendarEl, {
       plugins: [ 'interaction', 'timeGridWeek', 'timeGrid', 'list' ],
       header: {
@@ -301,6 +349,65 @@
       title  : '{{$groupschedule->name}}',
       start  : '{{$groupschedule->start}}',
       end:'{{$groupschedule->end}}',
+      allDay : false
+    },
+
+    @endforeach
+  ],
+  eventClick: function(info) {
+    alert('Event: ' + info.event.title);
+    alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+    alert('View: ' + info.view.type);
+
+    // change the border color just for fun
+    info.el.style.borderColor = 'red';
+  },
+
+  color: 'greenyellow',     // an option!
+      textColor: 'black' // an option!
+    }],
+    });
+    calendar.render();
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+
+    var Calendar = FullCalendar.Calendar;
+    var Draggable = FullCalendarInteraction.Draggable
+
+    /* initialize the external events
+    -----------------------------------------------------------------*/
+
+    var containerEl = document.getElementById('external-events-list');
+    new Draggable(containerEl, {
+      itemSelector: '.fc-event',
+      eventData: function(eventEl) {
+        return {
+          title: eventEl.innerText.trim()
+        }
+      }
+    });
+
+    var calendarEl = document.getElementById('calendar-child');
+    var calendar = new Calendar(calendarEl, {
+      plugins: [ 'interaction', 'timeGridWeek', 'timeGrid', 'list' ],
+      header: {
+        left:'',
+        right:'',
+        center: 'title',
+      },
+      minTime: "09:00:00",
+      defaultDate: '2019-10-06',
+      maxTime:"22:00:00",
+      editable: false,
+      droppable: true, // this allows things to be dropped onto the calendar
+    eventSources:[ {events: [
+      @foreach ($childschedule as $childschedule){
+    
+      id:'{{$childschedule->id}}',
+      title  : '{{$childschedule->name}}',
+      start  : '{{$childschedule->start}}',
+      end:'{{$childschedule->end}}',
       allDay : false
     },
 
