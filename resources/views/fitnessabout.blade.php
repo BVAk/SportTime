@@ -16,7 +16,7 @@
   <link href="{{ asset('css/aos.css') }}" rel="stylesheet">
   <link href="{{ asset('css/welcome.css') }}" rel="stylesheet">
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-  <link rel="stylesheet" href="/css/app.css">
+  
   
 <link href="{{asset('packages/core/main.css')}}" rel="stylesheet"/>
 <link href="{{asset('packages/daygrid/main.css')}}" rel="stylesheet" />
@@ -303,8 +303,18 @@
       end:'{{$groupschedule->end}}',
       allDay : false
     },
+
     @endforeach
   ],
+  eventClick: function(info) {
+    alert('Event: ' + info.event.title);
+    alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+    alert('View: ' + info.view.type);
+
+    // change the border color just for fun
+    info.el.style.borderColor = 'red';
+  },
+
   color: 'greenyellow',     // an option!
       textColor: 'black' // an option!
     }],
