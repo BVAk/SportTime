@@ -28,5 +28,10 @@ $trainergym=DB::table('traintrain')->join('trainers','traintrain.trainer_id','='
 return view('fitnessabout', compact('trainings'),['trainergym'=>$trainergym,'groupschedule'=>$groupschedule,'childschedule' => $childschedule,'trainingschild'=>$trainingschild,'trainingsgroup'=>$trainingsgroup]);
 
 }
+
+public function trainer(){
+    $trainergym=DB::table('traintrain')->join('trainers','traintrain.trainer_id','=','trainers.id')->join('trainings','traintrain.training_id','=','trainings.id')->where('training_id','=','91' ||'92')->get();
+    return view('trainers', compact('trainergym'));
+}
 }
 ?>

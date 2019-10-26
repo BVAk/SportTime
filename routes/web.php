@@ -20,6 +20,7 @@ Route::get('/registerclient', function () {
 Route::post('/loginclient','LoginClientController@loginclient')->name('loginclient');
 
 Route::get('/fitness', 'FitnessController@fitnessabout');
+Route::get('/fitness/trainers', 'FitnessController@trainer');
 
 Auth::routes();
 

@@ -239,11 +239,11 @@
     </div>
     <div class="row mt-5">
           <div class="col-lg-12 text-center">
-            <a href="#" class="btn btn-primary">Зареєструватися до тренера</a>
+            <a href="fitness/trainers" class="btn btn-primary">Зареєструватися до тренера</a>
           </div>
         </div>
     <div class="site-section">
-      
+
       <div class="container">
       <div class="row justify-content-center text-center">
       <h1 class="mb-3"><b>Групові заняття </b></h1>

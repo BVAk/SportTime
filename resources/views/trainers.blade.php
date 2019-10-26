@@ -111,7 +111,7 @@
     </header>
 
     <div class="ftco-blocks-cover-1">
-      <div class="site-section-cover overlay" data-stellar-background-ratio="0.5" style="background-image: url('images/hero_1.jpg')">
+      <div class="site-section-cover overlay" data-stellar-background-ratio="0.5" style="background-image: url('/images/hero_1.jpg')">
         <div class="container">
           <div class="row align-items-center ">
             <div class="col-md-5 mt-5 pt-5">
@@ -131,12 +131,32 @@
       <div class="row justify-content-center text-center">
       <h1 class="mb-3"><b>Обрати тренера</b></h1>
 
+      <div class="row">
+          @foreach ($trainergym as $trainergym)
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="news-1" style="background-image:url({{asset($trainergym->image)}})">
+            <div class="text-block">
+    <h4>{{$trainergym->name}}</h4>
+    <!-- имя тренера -->
+  </div>
+            
+            <div class="text">
+                <h3 style="visibility:visible;">{{$trainergym->name}}</h3>
+                
+                <span class="category d-block mb-3">{{$trainergym->type}}</span>
+                <p class="mb-4">{{date('Y-m-d')-$trainergym->start}} років стажу</p>
+                <a href="#" class="d-block arrow-wrap"><span class="icon-arrow_forward"></span></a>
+              </div>
+            </div>
+
+          </div>
+          @endforeach
+
+        </div>
       </div>    
     </div>
   </div>
-          @endforeach
-
-          
+         
         </div>
          
       </div>
@@ -171,125 +191,5 @@
 <script src="{{asset('packages/list/main.js')}}"></script>
 
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script>
-
-  document.addEventListener('DOMContentLoaded', function() {
-    var Calendar = FullCalendar.Calendar;
-    var Draggable = FullCalendarInteraction.Draggable
-
-    /* initialize the external events
-    -----------------------------------------------------------------*/
-
-    var containerEl = document.getElementById('external-events-list');
-    new Draggable(containerEl, {
-      itemSelector: '.fc-event',
-      eventData: function(eventEl) {
-        return {
-          title: eventEl.innerText.trim()
-        }
-      }
-    });
-
-    var calendarEl = document.getElementById('calendar-group');
-    var calendar = new Calendar(calendarEl, {
-      plugins: [ 'interaction', 'timeGridWeek', 'timeGrid', 'list' ],
-      header: {
-        left:'',
-        right:'',
-        center: 'title',
-      },
-      minTime: "09:00:00",
-      defaultDate: '2019-10-06',
-      maxTime:"22:00:00",
-      editable: false,
-      droppable: true, // this allows things to be dropped onto the calendar
-    eventSources:[ {events: [
-      @foreach ($groupschedule as $groupschedule){
-    
-      id:'{{$groupschedule->id}}',
-      title  : '{{$groupschedule->name}}',
-      start  : '{{$groupschedule->start}}',
-      end:'{{$groupschedule->end}}',
-      allDay : false
-    },
-
-    @endforeach
-  ],
-  eventClick: function(info) {
-    alert('Event: ' + info.event.title);
-    alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-    alert('View: ' + info.view.type);
-
-    // change the border color just for fun
-    info.el.style.borderColor = 'red';
-  },
-
-  color: 'greenyellow',     // an option!
-      textColor: 'black' // an option!
-    }],
-    });
-    calendar.render();
-  });
-
-  document.addEventListener('DOMContentLoaded', function() {
-
-    var Calendar = FullCalendar.Calendar;
-    var Draggable = FullCalendarInteraction.Draggable
-
-    /* initialize the external events
-    -----------------------------------------------------------------*/
-
-    var containerEl = document.getElementById('external-events-list');
-    new Draggable(containerEl, {
-      itemSelector: '.fc-event',
-      eventData: function(eventEl) {
-        return {
-          title: eventEl.innerText.trim()
-        }
-      }
-    });
-
-    var calendarEl = document.getElementById('calendar-child');
-    var calendar = new Calendar(calendarEl, {
-      plugins: [ 'interaction', 'timeGridWeek', 'timeGrid', 'list' ],
-      header: {
-        left:'',
-        right:'',
-        center: 'title',
-      },
-      minTime: "09:00:00",
-      defaultDate: '2019-10-06',
-      maxTime:"22:00:00",
-      editable: false,
-      droppable: true, // this allows things to be dropped onto the calendar
-    eventSources:[ {events: [
-      @foreach ($childschedule as $childschedule){
-    
-      id:'{{$childschedule->id}}',
-      title  : '{{$childschedule->name}}',
-      start  : '{{$childschedule->start}}',
-      end:'{{$childschedule->end}}',
-      allDay : false
-    },
-
-    @endforeach
-  ],
-  eventClick: function(info) {
-    alert('Event: ' + info.event.title);
-    alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-    alert('View: ' + info.view.type);
-
-    // change the border color just for fun
-    info.el.style.borderColor = 'red';
-  },
-
-  color: 'greenyellow',     // an option!
-      textColor: 'black' // an option!
-    }],
-    });
-    calendar.render();
-  });
-  </script>
-
 
 </body>
