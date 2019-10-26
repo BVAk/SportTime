@@ -24,8 +24,8 @@ class FitnessController extends Controller
 $trainingschild = DB::table('trainings')->where('type','=','дитячі')->get();
 $groupschedule = DB::table('groupshedule')->join('trainings','groupshedule.train_id','=','trainings.id')->where('type','!=','дитячі')->where('type','!=','')->get();
 $childschedule = DB::table('groupshedule')->join('trainings','groupshedule.train_id','=','trainings.id')->where('type','=','дитячі')->get();
-       
-return view('fitnessabout', compact('trainings'),['groupschedule'=>$groupschedule,'childschedule' => $childschedule,'trainingschild'=>$trainingschild,'trainingsgroup'=>$trainingsgroup]);
+$trainergym=DB::table('traintrain')->join('trainers','traintrain.trainer_id','=','trainers.id')->where('training_id','=','91')->get();
+return view('fitnessabout', compact('trainings'),['trainergym'=>$trainergym,'groupschedule'=>$groupschedule,'childschedule' => $childschedule,'trainingschild'=>$trainingschild,'trainingsgroup'=>$trainingsgroup]);
 
 }
 }
