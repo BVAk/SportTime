@@ -18,12 +18,23 @@
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
   
   
-<link href="{{asset('packages/core/main.css')}}" rel="stylesheet"/>
-<link href="{{asset('packages/daygrid/main.css')}}" rel="stylesheet" />
-<link href="{{asset('packages/timegrid/main.css')}}" rel="stylesheet" />
-<link href="{{asset('packages/list/main.css')}}" rel="stylesheet" />
-
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <style>
+      #wrap {
+    width: 50%;
+    margin: 0 auto;
+  }
+  .text-block {
+  position: static;
+  bottom: 20px;
+  right: 20px;
+  background-color: black;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+      </style>
+
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -130,28 +141,22 @@
       <div class="container">
       <div class="row justify-content-center text-center">
       <h1 class="mb-3"><b>Обрати тренера</b></h1>
-
       <div class="row">
           @foreach ($trainergym as $trainergym)
-          <div class="col-md-6 col-lg-4 mb-4">
+          <div class="col-sm col-md-4">
             <div class="news-1" style="background-image:url({{asset($trainergym->image)}})">
             <div class="text-block">
-    <h4>{{$trainergym->name}}</h4>
-    <!-- имя тренера -->
-  </div>
-            
+    <h4>{{$trainergym->trainer_name}}</h4>
+  </div>  
             <div class="text">
-                <h3 style="visibility:visible;">{{$trainergym->name}}</h3>
-                
-                <span class="category d-block mb-3">{{$trainergym->type}}</span>
+                <h3 style="visibility:visible;">{{$trainergym->trainer_name}}</h3>       
+                <span class="category d-block mb-3">{{$trainergym->training_name}}</span>
                 <p class="mb-4">{{date('Y-m-d')-$trainergym->start}} років стажу</p>
                 <a href="#" class="d-block arrow-wrap"><span class="icon-arrow_forward"></span></a>
               </div>
             </div>
-
           </div>
           @endforeach
-
         </div>
       </div>    
     </div>

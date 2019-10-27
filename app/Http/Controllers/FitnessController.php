@@ -30,7 +30,7 @@ return view('fitnessabout', compact('trainings'),['trainergym'=>$trainergym,'gro
 }
 
 public function trainer(){
-    $trainergym=DB::table('traintrain')->join('trainers','traintrain.trainer_id','=','trainers.id')->join('trainings','traintrain.training_id','=','trainings.id')->where('training_id','=','91' ||'92')->get();
+    $trainergym=DB::table('traintrain')->join('trainers','traintrain.trainer_id','=','trainers.id')->join('trainings','traintrain.training_id','=','trainings.id')->where('training_id','=','91')->orwhere('training_id','=','92')->select('trainers.name as trainer_name','start','image', 'trainings.name as training_name')->get();
     return view('trainers', compact('trainergym'));
 }
 }
