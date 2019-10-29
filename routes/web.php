@@ -17,7 +17,7 @@ Route::get('/', function () {
 Route::get('/registerclient', function () {
     return view('auth/registerclient');
 });
-Route::post('/loginclient','LoginClientController@loginclient')->name('loginclient');
+Route::post('/loginclient', 'LoginClientController@loginclient')->name('loginclient');
 
 Route::get('/fitness', 'FitnessController@fitnessabout');
 Route::get('/fitness/trainers', 'FitnessController@trainer');
@@ -25,6 +25,8 @@ Route::get('/fitness/trainers', 'FitnessController@trainer');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/fitness/trainers/privatetrainer', 'FitnessController@insertprivate');
+
 
 
 Route::prefix('/admin')->group(function () {

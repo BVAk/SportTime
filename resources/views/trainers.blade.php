@@ -16,24 +16,25 @@
   <link href="{{ asset('css/aos.css') }}" rel="stylesheet">
   <link href="{{ asset('css/welcome.css') }}" rel="stylesheet">
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-  
-  
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <style>
-      #wrap {
-    width: 100px;
-    margin: 0 auto;
-  }
-  .text-block {
-  position: static;
-  bottom: 20px;
-  right: 20px;
-  background-color: black;
-  color: white;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-      </style>
+
+
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <style>
+    #wrap {
+      width: 100px;
+      margin: 0 auto;
+    }
+
+    .text-block {
+      position: static;
+      bottom: 20px;
+      right: 20px;
+      background-color: black;
+      color: white;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  </style>
 
 </head>
 
@@ -126,11 +127,11 @@
         <div class="container">
           <div class="row align-items-center ">
             <div class="col-md-5 mt-5 pt-5">
-              <h1 class="mb-3">Зареєструватися на індивідуальні тренування в Fitness Time  </ h1>
+              <h1 class="mb-3">Зареєструватися на індивідуальні тренування в Fitness Time </ h1>
                               
             </div>
             <div class="col-md-6 ml-auto">
-             </div>
+            </div>
           </div>
         </div>
       </div>
@@ -139,45 +140,77 @@
 
     <div class="site-section">
       <div class="container">
-      <div class="row justify-content-center text-center">
-      <h1 class="mb-3"><b>Обрати тренера</b></h1>
-      <div class="row">
-          @foreach ($trainergym as $trainergym)
-          <div class="col-md-6 col-lg-4 mb-4">
-            <div class="news-1" style="background-image:url({{asset($trainergym->image)}})">
-            <div class="text-block">
-    <h4>{{$trainergym->trainer_name}}</h4>
-  </div>  
-            <div class="text">
-                <h3 >{{$trainergym->trainer_name}}</h3>       
-                <span class="category d-block mb-3">{{$trainergym->training_name}}</span>
-                <p class="mb-4">{{date('Y-m-d')-$trainergym->start}} років стажу</p>
-                <a href="#" class="d-block arrow-wrap"><span class="icon-arrow_forward"></span></a>
+        <div class="row justify-content-center text-center">
+          <h1 class="mb-3"><b>Обрати тренера</b></h1>
+          <div class="row">
+            @foreach ($trainergym as $trainergym)
+            <div class="col-md-6 col-lg-4 mb-4">
+              <div class="news-1" style="background-image:url({{asset($trainergym->image)}})">
+                <div class="text-block">
+                  <h4>{{$trainergym->trainer_name}}</h4>
+                </div>
+                <div class="text">
+                  <h3>{{$trainergym->trainer_name}}</h3>
+                  <span class="category d-block mb-3">{{$trainergym->training_name}}</span>
+                  <p class="mb-4">{{date('Y-m-d')-$trainergym->start}} років стажу</p>
+                  <a href="#" class="d-block arrow-wrap"><span class="icon-arrow_forward"></span></a>
+                </div>
               </div>
             </div>
+            @endforeach
+
+            <form role="form" class="col-md-6 col-lg-4 mb-4 go-right" action="{{ url('/fitness/trainers/privatetrainer') }}" method="post" enctype="multipart/form-data">
+              {{ csrf_field() }}
+              <div class="form-group">
+              <h2><b>Обрати тренера</b></h2>
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  
+                    <select id="select" name="trainings[]" class="selectpicker" style="font-size: 20px;" required>
+                      <option value=""> ---</option>
+                      @foreach ($trainergym2 as $training)
+                      <option value="{{$training->id}}"> {{$training->trainer_name}}</option>
+                      @endforeach
+                    </select>
+                  
+                </div>
+              </div>
+              </div>
+
+              <div class="form-group">
+                <h2><b>Обрати дату </b></h2>
+                <input id="datetrain" name="datetrain" type="date" class="form-control" value="" required>
+              </div>
+              <div class="form-group">
+                <h2><b> і час тренування</b></h2>
+                <input id="timetrain" name="timetrain" type="time" class="form-control" value="" required>
+
+              </div>
+
+              <div class="form-group">
+                <input class="btn btn-success center-block btn-lg" type="submit" value="Додати">
+              </div>
+
+
+            </form>
           </div>
-          @endforeach
-          <form>
-            
-          </form>
         </div>
-      </div>    
-    </div>
-  </div>
-
-
-         
-        </div>
-         
       </div>
     </div>
-  
+
 
 
   </div>
-  
-  
-  
+
+  </div>
+  </div>
+
+
+
+  </div>
+
+
+
 
 
   <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
@@ -195,11 +228,11 @@
   <script src="{{ asset('js/aos.js') }}"></script>
   <script src="{{ asset('js/main.js') }}"></script>
   <script src="{{asset('packages/core/main.js')}}"></script>
-<script src="{{asset('packages/interaction/main.js')}}"></script>
-<script src="{{asset('packages/daygrid/main.js')}}"></script>
-<script src="{{asset('packages/timegrid/main.js')}}"></script>
-<script src="{{asset('packages/list/main.js')}}"></script>
+  <script src="{{asset('packages/interaction/main.js')}}"></script>
+  <script src="{{asset('packages/daygrid/main.js')}}"></script>
+  <script src="{{asset('packages/timegrid/main.js')}}"></script>
+  <script src="{{asset('packages/list/main.js')}}"></script>
 
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 </body>
