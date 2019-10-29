@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <style>
       #wrap {
-    width: 50%;
+    width: 100px;
     margin: 0 auto;
   }
   .text-block {
@@ -143,13 +143,13 @@
       <h1 class="mb-3"><b>Обрати тренера</b></h1>
       <div class="row">
           @foreach ($trainergym as $trainergym)
-          <div class="col-sm col-md-4">
+          <div class="col-md-6 col-lg-4 mb-4">
             <div class="news-1" style="background-image:url({{asset($trainergym->image)}})">
             <div class="text-block">
     <h4>{{$trainergym->trainer_name}}</h4>
   </div>  
             <div class="text">
-                <h3 style="visibility:visible;">{{$trainergym->trainer_name}}</h3>       
+                <h3 >{{$trainergym->trainer_name}}</h3>       
                 <span class="category d-block mb-3">{{$trainergym->training_name}}</span>
                 <p class="mb-4">{{date('Y-m-d')-$trainergym->start}} років стажу</p>
                 <a href="#" class="d-block arrow-wrap"><span class="icon-arrow_forward"></span></a>

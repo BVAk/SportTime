@@ -179,7 +179,7 @@
 
     </div>
 
-    <div class="site-section">
+    <div class="site-section ">
       <div class="container">
       <div class="row justify-content-center text-center">
       <h1 class="mb-3"><b>Індивідуальні заняття </b></h1>
@@ -193,7 +193,7 @@
   </div>
             
             <div class="text">
-                <h3 style="visibility:visible;">{{$trainings->name}}</h3>
+                <h3>{{$trainings->name}}</h3>
                 <span class="category d-block mb-3">{{$trainings->type}}</span>
                 <p class="mb-4">{{$trainings->description}}</p>
                 <a href="#" class="d-block arrow-wrap"><span class="icon-arrow_forward"></span></a>
