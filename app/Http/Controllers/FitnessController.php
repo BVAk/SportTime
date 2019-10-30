@@ -53,7 +53,7 @@ class FitnessController extends Controller
                 $user = User::where('phone', '=', $usernon)->first()->id;
             } else {
                 User::insert(['name' => 'unknown ' + $usernon, 'email' => 'un' + $usernon + '@gmail.com', 'phone' => $usernon, 'created_at' => new \DateTime('now')]);
-                $user = User::where('phone', '=', '$usernon')->first()->id;
+                $user = User::where('phone', '=', $usernon)->first()->id;
             }
         } 
         DB::table('privateschedule')->insert(['trainer_id' => $trainer, 'training_id' => $training, 'user_id' => $user, 'date' => $datetrain]);
