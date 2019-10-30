@@ -4,9 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title>Fitness Time</title>
-        
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"> 
         <link href="{{ asset('css/bootstrap-datepicker.css') }}" rel="stylesheet">
         <link href="{{ asset('css/jquery.fancybox.min.css') }}" rel="stylesheet">
@@ -15,15 +13,10 @@
         <link href="{{ asset('css/aos.css') }}" rel="stylesheet">
         <link href="{{ asset('css/welcome.css') }}" rel="stylesheet">
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-
-
-
     </head>
     <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
-    
     <div class="site-wrap" id="home-section">
-
       <div class="site-mobile-menu site-navbar-target">
         <div class="site-mobile-menu-header">
           <div class="site-mobile-menu-close mt-3">

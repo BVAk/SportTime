@@ -158,60 +158,58 @@
               </div>
             </div>
             @endforeach
-
-            <form role="form" class="col-md-6 col-lg-4 mb-4 go-right" action="{{ url('/fitness/trainers/privatetrainer') }}" method="post" enctype="multipart/form-data">
-              {{ csrf_field() }}
-              <div class="form-group">
-              <h2><b>Обрати тренера</b></h2>
-              <div class="panel panel-default">
-                <div class="panel-body">
-                  
-                    <select id="select" name="trainings[]" class="selectpicker" style="font-size: 20px;" required>
-                      <option value=""> ---</option>
-                      @foreach ($trainergym2 as $training)
-                      <option value="{{$training->id}}"> {{$training->trainer_name}}</option>
-                      @endforeach
-                    </select>
-                  
-                </div>
-              </div>
-              </div>
-
-              <div class="form-group">
-                <h2><b>Обрати дату </b></h2>
-                <input id="datetrain" name="datetrain" type="date" class="form-control" value="" required>
-              </div>
-              <div class="form-group">
-                <h2><b> і час тренування</b></h2>
-                <input id="timetrain" name="timetrain" type="time" class="form-control" value="" required>
-
-              </div>
-
-              <div class="form-group">
-                <input class="btn btn-success center-block btn-lg" type="submit" value="Додати">
-              </div>
-
-
-            </form>
           </div>
         </div>
       </div>
     </div>
+    <div class="site-section section-3" data-stellar-background-ratio="0.5" style="background-image: url('images/hero_3.jpg');">
+      <div class="container">
+        <div class="row justify-content-center text-center">
+          <form role="form" class="col-md-6 col-lg-4 mb-4 go-right" action="{{ url('/fitness/trainers/privatetrainer') }}" method="post" enctype="multipart/form-data">
+            {{ csrf_field() }}
+            <div class="form-group">
+              <h2><b>Обрати тренера</b></h2>
+              <div class="panel panel-default">
+                <div class="panel-body">
+
+                  <select id="select" name="trainings[]" class="selectpicker" style="font-size: 20px;" required>
+                    <option value=""> ---</option>
+                    @foreach ($trainergym2 as $training)
+                    <option value="{{$training->id}}"> {{$training->trainer_name}}</option>
+                    @endforeach
+                  </select>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <h2><b>Обрати дату </b></h2>
+              <input id="datetrain" name="datetrain" type="date" class="form-control" value="" required>
+            </div>
+            <div class="form-group">
+              <h2><b> і час тренування</b></h2>
+              <input id="timetrain" name="timetrain" type="time" class="form-control" value="" required>
+
+            </div>
+            @guest
+            <div class="form-group">
+              <input id="usernon" name="usernon" type="text" class="form-control" value="" placeholder="+380_________" required>
+            </div>
+            @else
+            <input id="user" name="user" type="hidden" class="form-control" value="{{ Auth::user()->phone }}" required>
+            @endguest
+
+            <div class="form-group">
+              <input class="btn btn-success center-block btn-lg" type="submit" value="Зареєструвати індивідуальне тренування">
+            </div>
 
 
-
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
-
-  </div>
-  </div>
-
-
-
-  </div>
-
-
-
-
 
   <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
   <script src="{{ asset('js/jquery-migrate-3.0.0.js') }}"></script>
