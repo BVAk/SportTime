@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -33,7 +33,7 @@ class FitnessController extends Controller
     {
         $trainergym = DB::table('traintrain')->join('trainers', 'traintrain.trainer_id', '=', 'trainers.id')->join('trainings', 'traintrain.training_id', '=', 'trainings.id')->where('training_id', '=', '91')->orwhere('training_id', '=', '92')->select('trainers.id as id', 'trainers.name as trainer_name', 'start', 'image', 'trainings.name as training_name')->get();
         $trainergym2 = DB::table('traintrain')->join('trainers', 'traintrain.trainer_id', '=', 'trainers.id')->join('trainings', 'traintrain.training_id', '=', 'trainings.id')->where('training_id', '=', '91')->orwhere('training_id', '=', '92')->select('trainers.id as id', 'trainers.name as trainer_name', 'start', 'image', 'trainings.name as training_name')->get();
-        return view('trainers', compact('trainergym'),['trainergym2' => $trainergym2]);
+        return view('trainers', compact('trainergym'), ['trainergym2' => $trainergym2]);
     }
     /**
      * Get the list of the clients
@@ -43,21 +43,22 @@ class FitnessController extends Controller
      */
     public function insertprivate(Request $request)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'phone' => 'required|unique:trainers',
-            'start' => 'required',
-            'birth' => 'required'
-        ]);
+        $trainer = $request['trainer'];
+        $training = DB::table('traintrain')->where('trainer_id', '=', $trainer)->where('training_id', '=', '91')->orwhere('training_id', '=', '92')->first()->training_id;
+        $datetrain = $request['datetrain'];
+        $user = $request['user'];
+        $usernon = $request['usernon'];
+        if (empty($user)) {
+            if (User::where('phone', '=', $usernon)->exists()) {
+                $user = User::where('phone', '=', $usernon)->first()->id;
+            } else {
+                User::insert(['name' => 'unknown ' + $usernon, 'email' => 'un' + $usernon + '@gmail.com', 'phone' => $usernon, 'created_at' => new \DateTime('now')]);
+                $user = User::where('phone', '=', '$usernon')->first()->id;
+            }
+        } 
+        DB::table('privateschedule')->insert(['trainer_id' => $trainer, 'training_id' => $training, 'user_id' => $user, 'date' => $datetrain]);
 
-        if ($request->hasFile('photo')) $image = $this->uploadImage($request, 'photo', 'images/trainers/');
-        $request['image'] = isset($image) ? $image : null;
-        $trainer = Trainer::create($request->only(['name', 'birth', 'start', 'phone', 'image']));
 
-        $trainer->trainings()->sync($request->trainings);
-
-        return redirect('/admin/trainers');
-
-
+        return redirect('/');
     }
 }

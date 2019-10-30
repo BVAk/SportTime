@@ -172,11 +172,11 @@
               <div class="panel panel-default">
                 <div class="panel-body">
 
-                  <select id="select" name="trainings[]" class="selectpicker" style="font-size: 20px;" required>
+                  <select id="select" name="trainer" class="selectpicker" style="font-size: 20px;" required>
                     <option value=""> ---</option>
                     @foreach ($trainergym2 as $training)
                     <option value="{{$training->id}}"> {{$training->trainer_name}}</option>
-              
+                   
                     @endforeach
                   </select>
 
@@ -185,13 +185,8 @@
             </div>
 
             <div class="form-group">
-              <h2 class="text-white"><b>Обрати дату </b></h2>
-              <input id="datetrain" name="datetrain" type="date" class="form-control" value="" required>
-            </div>
-            <div class="form-group">
-              <h2 class="text-white"><b> і час тренування</b></h2>
-              <input id="timetrain" name="timetrain" type="time" class="form-control" value="" required>
-
+              <h2 class="text-white"><b>Обрати дату і час тренування</b></h2>
+              <input id="datetrain" name="datetrain" type="datetime-local" class="form-control" value="" required>
             </div>
            
             @guest
@@ -200,7 +195,7 @@
               <input id="usernon" name="usernon" type="text" class="form-control" value="" placeholder="+380_________" required>
             </div>
             @else
-            <input id="user" name="user" type="hidden" class="form-control" value="{{ Auth::user()->phone }}" required>
+            <input id="user" name="user" type="hidden" class="form-control" value="{{ Auth::user()->id }}" required>
             @endguest
 
             <div class="form-group">
