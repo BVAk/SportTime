@@ -162,13 +162,13 @@
         </div>
       </div>
     </div>
-    <div class="site-section section-3" data-stellar-background-ratio="0.5" style="background-image: url('images/hero_3.jpg');">
+    <div class="site-section section-3" data-stellar-background-ratio="0.5" style="background-image: url('/images/hero_3.jpg');">
       <div class="container">
         <div class="row justify-content-center text-center">
           <form role="form" class="col-md-6 col-lg-4 mb-4 go-right" action="{{ url('/fitness/trainers/privatetrainer') }}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="form-group">
-              <h2><b>Обрати тренера</b></h2>
+              <h2 class="text-white"><b>Обрати тренера</b></h2>
               <div class="panel panel-default">
                 <div class="panel-body">
 
@@ -176,6 +176,7 @@
                     <option value=""> ---</option>
                     @foreach ($trainergym2 as $training)
                     <option value="{{$training->id}}"> {{$training->trainer_name}}</option>
+              
                     @endforeach
                   </select>
 
@@ -184,16 +185,18 @@
             </div>
 
             <div class="form-group">
-              <h2><b>Обрати дату </b></h2>
+              <h2 class="text-white"><b>Обрати дату </b></h2>
               <input id="datetrain" name="datetrain" type="date" class="form-control" value="" required>
             </div>
             <div class="form-group">
-              <h2><b> і час тренування</b></h2>
+              <h2 class="text-white"><b> і час тренування</b></h2>
               <input id="timetrain" name="timetrain" type="time" class="form-control" value="" required>
 
             </div>
+           
             @guest
             <div class="form-group">
+            <h2 class="text-white"><b>Мобільний номер телефона </b></h2>
               <input id="usernon" name="usernon" type="text" class="form-control" value="" placeholder="+380_________" required>
             </div>
             @else
@@ -201,7 +204,7 @@
             @endguest
 
             <div class="form-group">
-              <input class="btn btn-success center-block btn-lg" type="submit" value="Зареєструвати індивідуальне тренування">
+              <input class="btn btn-success center-block btn-lg" type="submit" value="Зареєструвати тренування">
             </div>
 
 

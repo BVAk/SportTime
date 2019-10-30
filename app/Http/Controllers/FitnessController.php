@@ -42,5 +42,22 @@ class FitnessController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function insertprivate(Request $request)
-    { }
+    {
+        $request->validate([
+            'name' => 'required|max:255',
+            'phone' => 'required|unique:trainers',
+            'start' => 'required',
+            'birth' => 'required'
+        ]);
+
+        if ($request->hasFile('photo')) $image = $this->uploadImage($request, 'photo', 'images/trainers/');
+        $request['image'] = isset($image) ? $image : null;
+        $trainer = Trainer::create($request->only(['name', 'birth', 'start', 'phone', 'image']));
+
+        $trainer->trainings()->sync($request->trainings);
+
+        return redirect('/admin/trainers');
+
+
+    }
 }
