@@ -153,6 +153,17 @@ class AdminController extends Controller
           
         
         }
+
+            /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\User  $id
+     * @return \Illuminate\Http\Response
+     */
+        public function profileClients(id $id){
+
+
+        }
     }
 
 

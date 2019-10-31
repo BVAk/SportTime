@@ -92,7 +92,7 @@
                         <tbody>
                         @foreach($users as $user)
                             <tr>
-                                <td> {{$user->name}}</td>
+                                <td><a href="/admin/clients/{{$user->id}}"> {{$user->name}}</a></td>
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->phone}}</td>
                                 <td>{{$user->card}}</td>
