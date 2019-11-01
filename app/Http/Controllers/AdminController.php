@@ -24,7 +24,7 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-         $this->middleware('auth:admin');
+        $this->middleware('auth:admin');
     }
 
     /**
@@ -42,7 +42,6 @@ class AdminController extends Controller
             ->responsive(false)
             ->groupByMonth(date('Y'), true);
         return view('admin.welcomeadmin', compact('chart'));
-
     }
 
     /**
@@ -86,8 +85,6 @@ class AdminController extends Controller
         $trainer->trainings()->sync($request->trainings);
 
         return redirect('/admin/trainers');
-
-
     }
 
     /**
@@ -106,11 +103,12 @@ class AdminController extends Controller
         ]);
 
         return $request->file($filename)->store(
-            $path, 'public'
+            $path,
+            'public'
         );
     }
 
-    
+
     public function addClients()
     {
         $users = User::all();
@@ -124,47 +122,42 @@ class AdminController extends Controller
             'email' => 'required|unique:users',
             'phone' => 'required|unique:users',
             'card' => 'required',
-            'created_at'=>'required',
+            'created_at' => 'required',
         ]);
 
         $trainer = User::create($request->only(['name', 'email', 'phone', 'card', 'created_at']));
-        
+
         return redirect('/admin/clients');
-
-
     }
 
 
     public function schedulegroup()
     {
-        $training = Training::where('type','!=','дитячі')->where('type','!=','')->get();
-        $groupschedule = DB::table('groupshedule')->join('trainings','groupshedule.train_id','=','trainings.id')->where('type','!=','дитячі')->where('type','!=','')->get();
-        return view('admin.components.schedulegroup',compact('training'))->with('groupschedule',$groupschedule);
-
+        $training = Training::where('type', '!=', 'дитячі')->where('type', '!=', '')->get();
+        $groupschedule = DB::table('groupshedule')->join('trainings', 'groupshedule.train_id', '=', 'trainings.id')->where('type', '!=', 'дитячі')->where('type', '!=', '')->get();
+        return view('admin.components.schedulegroup', compact('training'))->with('groupschedule', $groupschedule);
     }
 
-    public function schedulegroupupdate(Request $request){
-       
-        $id=$request['Event'][0];
-        $start=$request['Event'][1];
-        $end=$request['Event'][2];
-        
-        Training::where('id','=',$id)->update('start'->$start,'end'->$end);        
-          
-        
-        }
+    public function schedulegroupupdate(Request $request)
+    {
 
-            /**
+        $id = $request['Event'][0];
+        $start = $request['Event'][1];
+        $end = $request['Event'][2];
+
+        Training::where('id', '=', $id)->update('start'->$start, 'end'->$end);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\User  $id
      * @return \Illuminate\Http\Response
      */
-        public function profileClients(id $id){
-
-
-        }
+    public function profileClients(User $id)
+    {
+        $users = User::where('id', '=', $id->id)->get();
+        $trainergym2 = DB::table('traintrain')->join('trainers', 'traintrain.trainer_id', '=', 'trainers.id')->join('trainings', 'traintrain.training_id', '=', 'trainings.id')->where('training_id', '=', '91')->orwhere('training_id', '=', '92')->select('trainers.id as id', 'trainers.name as trainer_name', 'start', 'image', 'trainings.name as training_name')->get();
+        return view('admin.components.clientprofile', compact('users', 'trainergym2'));
     }
-
-
-
+}
