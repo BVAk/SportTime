@@ -64,4 +64,9 @@ class FitnessController extends Controller
 
         return back();
     }
+
+    public function price(){
+        $price=DB::table('abonnements')->get();
+        return view ('price',compact('price'));
+    }
 }

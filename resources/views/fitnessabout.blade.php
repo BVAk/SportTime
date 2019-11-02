@@ -123,8 +123,8 @@
 
           <nav class="site-navigation text-left mr-auto d-none d-lg-block" role="navigation">
             <ul class="site-menu main-menu js-clone-nav mr-auto ">
-              <li class="active"><a href="/" class="nav-link">Головна</a></li>
-              <li><a href="/fitness" class="nav-link">Послуги</a></li>
+              <li><a href="/" class="nav-link">Головна</a></li>
+              <li class="active"><a href="/fitness" class="nav-link">Послуги</a></li>
               <li><a href="/price" class="nav-link">Ціни</a></li>
 
             </ul>

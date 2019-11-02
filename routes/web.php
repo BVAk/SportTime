@@ -21,7 +21,7 @@ Route::post('/loginclient', 'LoginClientController@loginclient')->name('logincli
 
 Route::get('/fitness', 'FitnessController@fitnessabout');
 Route::get('/fitness/trainers', 'FitnessController@trainer');
-
+Route::get('/price', 'FitnessController@price');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
