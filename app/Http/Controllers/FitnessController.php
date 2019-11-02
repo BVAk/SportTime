@@ -46,6 +46,9 @@ class FitnessController extends Controller
         $trainer = $request['trainer'];
         $training = DB::table('traintrain')->where('trainer_id', '=', $trainer)->where('training_id', '=', '91')->orwhere('training_id', '=', '92')->first()->training_id;
         $datetrain = $request['datetrain'];
+        $endtrain= date('Y-m-d H:i:s',strtotime('+1 hour',strtotime($datetrain)));
+        
+
         $user = $request['user'];
         $usernon = $request['usernon'];
         if (empty($user)) {
@@ -56,9 +59,9 @@ class FitnessController extends Controller
                 $user = User::where('phone', '=', $usernon)->first()->id;
             }
         } 
-        DB::table('privateschedule')->insert(['trainer_id' => $trainer, 'training_id' => $training, 'user_id' => $user, 'date' => $datetrain]);
+        DB::table('privateschedule')->insert(['trainer_id' => $trainer, 'training_id' => $training, 'user_id' => $user, 'date' => $datetrain,'endtrain'=>$endtrain]);
 
 
-        return redirect('/');
+        return back();
     }
 }

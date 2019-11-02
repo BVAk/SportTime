@@ -17,6 +17,7 @@ class AbonnementsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
+            $table->text('period');
             $table->float('price');
            
         });

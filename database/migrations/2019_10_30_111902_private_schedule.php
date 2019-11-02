@@ -19,6 +19,7 @@ class PrivateSchedule extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('training_id')->unsigned();
             $table->timestamp('date');
+            $table->timestamp('endtrain');
             
             $table->foreign('trainer_id')->references('id')->on('trainers');
             $table->foreign('training_id')->references('id')->on('trainings');
