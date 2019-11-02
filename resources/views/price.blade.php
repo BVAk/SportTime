@@ -21,6 +21,30 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   
 
+  <style>
+#customers {
+ 
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #dc3545;
+  color: white;
+}
+</style>
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -127,7 +151,7 @@
       <div class="container">
         <div class="row justify-content-center text-center">
         <div class="card-body table-responsive p-0">
-                    <table class="table table-hover" id="myTable">
+                    <table class="table table-hover" id="customers">
                         <thead>
                         <tr>
                             <th>Назва абономенту</th>
