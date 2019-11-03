@@ -17,6 +17,7 @@ class Trainers extends Migration
             $table->increments('id');
             $table->string('name');
             $table->date('birth');
+            $table->integer('salary');
             $table->date('start');
             $table->string('phone')->unique();
             $table->string('image')->nullable();
