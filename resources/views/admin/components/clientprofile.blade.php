@@ -177,8 +177,8 @@
       minTime: "09:00:00",
       
       maxTime:"23:00:00",
-      editable: true,
-      droppable: true, // this allows things to be dropped onto the calendar
+      editable: false,
+      droppable: false, // this allows things to be dropped onto the calendar
     eventSources:[ {events: [
       @foreach ($privateschedule as $privateschedule){
     
