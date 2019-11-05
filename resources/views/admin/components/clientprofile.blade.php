@@ -1,6 +1,5 @@
 @extends('layouts.admin_layout')
 
-
 @section ('style')
 
 <link href="{{asset('packages/core/main.css')}}" rel="stylesheet"/>
@@ -53,7 +52,6 @@
 @endsection
 
 
-
 @section('content')
 
 <div class="container-fluid">
@@ -99,31 +97,19 @@
 
 
         </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
+     
         <div id='wrap'>
 
-<div id='external-events'>
-  <h4>Групові заняття</h4>
+
+  <h4>Індивідуальні заняття</h4>
 
   <div id='external-events-list'>
-    @foreach($trainergym2 as $training)
-    <div class='fc-event'>{{$training->trainer_name}}</div>
-    @endforeach
+  
   </div>
-</div>
+
 <form >
 <div id='calendar'></div>
 <div class="form-group">
-
-<button class="btn btn-success btn-submit">Submit</button>
 
 </div>
 </form>
@@ -134,19 +120,19 @@
             <!-- /.card -->
         </div>
     </div>
+</div>
 
 
 @endsection
-@section ('script')
-
+@section('script')
 <script src="{{asset('packages/core/main.js')}}"></script>
 <script src="{{asset('packages/interaction/main.js')}}"></script>
 <script src="{{asset('packages/daygrid/main.js')}}"></script>
 <script src="{{asset('packages/timegrid/main.js')}}"></script>
 <script src="{{asset('packages/list/main.js')}}"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script><script>
+
   document.addEventListener('DOMContentLoaded', function() {
     var Calendar = FullCalendar.Calendar;
     var Draggable = FullCalendarInteraction.Draggable
@@ -164,52 +150,87 @@
       }
     });
 
+    //// the individual way to do it
+    // var containerEl = document.getElementById('external-events-list');
+    // var eventEls = Array.prototype.slice.call(
+    //   containerEl.querySelectorAll('.fc-event')
+    // );
+    // eventEls.forEach(function(eventEl) {
+    //   new Draggable(eventEl, {
+    //     eventData: {
+    //       title: eventEl.innerText.trim(),
+    //     }
+    //   });
+    // });
+
+    /* initialize the calendar
+    -----------------------------------------------------------------*/
+
     var calendarEl = document.getElementById('calendar');
     var calendar = new Calendar(calendarEl, {
-      plugins: ['interaction', 'timeGridWeek', 'timeGrid', 'list'],
+      plugins: [ 'interaction', 'timeGridWeek', 'timeGrid', 'list' ],
       header: {
-        left: '',
-        right: '',
+        left:'',
+        right:'',
         center: 'title',
       },
       minTime: "09:00:00",
-      maxTime: "22:00:00",
-      editable: false,
+      
+      maxTime:"23:00:00",
+      editable: true,
       droppable: true, // this allows things to be dropped onto the calendar
-      eventSources: [{
-        events: [
-          @foreach($privateschedule as $privateschedule1) {
-
-            id: '{{$privateschedule1->privateschedule_id}}',
-            title: '{{$privateschedule1->training_name}}',
-            start: '{{$privateschedule1->privateschedule_date}}',
-            end: '{{$privateschedule1->privateschedule_endtrain}}',
-            allDay: false
-          },
-
-          @endforeach
-        ],
-        eventClick: function(info) {
-          alert('Event: ' + info.event.title);
-          alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-          alert('View: ' + info.view.type);
-
-          // change the border color just for fun
-          info.el.style.borderColor = 'red';
-        },
-
-        color: 'greenyellow', // an option!
-        textColor: 'black' // an option!
-      }],
-      eventDrop: function(event, delta, revertFunc) { // si changement de position
+    eventSources:[ {events: [
+      @foreach ($privateschedule as $privateschedule){
+    
+      id:'{{$privateschedule->privateschedule_id}}',
+      title  : '{{$privateschedule->trainer_name}}',
+      start  : '{{$privateschedule->privateschedule_date}}',
+      end:'{{$privateschedule->privateschedule_endtrain}}',
+      allDay : false
+    },
+    @endforeach
+  ],
+  color: 'greenyellow',     // an option!
+      textColor: 'black' // an option!
+    }],
+    eventDrop: function(event, delta, revertFunc) { // si changement de position
 
 edit(event);
 
 },
     });
     calendar.render();
+
   });
 
-  <
-  /scrypt>
-  @endsection
+  function edit(event){
+			start = event.start.format('YYYY-MM-DD HH:mm:ss');
+			if(event.end){
+				end = event.end.format('YYYY-MM-DD HH:mm:ss');
+			}else{
+				end = start;
+			}
+			
+			id =  event.id;
+			
+			Event = [];
+			Event[0] = id;
+			Event[1] = start;
+			Event[2] = end;
+			
+			$.ajax({
+			 url: 'admin/schedule/group',
+			 type: "POST",
+			 data: {Event:Event},
+       success: function(rep) {
+					if(rep == 'OK'){
+						alert('Saved');
+					}else{
+						alert('Could not be saved. try again.'); 
+					}
+				}
+			});
+		}
+</script>
+
+@endsection

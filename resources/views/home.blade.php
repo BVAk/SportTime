@@ -150,7 +150,7 @@
                            <?for ($i=0;$i<52;$i+=16){?>
                             <g transform="translate({{$i*16}}, 0)">
                             <?for ($j=0;$j<91;$j+=15){?>
-                            <rect class="day" width="12" height="12" x="16-{{$i}}" y="{{$j}}" fill="#239a3b" data-count="2" data-date="2018-11-{{$i}}"/>
+                            <rect class="day" width="12" height="12" x="16-{{$i}}" y="{{$j}}" fill="#239a3b" data-count="2" data-date="2018-11-{{$j}}"/>
                             <?}?>
                             </g>
                             <?} ?>
