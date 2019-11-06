@@ -166,21 +166,77 @@ class AdminController extends Controller
     public function userabonnement(Request $request)
     {
         $abonnement = $request['abonnement'];
-        $training = DB::table('traintrain')->where('trainer_id', '=', $trainer)->where('training_id', '=', '91')->orwhere('training_id', '=', '92')->first()->training_id;
-        $datetrain = $request['datetrain'];
-        $endtrain= date('Y-m-d H:i:s',strtotime('+1 hour',strtotime($datetrain)));
-        
         $user = $request['user'];
-        $usernon = $request['usernon'];
-        if (empty($user)) {
-            if (User::where('phone', '=', $usernon)->exists()) {
-                $user = User::where('phone', '=', $usernon)->first()->id;
-            } else {
-                User::insert(['name' => 'unknown ' + $usernon, 'email' => 'un' + $usernon + '@gmail.com', 'phone' => $usernon, 'created_at' => new \DateTime('now')]);
-                $user = User::where('phone', '=', $usernon)->first()->id;
-            }
-        } 
-        DB::table('privateschedule')->insert(['trainer_id' => $trainer, 'training_id' => $training, 'user_id' => $user, 'date' => $datetrain,'endtrain'=>$endtrain]);
+        $date=new \DateTime('now');
+        if ($abonnement=='1'){
+            $end=date('Y-m-d H:i:s',strtotime('+3 month'));
+            $amount=NULL;
+        }
+        else if ($abonnement=='2'){
+            $end=date('Y-m-d H:i:s',strtotime('+1 month'));
+            $amount=NULL;
+        }
+        else if ($abonnement=='3'){
+            $end=date('Y-m-d H:i:s',strtotime('+1 day'));
+            $amount=NULL;
+        }
+        else if ($abonnement=='4'){
+            $end=date('Y-m-d H:i:s',strtotime('+3 month'));
+            $amount=NULL;
+        }
+        else if ($abonnement=='5'){
+            $end=date('Y-m-d H:i:s',strtotime('+1 month'));
+            $amount=NULL;
+        }
+        else if ($abonnement=='6'){
+            $end=date('Y-m-d H:i:s',strtotime('+3 month'));
+            $amount=NULL;
+        }
+        else if ($abonnement=='7'){
+            $end=date('Y-m-d H:i:s',strtotime('+1 month'));
+            $amount=NULL;
+        }
+        else if ($abonnement=='8'){
+            $end=date('Y-m-d H:i:s',strtotime('+1 day'));
+            $amount=NULL;
+        }
+        else if ($abonnement=='9'){
+            $end=NULL;
+            $amount=1;
+        }
+        else if ($abonnement=='10'){
+            $end=date('Y-m-d H:i:s',strtotime('+1 month'));
+            $amount=NULL;
+        }
+        else if ($abonnement=='11'){
+            $end=NULL;
+            $amount=1;
+        }
+        else if ($abonnement=='12'){
+            $end=NULL;
+            $amount=6;
+        }
+        else if ($abonnement=='13'){
+            $end=NULL;
+            $amount=12;
+        }
+        else if ($abonnement=='14'){
+            $end=NULL;
+            $amount=1;
+        }
+        else if ($abonnement=='15'){
+            $end=NULL;
+            $amount=1;
+        }
+        else if ($abonnement=='16'){
+            $end=NULL;
+            $amount=6;
+        }
+        else if ($abonnement=='17'){
+            $end=NULL;
+            $amount=1;
+        }
+        DB::table('usersabonnements')->insert(['user_id' => $user, 'abonnement_id' => $abonnement, 'date' => $date, 'end' => $end,'amount'=>$amount]);
 
 
         return back();
