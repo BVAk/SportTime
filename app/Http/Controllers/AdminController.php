@@ -159,6 +159,31 @@ class AdminController extends Controller
         $users = User::where('id', '=', $id->id)->get();
         $privateschedule = DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('trainers', 'privateschedule.trainer_id', '=', 'trainers.id')->where('user_id', '=', $id->id)->where('date','>=',new \DateTime('now'))->select('trainings.name as training_name','trainers.name as trainer_name','privateschedule.date as privateschedule_date','privateschedule.endtrain as privateschedule_endtrain','privateschedule.id as privateschedule_id')->get();  
         $trainergym2 = DB::table('traintrain')->join('trainers', 'traintrain.trainer_id', '=', 'trainers.id')->join('trainings', 'traintrain.training_id', '=', 'trainings.id')->where('training_id', '=', '91')->orwhere('training_id', '=', '92')->select('trainers.id as id', 'trainers.name as trainer_name', 'start', 'image', 'trainings.name as training_name')->get();
-        return view('admin.components.clientprofile', compact('users', 'trainergym2','privateschedule'));
+        $abonnement=DB::table('abonnements')->get();
+        return view('admin.components.clientprofile', compact('abonnement','users', 'trainergym2','privateschedule'));
     }
+
+    public function userabonnement(Request $request)
+    {
+        $abonnement = $request['abonnement'];
+        $training = DB::table('traintrain')->where('trainer_id', '=', $trainer)->where('training_id', '=', '91')->orwhere('training_id', '=', '92')->first()->training_id;
+        $datetrain = $request['datetrain'];
+        $endtrain= date('Y-m-d H:i:s',strtotime('+1 hour',strtotime($datetrain)));
+        
+        $user = $request['user'];
+        $usernon = $request['usernon'];
+        if (empty($user)) {
+            if (User::where('phone', '=', $usernon)->exists()) {
+                $user = User::where('phone', '=', $usernon)->first()->id;
+            } else {
+                User::insert(['name' => 'unknown ' + $usernon, 'email' => 'un' + $usernon + '@gmail.com', 'phone' => $usernon, 'created_at' => new \DateTime('now')]);
+                $user = User::where('phone', '=', $usernon)->first()->id;
+            }
+        } 
+        DB::table('privateschedule')->insert(['trainer_id' => $trainer, 'training_id' => $training, 'user_id' => $user, 'date' => $datetrain,'endtrain'=>$endtrain]);
+
+
+        return back();
+    }
+
 }

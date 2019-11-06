@@ -43,4 +43,5 @@ Route::prefix('/admin')->group(function () {
     Route::get('/schedule/group', 'AdminController@schedulegroup')->name('admin.schedulegroup');
     Route::post('/schedule/group', 'AdminController@schedulegroupupdate')->name('admin.schedulegroupupdate');
     Route::get('/schedule/private', 'AdminController@scheduleprivate')->name('admin.scheduleprivate');
+    Route::post('/userabonnement', 'AdminController@userabonnement');
 });
