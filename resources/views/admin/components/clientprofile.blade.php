@@ -113,7 +113,7 @@
             <div class="panel panel-default">
               <div class="panel-body" style="width:auto;">
 
-                <select id="select" name="abonnement" class="selectpicker" style="font-size: 20px; width:300px;" required>
+                <select id="selectabonnement" name="abonnement" onchange="abonnementinfo()" class="selectpicker" style="font-size: 20px; width:300px;" required>
                   <option value=""> ---</option>
                   @foreach ($abonnement as $abonnement1)
                   <option value="{{$abonnement1->id}}"> {{$abonnement1->name}} - {{$abonnement1->period}}</option>
@@ -165,6 +165,14 @@
 <script src="{{asset('packages/list/main.js')}}"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script>
+  function abonnementinfo() {
+    var sel=document.getElementById('selectabonnement').value;
+   
+    alert(sel);
+}
+  </script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var Calendar = FullCalendar.Calendar;
