@@ -122,7 +122,7 @@
               </div>
             </div>
           </div>
-
+          <div id="info"></div>
           <input id="user" name="user" type="hidden" class="form-control" value="{{$user->id }}" required>
 
           <div class="form-group">
@@ -168,11 +168,16 @@
 
 <script>
   function abonnementinfo() {
-    var sel=document.getElementById('selectabonnement').value;
-   
-    alert(sel);
-}
-  </script>
+    var sel = document.getElementById('selectabonnement').value;
+    
+    var text = document.getElementById('info');
+    <?php
+    $mi = "<script type='text/javascript'>sel</script>";
+    if ($abonnement1->id == $mi) {alert("j=ok");
+      ?>text.innerHTML = (<? $abonnement1->description; $abonnement1->price ?>)
+  <? } else {?>alert(<?$mi?>)<?}?>
+  }
+</script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var Calendar = FullCalendar.Calendar;
