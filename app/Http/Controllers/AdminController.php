@@ -166,11 +166,18 @@ class AdminController extends Controller
 
     public function userabonnement(Request $request)
     {
+        $amount=NULL;
         $abonnement = $request['abonnement'];
         $user = $request['user'];
         $date=new \DateTime('now');
-        if ($abonnement=='1'){
-            $end=date('Y-m-d H:i:s',strtotime('+3 month'));
+        $date1=strtotime("now");
+        if (DB::table('usersabonnements')->where('user_id','=',$user)->where('abonnement_id','=',$abonnement)->where('end','<=',$date)->orwhere('amount','!=',0)->orwhere('amount','!=',Null)->exists()){
+            $userabomalready=DB::table('usersabonnements')->where('user_id','=',$user)->where('abonnement_id','=',$abonnement)->where('end','<=',$date)->orwhere('amount','!=',0)->first();
+            $date1=$userabomalready->end;
+            $amount=$userabomalready->amount;
+        }
+       if ($abonnement=='1'){
+            $end=date('Y-m-d H:i:s',strtotime('+3 month',$date1));
             $amount=NULL;
         }
         else if ($abonnement=='2'){
@@ -203,7 +210,7 @@ class AdminController extends Controller
         }
         else if ($abonnement=='9'){
             $end=NULL;
-            $amount=1;
+            $amount=$amount+1;
         }
         else if ($abonnement=='10'){
             $end=date('Y-m-d H:i:s',strtotime('+1 month'));
@@ -211,31 +218,31 @@ class AdminController extends Controller
         }
         else if ($abonnement=='11'){
             $end=NULL;
-            $amount=1;
+            $amount=$amount+1;
         }
         else if ($abonnement=='12'){
             $end=NULL;
-            $amount=6;
+            $amount=$amount+6;
         }
         else if ($abonnement=='13'){
             $end=NULL;
-            $amount=12;
+            $amount=$amount+12;
         }
         else if ($abonnement=='14'){
             $end=NULL;
-            $amount=1;
+            $amount=$amount+1;
         }
         else if ($abonnement=='15'){
             $end=NULL;
-            $amount=1;
+            $amount=$amount+1;
         }
         else if ($abonnement=='16'){
             $end=NULL;
-            $amount=6;
+            $amount=$amount+6;
         }
         else if ($abonnement=='17'){
             $end=NULL;
-            $amount=1;
+            $amount=$amount+1;
         }
         DB::table('usersabonnements')->insert(['user_id' => $user, 'abonnement_id' => $abonnement, 'date' => $date, 'end' => $end,'amount'=>$amount]);
 
