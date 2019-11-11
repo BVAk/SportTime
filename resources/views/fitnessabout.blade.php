@@ -228,7 +228,7 @@
                 <span>{{$trainergym->name}}</span>
               </div>
               <blockquote>
-                <p>{{date('Y-m-d')-$trainergym->start}} років стажу</p>
+                <p>{{date('Y-m-d')-($trainergym->start)}} років стажу</p>
               </blockquote> 
             </div>
           </div>

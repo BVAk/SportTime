@@ -54,12 +54,40 @@
 @section('content')
 
 <div class="container-fluid">
-  <div class="col-lg-3 col-6">
+  <div class="row">
+<div class="col-6">
+  ФІО клієнта:
+</div>
+  <div class="col-6">
     <!-- small box -->
     @foreach ($users as $user)
     {{$user->name}}
     @endforeach
   </div>
+</div>
+<div class="row">
+<div class="col">
+  Мобільний номер клієнта:
+</div>
+  <div class="col">
+    <!-- small box -->
+    
+    {{$user->phone}}
+  
+  </div>
+</div>
+<div class="row">
+<div class="col">
+  Email клієнта:
+</div>
+  <div class="col">
+    <!-- small box -->
+ 
+    {{$user->email}}
+  
+  </div>
+</div>
+
 </div>
 
 <div class="row">
@@ -169,7 +197,7 @@
 <script>
   function abonnementinfo() {
     var sel = document.getElementById('selectabonnement').value;
-    
+    alert (sel);
     var text = document.getElementById('info');
     <?php
     $mi = "<script type='text/javascript'>sel</script>";

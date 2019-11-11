@@ -17,14 +17,8 @@
   <link href="{{ asset('css/welcome.css') }}" rel="stylesheet">
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
-
-
   <link crossorigin="anonymous" media="all" integrity="sha512-/YEVWs7BzxfKyUd6zVxjEQcXRWsLbcEjv045Rq8DSoipySmQblhVKxlXLva2GtNd5DhwCxHwW1RM0N9I7S2Vew==" rel="stylesheet" href="https://github.githubassets.com/assets/frameworks-481a47a96965f6706fb41bae0d14b09a.css" />
-
   <link crossorigin="anonymous" media="all" integrity="sha512-8yRKCmpBPsIyuLQNxQmP0kBfYdvNOz5EkCagWypV27znz6gRd0tHzdbCb2P/9XXEQcXFRMXC2olX8bhjTjbTYA==" rel="stylesheet" href="https://github.githubassets.com/assets/github-d12aa61f11c1ece71b4c19b1ba4dac4a.css" />
-
-
-
 
 
 </head>
@@ -147,13 +141,13 @@
 
                         <svg width="828" height="128" class="js-calendar-graph-svg">
                           <g transform="translate(10, 20)" data-hydro-click="{&quot;event_type&quot;:&quot;user_profile.click&quot;,&quot;payload&quot;:{&quot;profile_user_id&quot;:23367130,&quot;target&quot;:&quot;CONTRIBUTION_CALENDAR_SQUARE&quot;,&quot;user_id&quot;:23383350,&quot;client_id&quot;:&quot;1439471101.1564076804&quot;,&quot;originating_request_id&quot;:&quot;65FE:FE94:9064576:D8C11C2:5DC1CDE9&quot;,&quot;originating_url&quot;:&quot;https://github.com/andreyromanov&quot;,&quot;referrer&quot;:&quot;https://github.com/&quot;}}" data-hydro-click-hmac="106e788d8955df89b1abb9df8cd7409a5db9405f904a18c045dcfdb14b9a7826">
-                           <?for ($i=0;$i<52;$i+=16){?>
+                           <?php for ($i=0;$i<52;$i+=16){?>
                             <g transform="translate({{$i*16}}, 0)">
-                            <?for ($j=0;$j<91;$j+=15){?>
+                            <?php for ($j=0;$j<91;$j+=15){?>
                             <rect class="day" width="12" height="12" x="16-{{$i}}" y="{{$j}}" fill="#239a3b" data-count="2" data-date="2018-11-{{$j}}"/>
-                            <?}?>
+                            <?php }?>
                             </g>
-                            <?} ?>
+                            <?php } ?>
                             
                             <text x="16" y="-9" class="month">Nov</text>
                             <text x="76" y="-9" class="month">Dec</text>
