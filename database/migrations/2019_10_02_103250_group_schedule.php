@@ -15,13 +15,13 @@ class GroupSchedule extends Migration
     {
         Schema::create('groupshedule', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('traintrain_id')->unsigned();
+            $table->integer('train_id')->unsigned();
             $table->integer('room_id')->unsigned();
             $table->timestamp('start');
             $table->timestamp('end')->nullable();
-            $table->date('weekday')->format('d');
             
-            $table->foreign('traintrain_id')->references('id')->on('trainings');
+            
+            $table->foreign('train_id')->references('id')->on('trainings');
             $table->foreign('room_id')->references('id')->on('rooms');
           
         });

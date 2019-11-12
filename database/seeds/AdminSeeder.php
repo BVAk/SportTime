@@ -12,7 +12,7 @@ class AdminSeeder extends Seeder
     public function run()
     {
         \App\Admin::create([
-            'name' => 'Admin', 'phone' => '+3807777777','email' => 'admin@m.com', 'password' => bcrypt('password')
+            'name' => 'Admin', 'phone' => '+3807777777','email' => 'bekkviktoria@gmail.com', 'password' => bcrypt('123456')
         ]);
     }
 }

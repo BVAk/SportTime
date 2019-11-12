@@ -221,6 +221,7 @@
         </div>
         <div class="row">
         @foreach($trainergym as $trainergym)
+        <?php if (date('Y-m-d')-($trainergym->start)>1){?>
           <div class="col-lg-4 mb-4 mb-lg-0">
             <div class="testimonial-2 text-center">
               <div class="v-card mb-4 text-center">
@@ -232,6 +233,7 @@
               </blockquote> 
             </div>
           </div>
+        <?php }?>
           @endforeach
       </div>
     </div>

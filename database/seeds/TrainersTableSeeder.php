@@ -21,6 +21,7 @@ class TrainersTableSeeder extends Seeder
                 'start' => $faker->dateTimeBetween('-5 years', 'now'),
                 'phone' => $faker->unique()->phoneNumber,
                 'image' => "images/trainers/man$i.jpg",
+                'salary'=>'7000'
             ];
             \App\Trainer::create($trainer);
 

@@ -116,12 +116,7 @@
             <div class="container">
                 <div class="row justify-content-center text-center">
                     <div class="col-md-7 mb-5">
-                        <div class="panel panel-default">
 
-                            <a href="/registerclient"><button type="submit" class="btn btn-primary">
-                                    Учасник фітнес клубу
-                                </button> </a>
-                        </div>
                         <div class="panel panel-default">
                             <h5 class="control-label">Реєстрація</h5>
                             <div class="panel-body">
@@ -154,6 +149,12 @@
                                         </span>
                                         @endif
                                     </div>
+                                    
+                                    <div class="form-group{{ $errors->has('health') ? ' has-error' : '' }}">
+                                        <label for="health" class="subtitle">Фізичні особливості</label>
+                                        <input id="health" type="text" class="form-control" name="health" required>
+                                       
+                                    </div>
 
                                     <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                         <label for="password" class="subtitle">Пароль</label>
@@ -164,6 +165,7 @@
                                         </span>
                                         @endif
                                     </div>
+                                    
                                     <div class="form-group">
                                         <label for="password-confirm" class="subtitle">Повторити пароль</label>
                                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>

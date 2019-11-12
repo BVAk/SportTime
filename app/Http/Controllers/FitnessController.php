@@ -25,7 +25,7 @@ class FitnessController extends Controller
         $trainingschild = DB::table('trainings')->where('type', '=', 'дитячі')->get();
         $groupschedule = DB::table('groupshedule')->join('trainings', 'groupshedule.train_id', '=', 'trainings.id')->where('type', '!=', 'дитячі')->where('type', '!=', '')->get();
         $childschedule = DB::table('groupshedule')->join('trainings', 'groupshedule.train_id', '=', 'trainings.id')->where('type', '=', 'дитячі')->get();
-        $trainergym = DB::table('traintrain')->join('trainers', 'traintrain.trainer_id', '=', 'trainers.id')->where('training_id', '=', '91')->get();
+        $trainergym = DB::table('traintrain')->join('trainers', 'traintrain.trainer_id', '=', 'trainers.id')->where('training_id', '=', '1')->get();
         return view('fitnessabout', compact('trainings'), ['trainergym' => $trainergym, 'groupschedule' => $groupschedule, 'childschedule' => $childschedule, 'trainingschild' => $trainingschild, 'trainingsgroup' => $trainingsgroup]);
     }
 
@@ -44,7 +44,7 @@ class FitnessController extends Controller
     public function insertprivate(Request $request)
     {
         $trainer = $request['trainer'];
-        $training = DB::table('traintrain')->where('trainer_id', '=', $trainer)->where('training_id', '=', '91')->orwhere('training_id', '=', '92')->first()->training_id;
+        $training = DB::table('traintrain')->where('trainer_id', '=', $trainer)->where('training_id', '=', '1')->orwhere('training_id', '=', '2')->first()->training_id;
         $datetrain = $request['datetrain'];
         $endtrain= date('Y-m-d H:i:s',strtotime('+1 hour',strtotime($datetrain)));
         

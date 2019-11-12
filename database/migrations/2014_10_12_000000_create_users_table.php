@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->unique();
             $table->string('card')->unique()->nullable();
             $table->string('password')->nullable();
+            $table->text('health')->nullable();
             $table->rememberToken();
             $table->timestamps();
             
