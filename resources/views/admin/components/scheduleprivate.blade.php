@@ -56,24 +56,11 @@
     <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-        <div id='wrap'>
+        
 
-<div id='external-events'>
-  <h4>Draggable Events</h4>
 
-  <div id='external-events-list'>
-    @foreach($training as $training)
-    <div class='fc-event'>{{$training->name}}</div>
-    @endforeach
-  </div>
 
-  <p>
-    <input type='checkbox' id='drop-remove' />
-    <label for='drop-remove'>remove after drop</label>
-  </p>
-</div>
-
-<div id='calendar'></div>
+<div id='calendar' style="float:"></div>
 
 <div style='clear:both'></div>
 
@@ -100,15 +87,7 @@
     /* initialize the external events
     -----------------------------------------------------------------*/
 
-    var containerEl = document.getElementById('external-events-list');
-    new Draggable(containerEl, {
-      itemSelector: '.fc-event',
-      eventData: function(eventEl) {
-        return {
-          title: eventEl.innerText.trim()
-        }
-      }
-    });
+
 
     //// the individual way to do it
     // var containerEl = document.getElementById('external-events-list');
@@ -126,28 +105,72 @@
     /* initialize the calendar
     -----------------------------------------------------------------*/
 
+   
     var calendarEl = document.getElementById('calendar');
     var calendar = new Calendar(calendarEl, {
-      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+      plugins: [ 'interaction', 'timeGridWeek', 'timeGrid', 'list' ],
       header: {
-        left: 'prev,next today',
+        left:'',
+        right:'',
         center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
       },
+      minTime: "09:00:00",
+     
+      maxTime:"23:00:00",
       editable: true,
       droppable: true, // this allows things to be dropped onto the calendar
-      drop: function(arg) {
-        // is the "remove after drop" checkbox checked?
-        if (document.getElementById('drop-remove').checked) {
-          // if so, remove the element from the "Draggable Events" list
-          arg.draggedEl.parentNode.removeChild(arg.draggedEl);
-        }
-      }
+    eventSources:[ {events: [
+      @foreach ($private as $groupschedule){
+    
+      id:'{{$groupschedule->privateschedule_id}}',
+      title  : '{{$groupschedule->user_name}} - {{$groupschedule->trainer_name}} ',
+      start  : '{{$groupschedule->privateschedule_date}}',
+      end:'{{$groupschedule->privateschedule_endtrain}}',
+      allDay : false
+    },
+    @endforeach
+  ],
+  color: 'greenyellow',     // an option!
+      textColor: 'black' // an option!
+    }],
+    eventDrop: function(event, delta, revertFunc) { // si changement de position
+
+edit(event);
+
+},
     });
     calendar.render();
 
   });
 
+  function edit(event){
+			start = event.start.format('YYYY-MM-DD HH:mm:ss');
+			if(event.end){
+				end = event.end.format('YYYY-MM-DD HH:mm:ss');
+			}else{
+				end = start;
+			}
+			
+			id =  event.id;
+			
+			Event = [];
+			Event[0] = id;
+			Event[1] = start;
+			Event[2] = end;
+			
+			$.ajax({
+			 url: 'admin/schedule/group',
+			 type: "POST",
+			 data: {Event:Event},
+       success: function(rep) {
+					if(rep == 'OK'){
+						alert('Saved');
+					}else{
+						alert('Could not be saved. try again.'); 
+					}
+				}
+			});
+		}
 </script>
 
 @endsection
