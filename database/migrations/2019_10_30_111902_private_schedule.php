@@ -20,6 +20,7 @@ class PrivateSchedule extends Migration
             $table->integer('training_id')->unsigned();
             $table->timestamp('date');
             $table->timestamp('endtrain');
+            $table->boolean('checked');
             
             $table->foreign('trainer_id')->references('id')->on('trainers');
             $table->foreign('training_id')->references('id')->on('trainings');

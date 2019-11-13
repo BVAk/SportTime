@@ -82,7 +82,7 @@
 
           <nav class="site-navigation text-left mr-auto d-none d-lg-block" role="navigation">
             <ul class="site-menu main-menu js-clone-nav mr-auto ">
-              <li ><a href="/" class="nav-link">Головна</a></li>
+              <li><a href="/" class="nav-link">Головна</a></li>
               <li class="active"><a href="/fitness" class="nav-link">Послуги</a></li>
               <li><a href="/price" class="nav-link">Ціни</a></li>
 
@@ -176,7 +176,7 @@
                     <option value=""> ---</option>
                     @foreach ($trainergym2 as $training)
                     <option value="{{$training->id}}"> {{$training->trainer_name}}</option>
-                   
+
                     @endforeach
                   </select>
 
@@ -187,17 +187,18 @@
             <div class="form-group">
               <h2 class="text-white"><b>Обрати дату і час тренування</b></h2>
               <input id="datetrain" name="datetrain" type="datetime-local" class="form-control" value="" required>
+              <input  id="checked" name="checked" type="hidden" class="form-control" value="0">
             </div>
-           
+
             @guest
             <div class="form-group">
-            <h2 class="text-white"><b>Мобільний номер телефона </b></h2>
+              <h2 class="text-white"><b>Мобільний номер телефона </b></h2>
               <input id="usernon" name="usernon" type="text" class="form-control" value="" placeholder="+380_________" required>
             </div>
             @else
             <input id="user" name="user" type="hidden" class="form-control" value="{{ Auth::user()->id }}" required>
             @endguest
-
+           
             <div class="form-group">
               <input class="btn btn-success center-block btn-lg" type="submit" value="Зареєструвати тренування">
             </div>

@@ -31,8 +31,8 @@ class FitnessController extends Controller
 
     public function trainer()
     {
-        $trainergym = DB::table('traintrain')->join('trainers', 'traintrain.trainer_id', '=', 'trainers.id')->join('trainings', 'traintrain.training_id', '=', 'trainings.id')->where('training_id', '=', '91')->orwhere('training_id', '=', '92')->select('trainers.id as id', 'trainers.name as trainer_name', 'start', 'image', 'trainings.name as training_name')->get();
-        $trainergym2 = DB::table('traintrain')->join('trainers', 'traintrain.trainer_id', '=', 'trainers.id')->join('trainings', 'traintrain.training_id', '=', 'trainings.id')->where('training_id', '=', '91')->orwhere('training_id', '=', '92')->select('trainers.id as id', 'trainers.name as trainer_name', 'start', 'image', 'trainings.name as training_name')->get();
+        $trainergym = DB::table('traintrain')->join('trainers', 'traintrain.trainer_id', '=', 'trainers.id')->join('trainings', 'traintrain.training_id', '=', 'trainings.id')->where('training_id', '=', '1')->orwhere('training_id', '=', '2')->select('trainers.id as id', 'trainers.name as trainer_name', 'start', 'image', 'trainings.name as training_name')->get();
+        $trainergym2 = DB::table('traintrain')->join('trainers', 'traintrain.trainer_id', '=', 'trainers.id')->join('trainings', 'traintrain.training_id', '=', 'trainings.id')->where('training_id', '=', '1')->orwhere('training_id', '=', '2')->select('trainers.id as id', 'trainers.name as trainer_name', 'start', 'image', 'trainings.name as training_name')->get();
         return view('trainers', compact('trainergym'), ['trainergym2' => $trainergym2]);
     }
     /**
@@ -47,6 +47,7 @@ class FitnessController extends Controller
         $training = DB::table('traintrain')->where('trainer_id', '=', $trainer)->where('training_id', '=', '1')->orwhere('training_id', '=', '2')->first()->training_id;
         $datetrain = $request['datetrain'];
         $endtrain= date('Y-m-d H:i:s',strtotime('+1 hour',strtotime($datetrain)));
+        $checked=$request['checked'];
         
 
         $user = $request['user'];
@@ -59,7 +60,7 @@ class FitnessController extends Controller
                 $user = User::where('phone', '=', $usernon)->first()->id;
             }
         } 
-        DB::table('privateschedule')->insert(['trainer_id' => $trainer, 'training_id' => $training, 'user_id' => $user, 'date' => $datetrain,'endtrain'=>$endtrain]);
+        DB::table('privateschedule')->insert(['trainer_id' => $trainer,'checked' => $checked,'training_id' => $training, 'user_id' => $user, 'date' => $datetrain,'endtrain'=>$endtrain]);
 
 
         return back();

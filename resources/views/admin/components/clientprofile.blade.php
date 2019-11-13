@@ -55,38 +55,38 @@
 
 <div class="container-fluid">
   <div class="row">
-<div class="col-6">
-  ФІО клієнта:
-</div>
-  <div class="col-6">
-    <!-- small box -->
-    @foreach ($users as $user)
-    {{$user->name}}
-    @endforeach
+    <div class="col-6">
+      ФІО клієнта:
+    </div>
+    <div class="col-6">
+      <!-- small box -->
+      @foreach ($users as $user)
+      {{$user->name}}
+      @endforeach
+    </div>
   </div>
-</div>
-<div class="row">
-<div class="col">
-  Мобільний номер клієнта:
-</div>
-  <div class="col">
-    <!-- small box -->
-    
-    {{$user->phone}}
-  
+  <div class="row">
+    <div class="col">
+      Мобільний номер клієнта:
+    </div>
+    <div class="col">
+      <!-- small box -->
+
+      {{$user->phone}}
+
+    </div>
   </div>
-</div>
-<div class="row">
-<div class="col">
-  Email клієнта:
-</div>
-  <div class="col">
-    <!-- small box -->
- 
-    {{$user->email}}
-  
+  <div class="row">
+    <div class="col">
+      Email клієнта:
+    </div>
+    <div class="col">
+      <!-- small box -->
+
+      {{$user->email}}
+
+    </div>
   </div>
-</div>
 
 </div>
 
@@ -115,7 +115,10 @@
             <h2>Обрати дату і час тренування</h2>
             <input id="datetrain" name="datetrain" type="datetime-local" class="form-control" value="" required>
           </div>
-
+          <div class="form-group">
+          Підтвердити тренування
+          <input  id="checked" name="checked" type="checkbox"  value="1">
+          </div>
           <input id="user" name="user" type="hidden" class="form-control" value="{{$user->id }}" required>
 
           <div class="form-group">
@@ -197,13 +200,15 @@
 <script>
   function abonnementinfo() {
     var sel = document.getElementById('selectabonnement').value;
-    alert (sel);
+    alert(sel);
     var text = document.getElementById('info');
     <?php
     $mi = "<script type='text/javascript'>sel</script>";
-    if ($abonnement1->id == $mi) {alert("j=ok");
-      ?>text.innerHTML = (<? $abonnement1->description; $abonnement1->price ?>)
-  <? } else {?>alert(<?$mi?>)<?}?>
+    if ($abonnement1->id == $mi) {
+      alert("j=ok");
+      ?>text.innerHTML = (<? $abonnement1->description;
+                            $abonnement1->price ?>)
+    <? } else { ?>alert(<? $mi ?>) <? } ?>
   }
 </script>
 <script>
