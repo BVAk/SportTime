@@ -32,7 +32,7 @@ Route::post('/fitness/trainers/privatetrainer', 'FitnessController@insertprivate
 Route::prefix('/admin')->group(function () {
     Route::get('/login', 'Auth\LoginAdminController@showLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\LoginAdminController@login')->name('admin.login.submit');
-    Route::get('/', 'AdminController@dashboard')->name('admin');
+    Route::get('/', 'AdminController@welcome')->name('admin');
     Route::get('/clients', 'AdminController@showClients')->name('admin.clients');
     Route::get('/clients/{id}', 'AdminController@profileClients');
     Route::get('/trainers', 'AdminController@showTrainers')->name('admin.trainers');
@@ -44,4 +44,5 @@ Route::prefix('/admin')->group(function () {
     Route::post('/schedule/group', 'AdminController@schedulegroupupdate')->name('admin.schedulegroupupdate');
     Route::get('/schedule/private', 'AdminController@scheduleprivate')->name('admin.scheduleprivate');
     Route::post('/userabonnement', 'AdminController@userabonnement');
+    Route::get('/statistic', 'AdminController@dashboard');
 });

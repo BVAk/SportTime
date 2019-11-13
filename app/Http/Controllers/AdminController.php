@@ -41,7 +41,12 @@ class AdminController extends Controller
             ->dimensions(1000, 500)
             ->responsive(false)
             ->groupByMonth(date('Y'), true);
-        return view('admin.welcomeadmin', compact('chart'));
+        return view('admin.components.statistic', compact('chart'));
+    }
+    public function welcome()
+    {
+        $check=DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('trainers', 'privateschedule.trainer_id', '=', 'trainers.id')->join('users', 'privateschedule.user_id', '=', 'users.id')->where('checked', '!=', '1')->where('date', '>=', new \DateTime('now'))->select('users.name as user_name','users.phone as user_phone','trainings.name as training_name', 'trainers.name as trainer_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->get();
+        return view('admin.welcomeadmin', compact('check'));
     }
 
     /**

@@ -2,25 +2,22 @@
 
 @section('content')
 
-      <div class="container-fluid">
-       <!-- Custom tabs (Charts with tabs)-->
-       <div class="card">
-              
-              <div class="card-body">
-              <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">Chart Demo</div>
+<div class="container-fluid">
 
-                <div class="panel-body">
-                    {!! $chart->html() !!}
-                </div>
+    
+        @foreach ($check as $check1)
+        <div class="col-lg-3 col-6">
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <h2>{{$check1->user_name}}</h2>
+
+                <p>Зворотній зв'язок: <b>{{$check1->user_phone}}</b><br> Ім'я тренера: <b> {{$check1->trainer_name}}</b><br> Обраний час тренування: <b>{{$check1->privateschedule_date}}</b></p>
             </div>
+            <a href="/admin/clients/add" class="small-box-footer">Підтвердити тренування <i class="fas fa-arrow-circle-right"></i></a>
         </div>
-              </div>
-              
-{!! Charts::scripts() !!}
-{!! $chart->script() !!}<!-- /.card-body -->
-            </div>
-      </div>
- 
+        </div>
+            @endforeach
+    
+</div>
+
 @endsection
