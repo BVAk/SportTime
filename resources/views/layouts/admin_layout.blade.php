@@ -116,7 +116,7 @@
                         </li>
 
                         <li class="nav-item has-treeview ">
-                            <a href="#" class="nav-link {{in_array(request()->path(), ['admin/schedule/private', 'admin/trainers/group', 'admin/trainers/child']) ? 'active' : ''}}">
+                            <a href="#" class="nav-link {{in_array(request()->path(), ['admin/schedule/private', 'admin/schedule/group', 'admin/schedule/child']) ? 'active' : ''}}">
                                 <i class="nav-icon fas fa-table"></i>
                                 <p>Розклад<i class="fas fa-angle-left right"></i></p>
                             </a>

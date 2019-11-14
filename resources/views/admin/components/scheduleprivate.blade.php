@@ -8,7 +8,7 @@
 <link href="{{asset('packages/list/main.css')}}" rel="stylesheet" />
 <style>
   #wrap {
-    width: 1100px;
+    
     margin: 0 auto;
   }
 
@@ -44,7 +44,7 @@
   }
 
   #calendar {
-    float: right;
+    
     width: 900px;
   }
 </style>
@@ -53,8 +53,8 @@
 @section('content')
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-12">
+  <div class="row justify-content-center text-center">
+    
 
 
 
@@ -64,7 +64,7 @@
       <div style='clear:both'></div>
 
     </div>
-  </div>
+  
   <!-- /.card -->
 </div>
 </div>

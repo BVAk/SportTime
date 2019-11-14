@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-    <h1>Підтвердження броні індивідуальних тренувань</h1>
+    <h2>Підтвердження броні індивідуальних тренувань</h2>
     @foreach ($check as $check1)
     <div class="col-lg-3 col-6">
         <div class="small-box bg-warning">
@@ -36,7 +36,13 @@
         <div class="modal-footer">
         <form method="POST" action="/admin/privatechange/{{$check1->privateschedule_id}}">
         {{ csrf_field() }} 
-              <input id="date" name="date" type="datetime-local" class="form-control" value="{{$check1->privateschedule_date}}" required>
+        <select id="select" name="trainer" class="selectpicker" style="font-size: 20px;" required>
+                  <option value=""> ---</option>
+                  @foreach ($trainergym2 as $training)
+                  <option value="{{$training->id}}"> {{$training->trainer_name}}</option>
+                  @endforeach
+                </select>      
+        <input id="date" name="date" type="datetime-local" class="form-control" value="{{$check1->privateschedule_date}}" required>
               <button type="button" class="btn btn-default"
                       data-dismiss="modal">Закрити</button>
               <button type="submit" class="btn btn-danger">
@@ -53,7 +59,7 @@
   
 </div>
 <div class="container-fluid">
-  <h1>Відмітити клієнта</h1>
+  <h2>Відмітити клієнта</h2>
 
 
 </div>
