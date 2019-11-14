@@ -45,4 +45,5 @@ Route::prefix('/admin')->group(function () {
     Route::get('/schedule/private', 'AdminController@scheduleprivate')->name('admin.scheduleprivate');
     Route::post('/userabonnement', 'AdminController@userabonnement');
     Route::get('/statistic', 'AdminController@dashboard');
+    Route::post('/privatechange/{id}', 'AdminController@privatechange')->name('admin.privatechange');
 });

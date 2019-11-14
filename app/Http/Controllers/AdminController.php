@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Trainer;
 use App\Training;
 use App\User;
+use App\PrivateTraining;
 use App\Group;
 use Illuminate\Support\Facades\DB;
 use ConsoleTVs\Charts\Facades\Charts;
@@ -246,6 +247,12 @@ class AdminController extends Controller
         DB::table('usersabonnements')->insert(['user_id' => $user, 'abonnement_id' => $abonnement, 'date' => $date, 'end' => $end, 'amount' => $amount]);
 
 
+        return back();
+    }
+
+    public function privatechange(Request $request, PrivateTraining $id)
+    {
+        PrivateTraining::where('id', '=', $id->id)->update(['date'=>$request->date,'endtrain'=>date('Y-m-d H:i:s',strtotime('+1 hour',strtotime($request->date))),'checked'=>1]);
         return back();
     }
 }
