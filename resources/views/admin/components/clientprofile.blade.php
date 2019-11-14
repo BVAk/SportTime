@@ -93,9 +93,14 @@
     </div>
     <div class="col">
       <!-- small box -->
-
-      {{$user->email}}
-
+      @foreach ($userabonnement as $userabonnement)
+      <div class="row">
+      {{$userabonnement->name}}
+     <?if ($userabonnement->amount==NULL){?>
+      до {{$userabonnement->end}}
+     <? }else {?> {{$userabonnement->amount}} тренувань(ння) <?}?>
+     </div>
+     @endforeach
     </div>
   </div>
 
