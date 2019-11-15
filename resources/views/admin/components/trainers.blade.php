@@ -49,10 +49,10 @@
                         <tbody>
                         @foreach($trainers as $trainers)
                             <tr>
-                                <td> {{$trainers->name}}</td>
+                                <td><a href="trainers/{{$trainers->id}}"> {{$trainers->name}}</a></td>
                                 <td>{{date('Y-m-d')-$trainers->start}}</td>
                                 <td><img width=100px src="{{asset($trainers->image)}}"/></td>
-                                <td><a href="editprofile/{{$trainers->id}}">
+                                <td><a href="trainers/editprofile/{{$trainers->id}}">
                                         <button type="button" class="btn btn-warning">Редагувати</button>
                                     </a></td>
                             </tr>

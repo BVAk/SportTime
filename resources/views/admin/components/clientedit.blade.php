@@ -30,6 +30,11 @@
             
         </div>
         <div class="form-group">
+            <label for="health">Стан здоров'я</label>
+            <input id="health" name="health" type="text" class="form-control" value="{{$id->health}}" required>
+
+        </div>
+        <div class="form-group">
             <input class="btn btn-success center-block btn-lg" type="submit" value="Зберегти зміни">
         </div>
 

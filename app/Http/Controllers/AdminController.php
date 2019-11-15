@@ -47,8 +47,8 @@ class AdminController extends Controller
     public function welcome()
     {
         $trainergym2 = DB::table('traintrain')->join('trainers', 'traintrain.trainer_id', '=', 'trainers.id')->join('trainings', 'traintrain.training_id', '=', 'trainings.id')->where('training_id', '=', '1')->orwhere('training_id', '=', '2')->select('trainers.id as id', 'trainers.name as trainer_name', 'start', 'image', 'trainings.name as training_name')->get();
-        $check=DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('trainers', 'privateschedule.trainer_id', '=', 'trainers.id')->join('users', 'privateschedule.user_id', '=', 'users.id')->where('checked', '!=', '1')->where('date', '>=', new \DateTime('now'))->select('users.name as user_name','users.phone as user_phone','trainings.name as training_name', 'trainers.name as trainer_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->get();
-        return view('admin.welcomeadmin', compact('check','trainergym2'));
+        $check = DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('trainers', 'privateschedule.trainer_id', '=', 'trainers.id')->join('users', 'privateschedule.user_id', '=', 'users.id')->where('checked', '!=', '1')->where('date', '>=', new \DateTime('now'))->select('users.name as user_name', 'users.phone as user_phone', 'trainings.name as training_name', 'trainers.name as trainer_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->get();
+        return view('admin.welcomeadmin', compact('check', 'trainergym2'));
     }
 
     /**
@@ -57,12 +57,7 @@ class AdminController extends Controller
      * @rapam Request $request
      * @return \Illuminate\Http\Response
      */
-    public function showClients(Request $request)
-    {
-        // better to user pagination => instated of $users = User::all();
-        $users = User::where('name', 'like', "%$request->search%")->orWhere('email', 'like', "%$request->search%")->orWhere('phone', 'like', "%$request->search%")->paginate(10);
-        return view('admin.components.clients', compact('users'));
-    }
+ 
 
     public function showTrainers(Request $request)
     {
@@ -76,7 +71,7 @@ class AdminController extends Controller
         return view('admin.components.traineradd', compact('training'));
     }
 
-    
+
 
     public function inserttrainer(Request $request)
     {
@@ -117,7 +112,39 @@ class AdminController extends Controller
         );
     }
 
+    public function profileTrainers(Trainer $id)
+    {
+        $trainers = Trainer::where('id', '=', $id->id)->get();
+        $privateschedule = DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('users', 'privateschedule.user_id', '=', 'users.id')->where('privateschedule.trainer_id', '=', $id->id)->where('date', '>=', new \DateTime('now'))->select('trainings.name as training_name', 'users.name as user_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->get();
+       
+        return view('admin.components.trainerprofile', compact('trainers', 'privateschedule'));
+    }
 
+    public function editprofiletrainers(Trainer $id)
+    {
+        $users = Trainer::where('id', '=', $id->id)->get();
+
+        return view('admin.components.traineredit', compact('users', 'id'));
+    }
+    public function insertedittrainer(Request $request, Trainer $id)
+    {
+        Trainer::where('id', '=', $id->id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'card' => $request->card,
+            'health'=>$request->health
+        ]);
+        return redirect()->route('admin.trainerprofile', $id);
+    }
+
+
+    public function showClients(Request $request)
+    {
+        // better to user pagination => instated of $users = User::all();
+        $users = User::where('name', 'like', "%$request->search%")->orWhere('email', 'like', "%$request->search%")->orWhere('phone', 'like', "%$request->search%")->orWhere('card', 'like', "%$request->search%")->paginate(10);
+        return view('admin.components.clients', compact('users'));
+    }
     public function addClients()
     {
         $users = User::all();
@@ -125,16 +152,17 @@ class AdminController extends Controller
     }
     public function inserteditclient(Request $request, User $id)
     {
-   
-        User::where('id','=',$id->id)->update([
+
+        User::where('id', '=', $id->id)->update([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'card'=>$request->card
+            'card' => $request->card,
+            'health'=>$request->health
         ]);
 
-        return redirect()->route('admin.clientprofile',$id);
-    }  
+        return redirect()->route('admin.clientprofile', $id);
+    }
     public function insertclient(Request $request)
     {
         $request->validate([
@@ -142,13 +170,14 @@ class AdminController extends Controller
             'email' => 'required|unique:users',
             'phone' => 'required|unique:users',
             'card' => 'required',
+            'health' => 'required',
             'created_at' => 'required',
 
         ]);
 
-        $trainer = User::create($request->only(['name', 'email', 'phone', 'card', 'created_at']));
-$id=User::where('phone','=',$request->phone)->select('id')->first();
-        return redirect()->route('admin.clientprofile',$id);
+        User::create($request->only(['name', 'email', 'phone', 'card', 'created_at','health']));
+        $id = User::where('phone', '=', $request->phone)->select('id')->first();
+        return redirect()->route('admin.clientprofile', $id);
     }
 
 
@@ -162,8 +191,8 @@ $id=User::where('phone','=',$request->phone)->select('id')->first();
     public function scheduleprivate()
     {
         $training = Training::where('type', '!=', '')->get();
-        $private=DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('trainers', 'privateschedule.trainer_id', '=', 'trainers.id')->join('users', 'privateschedule.user_id', '=', 'users.id')->where('checked', '=', '1')->where('date', '>=', new \DateTime('now'))->select('users.name as user_name','users.phone as user_phone','trainings.name as training_name', 'trainers.name as trainer_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->get();
-        return view('admin.components.scheduleprivate', compact('training','private'));
+        $private = DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('trainers', 'privateschedule.trainer_id', '=', 'trainers.id')->join('users', 'privateschedule.user_id', '=', 'users.id')->where('checked', '=', '1')->where('date', '>=', new \DateTime('now'))->select('users.name as user_name', 'users.phone as user_phone', 'trainings.name as training_name', 'trainers.name as trainer_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->get();
+        return view('admin.components.scheduleprivate', compact('training', 'private'));
     }
 
 
@@ -184,19 +213,19 @@ $id=User::where('phone','=',$request->phone)->select('id')->first();
     public function profileClients(User $id)
     {
         $users = User::where('id', '=', $id->id)->get();
-        $userabonnement = DB::table('usersabonnements')->where('usersabonnements.user_id', '=', $id->id)->join('abonnements','abonnements.id','=','usersabonnements.abonnement_id')->where('usersabonnements.end','>=', new \DateTime('now'))->orwhere('usersabonnements.amount','>',0)->get();
+        $userabonnement = DB::table('usersabonnements')->where('usersabonnements.user_id', '=', $id->id)->join('abonnements', 'abonnements.id', '=', 'usersabonnements.abonnement_id')->where('usersabonnements.end', '>=', new \DateTime('now'))->orwhere('usersabonnements.amount', '>', 0)->get();
         $privateschedule = DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('trainers', 'privateschedule.trainer_id', '=', 'trainers.id')->where('user_id', '=', $id->id)->where('date', '>=', new \DateTime('now'))->select('trainings.name as training_name', 'trainers.name as trainer_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->get();
         $trainergym2 = DB::table('traintrain')->join('trainers', 'traintrain.trainer_id', '=', 'trainers.id')->join('trainings', 'traintrain.training_id', '=', 'trainings.id')->where('training_id', '=', '1')->orwhere('training_id', '=', '2')->select('trainers.id as id', 'trainers.name as trainer_name', 'start', 'image', 'trainings.name as training_name')->get();
         $abonnement = DB::table('abonnements')->get();
-        
+
         return view('admin.components.clientprofile', compact('userabonnement', 'abonnement', 'users', 'trainergym2', 'privateschedule'));
     }
 
     public function editprofile(User $id)
     {
         $users = User::where('id', '=', $id->id)->get();
-         
-        return view('admin.components.clientedit', compact('users','id'));
+
+        return view('admin.components.clientedit', compact('users', 'id'));
     }
 
     public function statistic()
@@ -212,28 +241,28 @@ $id=User::where('phone','=',$request->phone)->select('id')->first();
         if (DB::table('usersabonnements')->where('user_id', '=', $user)->where('abonnement_id', '=', $abonnement)->where('end', '>=', $date)->exists()) {
             $userabomalready = DB::table('usersabonnements')->where('user_id', '=', $user)->where('abonnement_id', '=', $abonnement)->where('end', '>=', $date)->first();
             $date1 = $userabomalready->end;
-            $date1=strtotime($date1);
+            $date1 = strtotime($date1);
         }
         if ($abonnement == '1') {
-            $end = date('Y-m-d H:i:s', strtotime('+3 month',$date1));
+            $end = date('Y-m-d H:i:s', strtotime('+3 month', $date1));
             $amount = NULL;
         } else if ($abonnement == '2') {
-            $end = date('Y-m-d H:i:s', strtotime('+1 month',$date1));
+            $end = date('Y-m-d H:i:s', strtotime('+1 month', $date1));
             $amount = NULL;
         } else if ($abonnement == '3') {
             $end = NULL;
             $amount = 1;
         } else if ($abonnement == '4') {
-            $end = date('Y-m-d H:i:s', strtotime('+3 month',$date1));
+            $end = date('Y-m-d H:i:s', strtotime('+3 month', $date1));
             $amount = NULL;
         } else if ($abonnement == '5') {
-            $end = date('Y-m-d H:i:s', strtotime('+1 month',$date1));
+            $end = date('Y-m-d H:i:s', strtotime('+1 month', $date1));
             $amount = NULL;
         } else if ($abonnement == '6') {
-            $end = date('Y-m-d H:i:s', strtotime('+3 month',$date1));
+            $end = date('Y-m-d H:i:s', strtotime('+3 month', $date1));
             $amount = NULL;
         } else if ($abonnement == '7') {
-            $end = date('Y-m-d H:i:s', strtotime('+1 month',$date1));
+            $end = date('Y-m-d H:i:s', strtotime('+1 month', $date1));
             $amount = NULL;
         } else if ($abonnement == '8') {
             $end = NULL;
@@ -242,7 +271,7 @@ $id=User::where('phone','=',$request->phone)->select('id')->first();
             $end = NULL;
             $amount = 1;
         } else if ($abonnement == '10') {
-            $end = date('Y-m-d H:i:s', strtotime('+1 month',$date1));
+            $end = date('Y-m-d H:i:s', strtotime('+1 month', $date1));
             $amount = NULL;
         } else if ($abonnement == '11') {
             $end = NULL;
@@ -274,7 +303,7 @@ $id=User::where('phone','=',$request->phone)->select('id')->first();
 
     public function privatechange(Request $request, PrivateTraining $id)
     {
-        PrivateTraining::where('id', '=', $id->id)->update(['date'=>$request->date,'endtrain'=>date('Y-m-d H:i:s',strtotime('+1 hour',strtotime($request->date))),'checked'=>1]);
+        PrivateTraining::where('id', '=', $id->id)->update(['date' => $request->date, 'endtrain' => date('Y-m-d H:i:s', strtotime('+1 hour', strtotime($request->date))), 'checked' => 1]);
         return back();
     }
 }
