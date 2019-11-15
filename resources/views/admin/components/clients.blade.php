@@ -96,7 +96,7 @@
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->phone}}</td>
                                 <td>{{$user->card}}</td>
-                                <td><a href="editprofile/{{$user->id}}">
+                                <td><a href="clients/editprofile/{{$user->id}}">
                                         <button type="button" class="btn btn-warning">Редагувати</button>
                                     </a></td>
                             </tr>

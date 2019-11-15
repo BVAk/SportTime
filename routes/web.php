@@ -34,12 +34,15 @@ Route::prefix('/admin')->group(function () {
     Route::post('/login', 'Auth\LoginAdminController@login')->name('admin.login.submit');
     Route::get('/', 'AdminController@welcome')->name('admin');
     Route::get('/clients', 'AdminController@showClients')->name('admin.clients');
-    Route::get('/clients/{id}', 'AdminController@profileClients');
+    Route::get('/clients/add', 'AdminController@addClients');
+    Route::post('/insertclient', 'AdminController@insertclient')->name('admin.insertclient.submit');
+    Route::post('/inserteditclient/{id}', 'AdminController@inserteditclient')->name('admin.inserteditclient.submit');
+    
+    Route::get('/clients/{id}', 'AdminController@profileClients')->name('admin.clientprofile');
+    Route::get('/clients/editprofile/{id}', 'AdminController@editprofile')->name('admin.clientedit');
     Route::get('/trainers', 'AdminController@showTrainers')->name('admin.trainers');
     Route::get('/trainers/add', 'AdminController@addTrainers')->name('admin.trainers.add');
     Route::post('/inserttrainer', 'AdminController@inserttrainer')->name('admin.inserttrainer.submit');
-    Route::get('/clients/add', 'AdminController@addClients')->name('admin.clients.add');
-    Route::post('/insertclient', 'AdminController@insertclient')->name('admin.insertclient.submit');
     Route::get('/schedule/group', 'AdminController@schedulegroup')->name('admin.schedulegroup');
     Route::post('/schedule/group', 'AdminController@schedulegroupupdate')->name('admin.schedulegroupupdate');
     Route::get('/schedule/private', 'AdminController@scheduleprivate')->name('admin.scheduleprivate');

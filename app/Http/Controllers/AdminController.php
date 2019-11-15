@@ -46,8 +46,9 @@ class AdminController extends Controller
     }
     public function welcome()
     {
+        $trainergym2 = DB::table('traintrain')->join('trainers', 'traintrain.trainer_id', '=', 'trainers.id')->join('trainings', 'traintrain.training_id', '=', 'trainings.id')->where('training_id', '=', '1')->orwhere('training_id', '=', '2')->select('trainers.id as id', 'trainers.name as trainer_name', 'start', 'image', 'trainings.name as training_name')->get();
         $check=DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('trainers', 'privateschedule.trainer_id', '=', 'trainers.id')->join('users', 'privateschedule.user_id', '=', 'users.id')->where('checked', '!=', '1')->where('date', '>=', new \DateTime('now'))->select('users.name as user_name','users.phone as user_phone','trainings.name as training_name', 'trainers.name as trainer_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->get();
-        return view('admin.welcomeadmin', compact('check'));
+        return view('admin.welcomeadmin', compact('check','trainergym2'));
     }
 
     /**
@@ -74,6 +75,8 @@ class AdminController extends Controller
         $training = Training::all();
         return view('admin.components.traineradd', compact('training'));
     }
+
+    
 
     public function inserttrainer(Request $request)
     {
@@ -120,7 +123,18 @@ class AdminController extends Controller
         $users = User::all();
         return view('admin.components.clientadd', compact('users'));
     }
+    public function inserteditclient(Request $request, User $id)
+    {
+   
+        User::where('id','=',$id->id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'card'=>$request->card
+        ]);
 
+        return redirect()->route('admin.clientprofile',$id);
+    }  
     public function insertclient(Request $request)
     {
         $request->validate([
@@ -133,8 +147,8 @@ class AdminController extends Controller
         ]);
 
         $trainer = User::create($request->only(['name', 'email', 'phone', 'card', 'created_at']));
-
-        return redirect('/admin/clients');
+$id=User::where('phone','=',$request->phone)->select('id')->first();
+        return redirect()->route('admin.clientprofile',$id);
     }
 
 
@@ -177,6 +191,14 @@ class AdminController extends Controller
         
         return view('admin.components.clientprofile', compact('userabonnement', 'abonnement', 'users', 'trainergym2', 'privateschedule'));
     }
+
+    public function editprofile(User $id)
+    {
+        $users = User::where('id', '=', $id->id)->get();
+         
+        return view('admin.components.clientedit', compact('users','id'));
+    }
+
     public function statistic()
     {
         return view('admin.components.statistic');
