@@ -202,7 +202,7 @@
               <span class="icon-code wrap-icon mr-3"></span>
               <div class="text">
                 <span class="d-block number">3</span>
-                <span class="caption">великих залів</span>
+                <span class="caption">великі зали</span>
               </div>
             </div>
           </div>

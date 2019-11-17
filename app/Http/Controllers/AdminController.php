@@ -115,7 +115,7 @@ class AdminController extends Controller
     public function profileTrainers(Trainer $id)
     {
         $trainers = Trainer::where('id', '=', $id->id)->get();
-        $privateschedule = DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('users', 'privateschedule.user_id', '=', 'users.id')->where('privateschedule.trainer_id', '=', $id->id)->where('date', '>=', new \DateTime('now'))->select('trainings.name as training_name', 'users.name as user_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->get();
+        $privateschedule = DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('users', 'privateschedule.user_id', '=', 'users.id')->where('privateschedule.trainer_id', '=', $id->id)->select('trainings.name as training_name', 'users.name as user_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->get();
        
         return view('admin.components.trainerprofile', compact('trainers', 'privateschedule'));
     }
@@ -123,8 +123,9 @@ class AdminController extends Controller
     public function editprofiletrainers(Trainer $id)
     {
         $users = Trainer::where('id', '=', $id->id)->get();
-
-        return view('admin.components.traineredit', compact('users', 'id'));
+        $training=DB::table('traintrain')->join('trainings','traintrain.training_id', '=', 'trainings.id')->where('traintrain.trainer_id', '=',$id->id)->get();
+        $trainings=DB::table('trainings')->get();
+        return view('admin.components.traineredit', compact('users', 'id','training','trainings'));
     }
     public function insertedittrainer(Request $request, Trainer $id)
     {
@@ -148,6 +149,7 @@ class AdminController extends Controller
     public function addClients()
     {
         $users = User::all();
+        
         return view('admin.components.clientadd', compact('users'));
     }
     public function inserteditclient(Request $request, User $id)
