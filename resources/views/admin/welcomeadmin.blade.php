@@ -1,6 +1,9 @@
 @extends('layouts.admin_layout')
 
 @section('content')
+@if (Session::has('message'))
+   <div class="alert alert-info">{{ Session::get('message') }}</div>
+@endif
 <div class="container-fluid">
 <div class="row justify-content-center text-center">
   <h2>Підтвердження броні індивідуальних тренувань</h2>
@@ -79,6 +82,7 @@
   </form>
 </div>
 </div>
+
 
 
 @endsection

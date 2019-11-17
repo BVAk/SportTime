@@ -157,11 +157,11 @@ class AdminController extends Controller
     {
         $usercard = $request['usercard'];
         $userphone = $request['userphone'];
-        $user = User::where('card', '=', $usercard)->orwhere('phone','=',$userphone)->select('id as user_id')->first();
-        DB::table('visiting')->insert(['user_id' => $user->user_id, 'date' => new \DateTime('now')]);
+        $user = User::where('card', '=', $usercard)->orwhere('phone','=',$userphone)->first();
+        DB::table('visiting')->insert(['user_id' => $user->id, 'date' => new \DateTime('now')]);
 
-
-        return back();
+        return Redirect()->back()->with(['message' => $user->name.', успішно відмічено!']);
+        
     }
     
     public function inserteditclient(Request $request, User $id)
