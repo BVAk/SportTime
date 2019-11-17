@@ -152,6 +152,18 @@ class AdminController extends Controller
         
         return view('admin.components.clientadd', compact('users'));
     }
+    
+    public function addvisit(Request $request)
+    {
+        $usercard = $request['usercard'];
+        $userphone = $request['userphone'];
+        $user = User::where('card', '=', $usercard)->orwhere('phone','=',$userphone)->select('id as user_id')->first();
+        DB::table('visiting')->insert(['user_id' => $user->user_id, 'date' => new \DateTime('now')]);
+
+
+        return back();
+    }
+    
     public function inserteditclient(Request $request, User $id)
     {
 

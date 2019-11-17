@@ -34,6 +34,8 @@ Route::prefix('/admin')->group(function () {
     Route::post('/login', 'Auth\LoginAdminController@login')->name('admin.login.submit');
     Route::get('/', 'AdminController@welcome')->name('admin');
 
+    
+    Route::post('/addvisit', 'AdminController@addvisit')->name('admin.addvisit.submit');
     Route::get('/clients', 'AdminController@showClients')->name('admin.clients');
     Route::get('/clients/add', 'AdminController@addClients');
     Route::post('/insertclient', 'AdminController@insertclient')->name('admin.insertclient.submit');
