@@ -9,7 +9,7 @@
               <div class="card-body">
               <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Chart Demo</div>
+                <div class="panel-heading">Реєстрація нових клієнтів</div>
 
                 <div class="panel-body">
                     {!! $chart->html() !!}
