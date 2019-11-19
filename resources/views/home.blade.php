@@ -20,6 +20,53 @@
   <link crossorigin="anonymous" media="all" integrity="sha512-/YEVWs7BzxfKyUd6zVxjEQcXRWsLbcEjv045Rq8DSoipySmQblhVKxlXLva2GtNd5DhwCxHwW1RM0N9I7S2Vew==" rel="stylesheet" href="https://github.githubassets.com/assets/frameworks-481a47a96965f6706fb41bae0d14b09a.css" />
   <link crossorigin="anonymous" media="all" integrity="sha512-8yRKCmpBPsIyuLQNxQmP0kBfYdvNOz5EkCagWypV27znz6gRd0tHzdbCb2P/9XXEQcXFRMXC2olX8bhjTjbTYA==" rel="stylesheet" href="https://github.githubassets.com/assets/github-d12aa61f11c1ece71b4c19b1ba4dac4a.css" />
 
+  <link href="{{asset('packages/core/main.css')}}" rel="stylesheet" />
+<link href="{{asset('packages/daygrid/main.css')}}" rel="stylesheet" />
+<link href="{{asset('packages/timegrid/main.css')}}" rel="stylesheet" />
+<link href="{{asset('packages/list/main.css')}}" rel="stylesheet" />
+<style>
+  #wrap {
+    
+    margin: 0 auto;
+  }
+
+  #external-events {
+    float: left;
+    width: 150px;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    background: #eee;
+    text-align: left;
+  }
+
+  #external-events h4 {
+    font-size: 16px;
+    margin-top: 0;
+    padding-top: 1em;
+  }
+
+  #external-events .fc-event {
+    margin: 10px 0;
+    cursor: pointer;
+  }
+
+  #external-events p {
+    margin: 1.5em 0;
+    font-size: 11px;
+    color: #666;
+  }
+
+  #external-events p input {
+    margin: 0;
+    vertical-align: middle;
+  }
+
+  #calendar {
+    
+    width: 900px;
+  }
+</style>
+
 
 </head>
 
@@ -115,73 +162,89 @@
     </div>
     <div class="site-section">
       <div class="container">
-        <div class="col-md-8 col-md-offset-2">
-          <div class="panel panel-default">
-            <div class="panel-heading">Dashboard</div>
-
-            <div class="panel-body">
-              @if (session('status'))
-              <div class="alert alert-success">
-                {{ session('status') }}
-              </div>
-              @endif
-              <p>My name: {{Auth::user()->name}}</p>
-              <p>My Email: {{Auth::user()->email}}</p>
+        
 
 
-              <div class="mt-4 position-relative">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-6">
+      ФІО клієнта:
+    </div>
+    <div class="col-6">
+      <!-- small box -->
+      @foreach ($users as $user)
+      {{$user->name}}
+      @endforeach
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      Мобільний номер клієнта:
+    </div>
+    <div class="col">
+      <!-- small box -->
+
+      {{$user->phone}}
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      Email клієнта:
+    </div>
+    <div class="col">
+      <!-- small box -->
+
+      {{$user->email}}
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      Діючий абонемент:
+    </div>
+    <div class="col">
+      <!-- small box -->
+      @foreach ($userabonnement as $userabonnement)
+      <div class="row">
+      {{$userabonnement->name}}
+     <?if ($userabonnement->amount==NULL){?>
+      до {{$userabonnement->end}}
+     <? }else {?> {{$userabonnement->amount}} тренувань(ння) <?}?>
+     </div>
+     @endforeach
+    </div>
+  </div>
+
+</div>
 
 
-                <div class="js-yearly-contributions">
 
-                  <div class="position-relative">
 
-                    <div class="border border-gray-dark py-2 graph-before-activity-overview">
-                      <div class="js-calendar-graph mx-3 d-flex flex-column flex-items-end flex-xl-items-center overflow-hidden pt-1 is-graph-loading graph-canvas calendar-graph height-full text-center" data-graph-url="/users/andreyromanov/contributions?to=2019-11-05" data-url="/andreyromanov" data-from="2018-11-04 00:00:00 +0200" data-to="2019-11-05 23:59:59 +0200" data-org="">
 
-                        <svg width="828" height="128" class="js-calendar-graph-svg">
-                          <g transform="translate(10, 20)" data-hydro-click="{&quot;event_type&quot;:&quot;user_profile.click&quot;,&quot;payload&quot;:{&quot;profile_user_id&quot;:23367130,&quot;target&quot;:&quot;CONTRIBUTION_CALENDAR_SQUARE&quot;,&quot;user_id&quot;:23383350,&quot;client_id&quot;:&quot;1439471101.1564076804&quot;,&quot;originating_request_id&quot;:&quot;65FE:FE94:9064576:D8C11C2:5DC1CDE9&quot;,&quot;originating_url&quot;:&quot;https://github.com/andreyromanov&quot;,&quot;referrer&quot;:&quot;https://github.com/&quot;}}" data-hydro-click-hmac="106e788d8955df89b1abb9df8cd7409a5db9405f904a18c045dcfdb14b9a7826">
-                           <?php for ($i=0;$i<52;$i+=16){?>
-                            <g transform="translate({{$i*16}}, 0)">
-                            <?php for ($j=0;$j<91;$j+=15){?>
-                            <rect class="day" width="12" height="12" x="16-{{$i}}" y="{{$j}}" fill="#239a3b" data-count="2" data-date="2018-11-{{$j}}"/>
-                            <?php }?>
-                            </g>
-                            <?php } ?>
-                            
-                            <text x="16" y="-9" class="month">Nov</text>
-                            <text x="76" y="-9" class="month">Dec</text>
-                            <text x="151" y="-9" class="month">Jan</text>
-                            <text x="211" y="-9" class="month">Feb</text>
-                            <text x="271" y="-9" class="month">Mar</text>
-                            <text x="346" y="-9" class="month">Apr</text>
-                            <text x="406" y="-9" class="month">May</text>
-                            <text x="466" y="-9" class="month">Jun</text>
-                            <text x="541" y="-9" class="month">Jul</text>
-                            <text x="601" y="-9" class="month">Aug</text>
-                            <text x="661" y="-9" class="month">Sep</text>
-                            <text x="736" y="-9" class="month">Oct</text>
-                            <text text-anchor="start" class="wday" dx="-10" dy="8" style="display: none;">Sun</text>
-                            <text text-anchor="start" class="wday" dx="-10" dy="25">Mon</text>
-                            <text text-anchor="start" class="wday" dx="-10" dy="32" style="display: none;">Tue</text>
-                            <text text-anchor="start" class="wday" dx="-10" dy="56">Wed</text>
-                            <text text-anchor="start" class="wday" dx="-10" dy="57" style="display: none;">Thu</text>
-                            <text text-anchor="start" class="wday" dx="-10" dy="85">Fri</text>
-                            <text text-anchor="start" class="wday" dx="-10" dy="81" style="display: none;">Sat</text>
-                          </g>
-                         
-                        </svg>
+<div class="container">
+  <div class="row justify-content-center text-center">
+    <div id='wrap'>
 
-                      </div>
-                    </div>
 
-                  </div>
-                </div>
+      <h2>Індивідуальні заняття</h2>
 
-              </div>
-            </div>
-          </div>
+      <div id='external-events-list'>
+
+      </div>
+
+      <form>
+        <div id='calendar' ></div>
+        <div class="form-group">
+
         </div>
+      </form>
+      <div style='clear:both'></div>
+
+    </div>
+
+    
+    
       </div>
 
 
@@ -210,6 +273,118 @@
     <script crossorigin="anonymous" integrity="sha512-pLb0KdGv98tBKuIktAXgkkzj5YctsASlAaHp9M28BRo766KtsWiUbAQ9ApBTVhBbJftX2yrrHYAilPdc8JPZ2w==" type="application/javascript" src="https://github.githubassets.com/assets/frameworks-62db07b3.js"></script>
     
     <script crossorigin="anonymous" async="async" integrity="sha512-nITnsRZNziONp9Rn/73yyNlra8L1nPXp13ejdl0hm3Exs0hYsTtfScepr51Ga7I/SQYW7kDTYconHohkEPgtlQ==" type="application/javascript" src="https://github.githubassets.com/assets/github-bootstrap-eafec0d4.js"></script>
+    <script src="{{asset('packages/core/main.js')}}"></script>
+    <script src="{{asset('packages/interaction/main.js')}}"></script>
+    <script src="{{asset('packages/daygrid/main.js')}}"></script>
+    <script src="{{asset('packages/timegrid/main.js')}}"></script>
+    <script src="{{asset('packages/list/main.js')}}"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
     
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var Calendar = FullCalendar.Calendar;
+        var Draggable = FullCalendarInteraction.Draggable
+
+        /* initialize the external events
+        -----------------------------------------------------------------*/
+
+        var containerEl = document.getElementById('external-events-list');
+        new Draggable(containerEl, {
+          itemSelector: '.fc-event',
+          eventData: function(eventEl) {
+            return {
+              title: eventEl.innerText.trim()
+            }
+          }
+        });
+
+        //// the individual way to do it
+        // var containerEl = document.getElementById('external-events-list');
+        // var eventEls = Array.prototype.slice.call(
+        //   containerEl.querySelectorAll('.fc-event')
+        // );
+        // eventEls.forEach(function(eventEl) {
+        //   new Draggable(eventEl, {
+        //     eventData: {
+        //       title: eventEl.innerText.trim(),
+        //     }
+        //   });
+        // });
+
+        /* initialize the calendar
+        -----------------------------------------------------------------*/
+
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new Calendar(calendarEl, {
+          plugins: ['interaction', 'timeGridWeek', 'timeGrid', 'list'],
+          header: {
+            left: '',
+            right: '',
+            center: 'title',
+          },
+          minTime: "09:00:00",
+
+          maxTime: "23:00:00",
+          editable: false,
+          droppable: false, // this allows things to be dropped onto the calendar
+          eventSources: [{
+            events: [
+              @foreach($privateschedule as $privateschedule) {
+
+                id: '{{$privateschedule->privateschedule_id}}',
+                title: '{{$privateschedule->trainer_name}}',
+                start: '{{$privateschedule->privateschedule_date}}',
+                end: '{{$privateschedule->privateschedule_endtrain}}',
+                allDay: false
+              },
+              @endforeach
+            ],
+            color: 'greenyellow', // an option!
+            textColor: 'black' // an option!
+          }],
+          eventDrop: function(event, delta, revertFunc) { // si changement de position
+
+            edit(event);
+
+          },
+        });
+        calendar.render();
+
+      });
+
+      function edit(event) {
+        start = event.start.format('YYYY-MM-DD HH:mm:ss');
+        if (event.end) {
+          end = event.end.format('YYYY-MM-DD HH:mm:ss');
+        } else {
+          end = start;
+        }
+
+        id = event.id;
+
+        Event = [];
+        Event[0] = id;
+        Event[1] = start;
+        Event[2] = end;
+
+        $.ajax({
+          url: 'admin/schedule/group',
+          type: "POST",
+          data: {
+            Event: Event
+          },
+          success: function(rep) {
+            if (rep == 'OK') {
+              alert('Saved');
+            } else {
+              alert('Could not be saved. try again.');
+            }
+          }
+        });
+      }
+    </script>
+
     
 </body>
