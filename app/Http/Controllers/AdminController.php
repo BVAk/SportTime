@@ -159,8 +159,8 @@ class AdminController extends Controller
         $userphone = $request['userphone'];
         $user = User::where('card', '=', $usercard)->orwhere('phone', '=', $userphone)->first();
 
-        if (DB::table('usersabonnements')->where('usersabonnements.user_id', '=', '116')->exists()) {
-            $userabonnement = DB::table('usersabonnements')->where('user_id', '=', '116')->get();
+        if (DB::table('usersabonnements')->where('usersabonnements.user_id', '=', $user->id)->where('end','>=', new \DateTime('now'))->orwhere('amount','!=',0)->exists()) {
+            $userabonnement = DB::table('usersabonnements')->where('user_id', '=',  $user->id)->get();
            foreach ($userabonnement as $userabonnement){ if (($userabonnement->end) > (new \DateTime('now'))) {
                 $message= ', не відмічено!';
             }} if (($userabonnement->end) < (new \DateTime('now'))) {
@@ -266,25 +266,25 @@ class AdminController extends Controller
         }
         if ($abonnement == '1') {
             $end = date('Y-m-d H:i:s', strtotime('+3 month', $date1));
-            $amount = NULL;
+            $amount = 0;
         } else if ($abonnement == '2') {
             $end = date('Y-m-d H:i:s', strtotime('+1 month', $date1));
-            $amount = NULL;
+            $amount = 0;
         } else if ($abonnement == '3') {
-            $end = NULL;
+            $end = 0;
             $amount = 1;
         } else if ($abonnement == '4') {
             $end = date('Y-m-d H:i:s', strtotime('+3 month', $date1));
-            $amount = NULL;
+            $amount = 0;
         } else if ($abonnement == '5') {
             $end = date('Y-m-d H:i:s', strtotime('+1 month', $date1));
-            $amount = NULL;
+            $amount = 0;
         } else if ($abonnement == '6') {
             $end = date('Y-m-d H:i:s', strtotime('+3 month', $date1));
-            $amount = NULL;
+            $amount = 0;
         } else if ($abonnement == '7') {
             $end = date('Y-m-d H:i:s', strtotime('+1 month', $date1));
-            $amount = NULL;
+            $amount = 0;
         } else if ($abonnement == '8') {
             $end = NULL;
             $amount = 1;
