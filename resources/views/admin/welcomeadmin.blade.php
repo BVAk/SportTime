@@ -80,6 +80,8 @@
       <input class="btn btn-warning center-block btn-lg" type="submit" value="Відмітити">
     </div>
   </form>
+
+  
 </div>
 </div>
 

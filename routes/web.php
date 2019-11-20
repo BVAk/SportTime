@@ -33,8 +33,8 @@ Route::prefix('/admin')->group(function () {
     Route::get('/login', 'Auth\LoginAdminController@showLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\LoginAdminController@login')->name('admin.login.submit');
     Route::get('/', 'AdminController@welcome')->name('admin');
+    Route::get('addweek', 'AdminController@handle');
 
-    
     Route::post('/addvisit', 'AdminController@addvisit')->name('admin.addvisit.submit');
     Route::get('/clients', 'AdminController@showClients')->name('admin.clients');
     Route::get('/clients/add', 'AdminController@addClients');

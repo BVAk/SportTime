@@ -241,7 +241,7 @@ class AdminController extends Controller
 
         return view('admin.components.clientprofile', compact('userabonnement', 'abonnement', 'users', 'trainergym2', 'privateschedule'));
     }
-
+    
     public function editprofile(User $id)
     {
         $users = User::where('id', '=', $id->id)->get();

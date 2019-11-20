@@ -37,12 +37,13 @@ class updateGroup extends Command
      */
     public function handle()
     {
-        $grpschtble = DB::table('groupshedule');
+        $grpschtble = DB::table('groupshedule')->get();
         foreach ($grpschtble as $sch) {
-            $date1 = $sch->start;
-            $date2 = $sch->end;
-            DB::table('groupshedule')->where('id', '=', $grpschtble->id)->update(['start' => date('Y-m-d H:i:s', strtotime('+1 week', $date1)), 'end' => date('Y-m-d H:i:s', strtotime('+1 week', $date2))]);
+            $date = date_create_from_format('Y-m-d H:i:s', $sch->start);
+            $date2 = date_create_from_format('Y-m-d H:i:s', $sch->end);
+            DB::table('groupshedule')->where('id', '=', $sch->id)->update(['start' =>  $date->modify( '+7 days' ), 'end' => $date2->modify( '+7 days' )]);
         }
+    
     }
     }
 

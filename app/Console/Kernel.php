@@ -26,9 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('group:day')->daily();
-       /** weekly()->mondays()->at('00:00');
-       */
+        $schedule->command('group:day')-> weekly()->mondays()->at('00:00');
     }
 
     /**
