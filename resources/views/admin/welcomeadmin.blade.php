@@ -8,6 +8,10 @@
 <div class="row justify-content-center text-center">
   <h2>Підтвердження броні індивідуальних тренувань</h2>
 </div>
+
+
+<h4 class="modal-title">{{ $checkme }}</h4>
+  
   @foreach ($check as $check1)
   <div class="col-lg-3 col-6">
     <div class="small-box bg-warning">
@@ -16,7 +20,7 @@
 
         <p>Зворотній зв'язок: <b>{{$check1->user_phone}}</b><br> Ім'я тренера: <b> {{$check1->trainer_name}}</b><br> Обраний час тренування: <b>{{$check1->privateschedule_date}}</b></p>
       </div>
-      <a href="/admin/clients/add" class="small-box-footer">Підтвердити тренування <i class="fas fa-arrow-circle-right"></i></a>
+      <a href="/admin/clients/private/{{$check1->privateschedule_id}}" class="small-box-footer">Підтвердити тренування <i class="fas fa-arrow-circle-right"></i></a>
       <a id="functionEdit" class="small-box-footer" type="button" data-toggle="modal" data-target="#myModal-{{ $check1->privateschedule_id }}">Редагувати тренування <i class="fas fa-arrow-circle-right"></i></a>
     </div>
   </div>
@@ -60,6 +64,7 @@
   </div>
 
   @endforeach
+  
 
 </div>
 <div class="container-fluid">

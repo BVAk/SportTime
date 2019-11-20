@@ -131,7 +131,7 @@
       </div>
       <div class="form-group">
         Підтвердити тренування
-        <input id="checked" name="checked" type="checkbox" value="1">
+        <input id="checked" name="checked" type="hidden" value="1">
       </div>
       <input id="user" name="user" type="hidden" class="form-control" value="{{$user->id }}" required>
 
@@ -246,7 +246,7 @@
           plugins: ['interaction', 'timeGridWeek', 'timeGrid', 'list'],
           header: {
             left: '',
-            right: '',
+            right: 'today prev,next',
             center: 'title',
           },
           minTime: "09:00:00",

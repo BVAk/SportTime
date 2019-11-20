@@ -42,6 +42,7 @@ Route::prefix('/admin')->group(function () {
     Route::post('/inserteditclient/{id}', 'AdminController@inserteditclient')->name('admin.inserteditclient.submit');
     Route::get('/clients/{id}', 'AdminController@profileClients')->name('admin.clientprofile');
     Route::get('/clients/editprofile/{id}', 'AdminController@editprofile')->name('admin.clientedit');
+    Route::get('/clients/private/{id}','AdminController@checkprivateclient');
 
     Route::get('/trainers', 'AdminController@showTrainers')->name('admin.trainers');
     Route::get('/trainers/add', 'AdminController@addTrainers')->name('admin.trainers.add');
