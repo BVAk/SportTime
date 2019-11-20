@@ -206,9 +206,17 @@ class AdminController extends Controller
     {
         $training = Training::where('type', '!=', 'дитячі')->where('type', '!=', '')->get();
         $groupschedule = DB::table('groupshedule')->join('trainings', 'groupshedule.train_id', '=', 'trainings.id')->where('type', '!=', 'дитячі')->where('type', '!=', '')->get();
-        return view('admin.components.schedulegroup', compact('training'))->with('groupschedule', $groupschedule);
+        $name="Групові заняття";
+        return view('admin.components.schedulegroup', compact('training','name'))->with('groupschedule', $groupschedule);
     }
 
+    public function schedulechild()
+    {
+        $training = Training::where('type', '=', 'дитячі')->get();
+        $name="Заняття для дітей";
+        $groupschedule = DB::table('groupshedule')->join('trainings', 'groupshedule.train_id', '=', 'trainings.id')->where('type', '=', 'дитячі')->get();
+        return view('admin.components.schedulegroup', compact('training','name'))->with('groupschedule', $groupschedule);
+    }
     public function scheduleprivate()
     {
         $training = Training::where('type', '!=', '')->get();

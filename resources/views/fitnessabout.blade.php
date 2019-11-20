@@ -404,7 +404,7 @@
         center: 'title',
       },
       minTime: "09:00:00",
-      defaultDate: '2019-10-06',
+      
       maxTime:"22:00:00",
       editable: false,
       droppable: true, // this allows things to be dropped onto the calendar
@@ -463,7 +463,7 @@
         center: 'title',
       },
       minTime: "09:00:00",
-      defaultDate: '2019-10-06',
+      
       maxTime:"22:00:00",
       editable: false,
       droppable: true, // this allows things to be dropped onto the calendar

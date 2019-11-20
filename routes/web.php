@@ -51,6 +51,7 @@ Route::prefix('/admin')->group(function () {
     Route::get('/trainers/{id}', 'AdminController@profileTrainers')->name('admin.trainerprofile');
 
     Route::get('/schedule/group', 'AdminController@schedulegroup')->name('admin.schedulegroup');
+    Route::get('/schedule/child', 'AdminController@schedulechild');
     Route::post('/schedule/group', 'AdminController@schedulegroupupdate')->name('admin.schedulegroupupdate');
     Route::get('/schedule/private', 'AdminController@scheduleprivate')->name('admin.scheduleprivate');
     Route::post('/userabonnement', 'AdminController@userabonnement');

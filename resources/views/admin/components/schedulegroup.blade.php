@@ -59,7 +59,7 @@
         <div id='wrap'>
 
 <div id='external-events'>
-  <h4>Групові заняття</h4>
+  <h4> {{$name}}</h4>
 
   <div id='external-events-list'>
     @foreach($training as $training)
@@ -136,7 +136,7 @@
         center: 'title',
       },
       minTime: "09:00:00",
-      defaultDate: '2019-10-06',
+      
       maxTime:"23:00:00",
       editable: true,
       droppable: true, // this allows things to be dropped onto the calendar
