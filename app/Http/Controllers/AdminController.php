@@ -6,7 +6,7 @@ use App\Trainer;
 use App\Training;
 use App\User;
 use App\PrivateTraining;
-use App\Group;
+use App\Visit;
 use Illuminate\Support\Facades\DB;
 use ConsoleTVs\Charts\Facades\Charts;
 use Carbon\Carbon;
@@ -42,19 +42,33 @@ class AdminController extends Controller
             ->dimensions(1000, 500)
             ->responsive(false)
             ->groupByMonth(date('Y'), true);
-        return view('admin.components.statistic', compact('chart'));
+
+        $visit = Visit::where(DB::raw("(DATE_FORMAT(date,'%d'))"), date('Y'))->get();;
+        $chart2 = Charts::database($visit, 'line', 'highcharts')
+            ->title("Поповнення новими клієнтами")
+            ->elementLabel("К-сть нових клієнтів")
+            ->dimensions(1000, 500)
+            ->responsive(false)
+            ->groupByDay(date('d'), true);
+
+        return view('admin.components.statistic', [
+            'chart' => $chart,
+            'chart2' => $chart2
+            
+        ]);
     }
     public function welcome()
     {
         $trainergym2 = DB::table('traintrain')->join('trainers', 'traintrain.trainer_id', '=', 'trainers.id')->join('trainings', 'traintrain.training_id', '=', 'trainings.id')->where('training_id', '=', '1')->orwhere('training_id', '=', '2')->select('trainers.id as id', 'trainers.name as trainer_name', 'start', 'image', 'trainings.name as training_name')->get();
-        
-        if(DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('trainers', 'privateschedule.trainer_id', '=', 'trainers.id')->join('users', 'privateschedule.user_id', '=', 'users.id')->where('checked', '!=', '1')->where('date', '>=', new \DateTime('now'))->select('users.name as user_name', 'users.phone as user_phone', 'trainings.name as training_name', 'trainers.name as trainer_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->exists()){
+
+        if (DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('trainers', 'privateschedule.trainer_id', '=', 'trainers.id')->join('users', 'privateschedule.user_id', '=', 'users.id')->where('checked', '!=', '1')->where('date', '>=', new \DateTime('now'))->select('users.name as user_name', 'users.phone as user_phone', 'trainings.name as training_name', 'trainers.name as trainer_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->exists()) {
             $check = DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('trainers', 'privateschedule.trainer_id', '=', 'trainers.id')->join('users', 'privateschedule.user_id', '=', 'users.id')->where('checked', '!=', '1')->where('date', '>=', new \DateTime('now'))->select('users.name as user_name', 'users.phone as user_phone', 'trainings.name as training_name', 'trainers.name as trainer_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->get();
-            $checkme=NULL;
+            $checkme = NULL;
+        } else {
+            $checkme = "Всі персональні тренування підтвердженні";
+            $check = [];
         }
-        else{ $checkme="Всі персональні тренування підтвердженні";
-        $check=[];}
-        return view('admin.welcomeadmin', compact('check', 'trainergym2','checkme'));
+        return view('admin.welcomeadmin', compact('check', 'trainergym2', 'checkme'));
     }
 
     /**
@@ -164,18 +178,26 @@ class AdminController extends Controller
         $usercard = $request['usercard'];
         $userphone = $request['userphone'];
         $user = User::where('card', '=', $usercard)->orwhere('phone', '=', $userphone)->first();
-
-        if (DB::table('usersabonnements')->where('usersabonnements.user_id', '=', $user->id)->where('end','>=', new \DateTime('now'))->orwhere('amount','!=',0)->exists()) {
+        $message = "Не відмічено!";
+        if (DB::table('usersabonnements')->where('usersabonnements.user_id', '=', $user->id)->where('end', '>=', new \DateTime('now'))->orwhere('amount', '>', 0)->exists()) {
             $userabonnement = DB::table('usersabonnements')->where('user_id', '=',  $user->id)->get();
-           foreach ($userabonnement as $userabonnement){ if (($userabonnement->end) > (new \DateTime('now'))) {
-                $message= ', не відмічено!';
-            }} if (($userabonnement->end) < (new \DateTime('now'))) {
-                DB::table('visiting')->insert(['user_id' => $user->id, 'date' => new \DateTime('now')]);
-                $message= ', успішно відмічено!';
+            foreach ($userabonnement as $userabonnement) {
+
+                if (($userabonnement->end) > (new \DateTime('now'))) {
+                    DB::table('visiting')->insert(['user_id' => $user->id, 'date' => new \DateTime('now')]);
+                    $message =  $user->name . ', успішно відмічено!';
+                } else if (($userabonnement->amount) > 0) {
+                    DB::table('visiting')->insert(['user_id' => $user->id, 'date' => new \DateTime('now')]);
+                    DB::table('usersabonnements')->where('id', '=', $userabonnement->id)->update(['amount' => ($userabonnement->amount - 1)]);
+                    $message =  $user->name . ', успішно відмічено!';
+                }
             }
-        } else{ $message=', не оплачено!';}
-        return Redirect()->back()->with(['message' => $user->name . $message]);
+        } else {
+            $message = 'Не оплачено!';
+        }
+        return Redirect()->back()->with(['message' => $message]);
     }
+
 
     public function inserteditclient(Request $request, User $id)
     {
@@ -212,16 +234,16 @@ class AdminController extends Controller
     {
         $training = Training::where('type', '!=', 'дитячі')->where('type', '!=', '')->get();
         $groupschedule = DB::table('groupshedule')->join('trainings', 'groupshedule.train_id', '=', 'trainings.id')->where('type', '!=', 'дитячі')->where('type', '!=', '')->get();
-        $name="Групові заняття";
-        return view('admin.components.schedulegroup', compact('training','name'))->with('groupschedule', $groupschedule);
+        $name = "Групові заняття";
+        return view('admin.components.schedulegroup', compact('training', 'name'))->with('groupschedule', $groupschedule);
     }
 
     public function schedulechild()
     {
         $training = Training::where('type', '=', 'дитячі')->get();
-        $name="Заняття для дітей";
+        $name = "Заняття для дітей";
         $groupschedule = DB::table('groupshedule')->join('trainings', 'groupshedule.train_id', '=', 'trainings.id')->where('type', '=', 'дитячі')->get();
-        return view('admin.components.schedulegroup', compact('training','name'))->with('groupschedule', $groupschedule);
+        return view('admin.components.schedulegroup', compact('training', 'name'))->with('groupschedule', $groupschedule);
     }
     public function scheduleprivate()
     {
@@ -255,7 +277,7 @@ class AdminController extends Controller
 
         return view('admin.components.clientprofile', compact('userabonnement', 'abonnement', 'users', 'trainergym2', 'privateschedule'));
     }
-    
+
     public function editprofile(User $id)
     {
         $users = User::where('id', '=', $id->id)->get();

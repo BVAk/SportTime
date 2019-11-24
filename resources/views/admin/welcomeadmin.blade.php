@@ -10,7 +10,7 @@
 </div>
 
 
-<h4 class="modal-title">{{ $checkme }}</h4>
+<div class="alert alert-info">{{ $checkme }}</div>
   
   @foreach ($check as $check1)
   <div class="col-lg-3 col-6">
@@ -99,6 +99,6 @@
 <script>
   document.getElementById("functionEdit").onclick = function() {
   $('#myModal').modal('show');
-  });
+  }
 </script>
 @endsection

@@ -21,6 +21,23 @@
 {!! Charts::scripts() !!}
 {!! $chart->script() !!}<!-- /.card-body -->
             </div>
+            <div class="card">
+              
+              <div class="card-body">
+              <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Відвідування занять</div>
+
+                <div class="panel-body">
+                    {!! $chart2->html() !!}
+                </div>
+            </div>
+        </div>
+              </div>
+              
+{!! Charts::scripts() !!}
+{!! $chart2->script() !!}<!-- /.card-body -->
+            </div>
       </div>
  
 @endsection
