@@ -21,51 +21,51 @@
   <link crossorigin="anonymous" media="all" integrity="sha512-8yRKCmpBPsIyuLQNxQmP0kBfYdvNOz5EkCagWypV27znz6gRd0tHzdbCb2P/9XXEQcXFRMXC2olX8bhjTjbTYA==" rel="stylesheet" href="https://github.githubassets.com/assets/github-d12aa61f11c1ece71b4c19b1ba4dac4a.css" />
 
   <link href="{{asset('packages/core/main.css')}}" rel="stylesheet" />
-<link href="{{asset('packages/daygrid/main.css')}}" rel="stylesheet" />
-<link href="{{asset('packages/timegrid/main.css')}}" rel="stylesheet" />
-<link href="{{asset('packages/list/main.css')}}" rel="stylesheet" />
-<style>
-  #wrap {
-    
-    margin: 0 auto;
-  }
+  <link href="{{asset('packages/daygrid/main.css')}}" rel="stylesheet" />
+  <link href="{{asset('packages/timegrid/main.css')}}" rel="stylesheet" />
+  <link href="{{asset('packages/list/main.css')}}" rel="stylesheet" />
+  <style>
+    #wrap {
 
-  #external-events {
-    float: left;
-    width: 150px;
-    padding: 0 10px;
-    border: 1px solid #ccc;
-    background: #eee;
-    text-align: left;
-  }
+      margin: 0 auto;
+    }
 
-  #external-events h4 {
-    font-size: 16px;
-    margin-top: 0;
-    padding-top: 1em;
-  }
+    #external-events {
+      float: left;
+      width: 150px;
+      padding: 0 10px;
+      border: 1px solid #ccc;
+      background: #eee;
+      text-align: left;
+    }
 
-  #external-events .fc-event {
-    margin: 10px 0;
-    cursor: pointer;
-  }
+    #external-events h4 {
+      font-size: 16px;
+      margin-top: 0;
+      padding-top: 1em;
+    }
 
-  #external-events p {
-    margin: 1.5em 0;
-    font-size: 11px;
-    color: #666;
-  }
+    #external-events .fc-event {
+      margin: 10px 0;
+      cursor: pointer;
+    }
 
-  #external-events p input {
-    margin: 0;
-    vertical-align: middle;
-  }
+    #external-events p {
+      margin: 1.5em 0;
+      font-size: 11px;
+      color: #666;
+    }
 
-  #calendar {
-    
-    width: 900px;
-  }
-</style>
+    #external-events p input {
+      margin: 0;
+      vertical-align: middle;
+    }
+
+    #calendar {
+
+      width: 900px;
+    }
+  </style>
 
 
 </head>
@@ -162,200 +162,195 @@
     </div>
     <div class="site-section">
       <div class="container">
-        
 
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-6">
-      ФІО клієнта:
-    </div>
-    <div class="col-6">
-      <!-- small box -->
-      @foreach ($users as $user)
-      {{$user->name}}
-      @endforeach
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      Мобільний номер клієнта:
-    </div>
-    <div class="col">
-      <!-- small box -->
 
-      {{$user->phone}}
+        <div class="container-fluid">
+          <div class="site-section bg-light">
+            <div class="container">
+              <div class="row justify-content-center text-center mb-5">
+                <div class="col-7 text-center mb-5">
+                  <h2 class="section-heading text-center"> @foreach ($users as $user)
+                    {{$user->name}}
+                    @endforeach</h2>
+                  <p class="lead">
 
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      Email клієнта:
-    </div>
-    <div class="col">
-      <!-- small box -->
+                    <span> ФІО клієнта: {{$user->name}}</span><br>
+                    <span> Мобільний номер клієнта: {{$user->phone}}</span><br>
+                    <span>Email клієнта: {{$user->email}}</span><br>
+                    <span>Стан здоров'я:{{$user->health}}</span></p><br>
+                </div>
+                <div class="row">
 
-      {{$user->email}}
 
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      Діючий абонемент:
-    </div>
-    <div class="col">
-      <!-- small box -->
-      @foreach ($userabonnement as $userabonnement)
-      <div class="row">
-      {{$userabonnement->name}}
-     <?if ($userabonnement->amount==NULL){?>
-      до {{$userabonnement->end}}
-     <? }else {?> {{$userabonnement->amount}} тренувань(ння) <?}?>
-     </div>
-     @endforeach
-    </div>
-  </div>
+                  @foreach ($userabonnement as $userabonnement)
+                  <div class="row justify-content-center">
+                    <div class="col-lg-6 mb-6 mb-lg-0">
+                      <div class="testimonial-2 text-center">
+                        <div class="v-card mb-6 text-center">
 
-</div>
+                          <span>Діючий абонемент:</span>
+                        </div>
+                        <blockquote>
+                          <div class="row ">
+                            <div class="text-center">
+                               {{$userabonnement->name}}<br>
+                              <? if ($userabonnement->amount == 0) { ?>
+                                до {{$userabonnement->end}}
+                              <? } else { ?> {{$userabonnement->amount}} тренувань(ння) <? } ?>
+                            </div>
+                          </div>
+                        </blockquote>
+                      </div>
+                    </div>
+                  </div>
+
+                  @endforeach
+                </div>
+              </div>
+
+            </div>
+
+
+
+          </div>
 
 
 
 
 
-<div class="container">
-  <div class="row justify-content-center text-center">
-    <div id='wrap'>
+          <div class="container">
+            <div class="row justify-content-center text-center">
+              <div id='wrap'>
 
 
-      <h2>Індивідуальні заняття</h2>
+                <h2>Індивідуальні заняття</h2>
 
-      <div id='external-events-list'>
+                <div id='external-events-list'>
 
-      </div>
+                </div>
 
-      <form>
-        <div id='calendar' ></div>
-        <div class="form-group">
+                <form>
+                  <div id='calendar'></div>
+                  <div class="form-group">
 
+                  </div>
+                </form>
+                <div style='clear:both'></div>
+
+              </div>
+
+
+
+            </div>
+
+
+
+
+          </div>
         </div>
-      </form>
-      <div style='clear:both'></div>
-
-    </div>
-
-    
-    
-      </div>
 
 
+        <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+        <script src="{{ asset('js/jquery-migrate-3.0.0.js') }}"></script>
+        <script src="{{ asset('js/popper.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.sticky.js') }}"></script>
+        <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.animateNumber.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.fancybox.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.stellar.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.easing.1.3.js') }}"></script>
+        <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+        <script src="{{ asset('js/aos.js') }}"></script>
+        <script src="{{ asset('js/main.js') }}"></script>
 
 
-    </div>
-  </div>
-  
+        <script crossorigin="anonymous" integrity="sha512-pLb0KdGv98tBKuIktAXgkkzj5YctsASlAaHp9M28BRo766KtsWiUbAQ9ApBTVhBbJftX2yrrHYAilPdc8JPZ2w==" type="application/javascript" src="https://github.githubassets.com/assets/frameworks-62db07b3.js"></script>
 
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-    <script src="{{ asset('js/jquery-migrate-3.0.0.js') }}"></script>
-    <script src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.sticky.js') }}"></script>
-    <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.animateNumber.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.fancybox.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.stellar.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.easing.1.3.js') }}"></script>
-    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('js/aos.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
+        <script crossorigin="anonymous" async="async" integrity="sha512-nITnsRZNziONp9Rn/73yyNlra8L1nPXp13ejdl0hm3Exs0hYsTtfScepr51Ga7I/SQYW7kDTYconHohkEPgtlQ==" type="application/javascript" src="https://github.githubassets.com/assets/github-bootstrap-eafec0d4.js"></script>
+        <script src="{{asset('packages/core/main.js')}}"></script>
+        <script src="{{asset('packages/interaction/main.js')}}"></script>
+        <script src="{{asset('packages/daygrid/main.js')}}"></script>
+        <script src="{{asset('packages/timegrid/main.js')}}"></script>
+        <script src="{{asset('packages/list/main.js')}}"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 
-    <script crossorigin="anonymous" integrity="sha512-pLb0KdGv98tBKuIktAXgkkzj5YctsASlAaHp9M28BRo766KtsWiUbAQ9ApBTVhBbJftX2yrrHYAilPdc8JPZ2w==" type="application/javascript" src="https://github.githubassets.com/assets/frameworks-62db07b3.js"></script>
-    
-    <script crossorigin="anonymous" async="async" integrity="sha512-nITnsRZNziONp9Rn/73yyNlra8L1nPXp13ejdl0hm3Exs0hYsTtfScepr51Ga7I/SQYW7kDTYconHohkEPgtlQ==" type="application/javascript" src="https://github.githubassets.com/assets/github-bootstrap-eafec0d4.js"></script>
-    <script src="{{asset('packages/core/main.js')}}"></script>
-    <script src="{{asset('packages/interaction/main.js')}}"></script>
-    <script src="{{asset('packages/daygrid/main.js')}}"></script>
-    <script src="{{asset('packages/timegrid/main.js')}}"></script>
-    <script src="{{asset('packages/list/main.js')}}"></script>
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            var Calendar = FullCalendar.Calendar;
+            var Draggable = FullCalendarInteraction.Draggable
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+            /* initialize the external events
+            -----------------------------------------------------------------*/
 
-    
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        var Calendar = FullCalendar.Calendar;
-        var Draggable = FullCalendarInteraction.Draggable
+            var containerEl = document.getElementById('external-events-list');
+            new Draggable(containerEl, {
+              itemSelector: '.fc-event',
+              eventData: function(eventEl) {
+                return {
+                  title: eventEl.innerText.trim()
+                }
+              }
+            });
 
-        /* initialize the external events
-        -----------------------------------------------------------------*/
+            //// the individual way to do it
+            // var containerEl = document.getElementById('external-events-list');
+            // var eventEls = Array.prototype.slice.call(
+            //   containerEl.querySelectorAll('.fc-event')
+            // );
+            // eventEls.forEach(function(eventEl) {
+            //   new Draggable(eventEl, {
+            //     eventData: {
+            //       title: eventEl.innerText.trim(),
+            //     }
+            //   });
+            // });
 
-        var containerEl = document.getElementById('external-events-list');
-        new Draggable(containerEl, {
-          itemSelector: '.fc-event',
-          eventData: function(eventEl) {
-            return {
-              title: eventEl.innerText.trim()
-            }
-          }
-        });
+            /* initialize the calendar
+            -----------------------------------------------------------------*/
 
-        //// the individual way to do it
-        // var containerEl = document.getElementById('external-events-list');
-        // var eventEls = Array.prototype.slice.call(
-        //   containerEl.querySelectorAll('.fc-event')
-        // );
-        // eventEls.forEach(function(eventEl) {
-        //   new Draggable(eventEl, {
-        //     eventData: {
-        //       title: eventEl.innerText.trim(),
-        //     }
-        //   });
-        // });
-
-        /* initialize the calendar
-        -----------------------------------------------------------------*/
-
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new Calendar(calendarEl, {
-          plugins: ['interaction', 'timeGridWeek', 'timeGrid', 'list'],
-          header: {
-            left: '',
-            right: '',
-            center: 'title',
-          },
-          minTime: "09:00:00",
-
-          maxTime: "23:00:00",
-          editable: false,
-          droppable: false, // this allows things to be dropped onto the calendar
-          eventSources: [{
-            events: [
-              @foreach($privateschedule as $privateschedule) {
-
-                id: '{{$privateschedule->privateschedule_id}}',
-                title: '{{$privateschedule->trainer_name}}',
-                start: '{{$privateschedule->privateschedule_date}}',
-                end: '{{$privateschedule->privateschedule_endtrain}}',
-                allDay: false
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new Calendar(calendarEl, {
+              plugins: ['interaction', 'timeGridWeek', 'timeGrid', 'list'],
+              header: {
+                left: '',
+                right: '',
+                center: 'title',
               },
-              @endforeach
-            ],
-            color: 'greenyellow', // an option!
-            textColor: 'black' // an option!
-          }],
-          eventDrop: function(event, delta, revertFunc) { // si changement de position
+              minTime: "09:00:00",
 
-            
+              maxTime: "23:00:00",
+              editable: false,
+              droppable: false, // this allows things to be dropped onto the calendar
+              eventSources: [{
+                events: [
+                  @foreach($privateschedule as $privateschedule) {
 
-          },
-        });
-        calendar.render();
+                    id: '{{$privateschedule->privateschedule_id}}',
+                    title: '{{$privateschedule->trainer_name}}',
+                    start: '{{$privateschedule->privateschedule_date}}',
+                    end: '{{$privateschedule->privateschedule_endtrain}}',
+                    allDay: false
+                  },
+                  @endforeach
+                ],
+                color: 'greenyellow', // an option!
+                textColor: 'black' // an option!
+              }],
+              eventDrop: function(event, delta, revertFunc) { // si changement de position
 
-      });
 
-      
-    </script>
 
-    
+              },
+            });
+            calendar.render();
+
+          });
+        </script>
+
+
 </body>
