@@ -51,10 +51,16 @@ class AdminController extends Controller
             ->responsive(false)
             ->groupByDay(date('d'), true);
 
-        return view('admin.components.statistic', [
-            'chart' => $chart,
-            'chart2' => $chart2
-            
+        $linechart=Charts::create('line', 'highcharts')
+        ->title('My nice chart')
+        ->elementLabel('My nice label')
+        ->labels(['First', 'Second', 'Third'])
+        ->values([5,10,20])
+        ->dimensions(1000,500)
+        ->responsive(false);    
+
+        return view('admin.components.statistic', compact('chart','chart2','linechart'));
+
         ]);
     }
     public function welcome()
@@ -99,13 +105,14 @@ class AdminController extends Controller
             'name' => 'required|max:255',
             'phone' => 'required|unique:trainers',
             'start' => 'required',
-            'birth' => 'required'
+            'birth' => 'required',
+            'email' => 'required',
         ]);
 
         if ($request->hasFile('photo')) $image = $this->uploadImage($request, 'photo', 'images/trainers/');
         $request['image'] = isset($image) ? $image : null;
-        $trainer = Trainer::create($request->only(['name', 'birth', 'start', 'phone', 'image']));
-
+        $trainer = Trainer::create(['name' => $request->name, 'email' => $request->email, 'phone' => $request->phone, 'birth' => $request->birth, 'start'=>$request->start,'salary'=>'10000','image'=> $request['image'] ]);
+        DB::table('admins')->insert(['name' => $request->name, 'email' => $request->email, 'phone' => $request->phone, 'password' =>bcrypt($request->email), 'role' => 'trainer']);
         $trainer->trainings()->sync($request->trainings);
 
         return redirect('/admin/trainers');

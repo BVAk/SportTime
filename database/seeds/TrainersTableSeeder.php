@@ -17,6 +17,7 @@ class TrainersTableSeeder extends Seeder
         for ($i = 0; $i <= 10; $i++){
             $trainer = [
                 'name' => $faker->name($gender = 'male'),
+                'email' => $faker->unique()->freeEmail,
                 'birth' => $faker->dateTimeBetween('-30 years', '-18 years'),
                 'start' => $faker->dateTimeBetween('-5 years', 'now'),
                 'phone' => $faker->unique()->phoneNumber,
@@ -26,6 +27,7 @@ class TrainersTableSeeder extends Seeder
             \App\Trainer::create($trainer);
 
             $trainer['name'] = $faker->name($gender = 'female');
+            $trainer['email'] = $faker->unique()->freeEmail;
             $trainer['image'] = "images/trainers/woman$i.jpg";
             $trainer['phone'] = $faker->unique()->phoneNumber;
             \App\Trainer::create($trainer);

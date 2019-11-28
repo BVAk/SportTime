@@ -9,10 +9,15 @@
         </div>
         <div class="row">
         <div class="col">
-
+        <input id="salary" name="salary" type="hidden" value="10000" >
             <div class="form-group">
                 <label for="name">ФІО</label>
                 <input id="name" name="name" type="text" class="form-control" value="" required>
+
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input id="email" name="email" type="email" class="form-control" value="" required>
 
             </div>
         </div>

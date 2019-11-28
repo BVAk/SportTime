@@ -18,6 +18,8 @@ class Trainers extends Migration
             $table->string('name');
             $table->date('birth');
             $table->integer('salary');
+            
+            $table->string('email')->unique();
             $table->date('start');
             $table->string('phone')->unique();
             $table->string('image')->nullable();
