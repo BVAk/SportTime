@@ -57,11 +57,19 @@ class AdminController extends Controller
         ->labels(['First', 'Second', 'Third'])
         ->values([5,10,20])
         ->dimensions(1000,500)
-        ->responsive(false);    
+        ->responsive(false);  
+        
+        $percentchart=Charts::create('percentage', 'justgage')
+        ->title('My nice chart')
+        ->elementLabel('My nice label')
+        ->values([65,0,100])
+        ->responsive(false)
+        ->height(300)
+        ->width(0);
 
-        return view('admin.components.statistic', compact('chart','chart2','linechart'));
+        return view('admin.components.statistic', compact('chart','chart2','linechart','percentchart'));
 
-        ]);
+        
     }
     public function welcome()
     {

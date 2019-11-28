@@ -147,7 +147,7 @@
                         <li class="nav-item">
                             <a href="/admin/statistic" class="nav-link {{request()->path() == 'admin/statistic' ? 'active' : ''}}">
                                 <i class="nav-icon fas fa-chart-pie"></i>
-                                Статистика і економіка
+                                Статистика
                             </a>
 
                         </li>
