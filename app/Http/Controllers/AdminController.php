@@ -152,7 +152,15 @@ class AdminController extends Controller
         $trainers = Trainer::where('id', '=', $id->id)->get();
         $privateschedule = DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('users', 'privateschedule.user_id', '=', 'users.id')->where('privateschedule.trainer_id', '=', $id->id)->select('trainings.name as training_name', 'users.name as user_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->get();
 
-        return view('admin.components.trainerprofile', compact('trainers', 'privateschedule'));
+        $percentchart=Charts::create('percentage', 'justgage')
+        ->title('Виконання плану індивідуальних тренувань')
+        ->elementLabel('%')
+        ->values([65,0,100])
+        ->responsive(false)
+        ->height(300)
+        ->width(0);
+
+        return view('admin.components.trainerprofile', compact('trainers','percentchart', 'privateschedule'));
     }
 
     public function editprofiletrainers(Trainer $id)

@@ -56,23 +56,7 @@
 
 {!! $linechart->script() !!}<!-- /.card-body -->
             </div>
-            <div class="card">
-              
-              <div class="card-body">
-              <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">Відвідування занять</div>
-
-                <div class="panel-body">
-                    {!! $percentchart->html() !!}
-                </div>
-            </div>
-        </div>
-              </div>
-              
-
-{!! $percentchart->script() !!}<!-- /.card-body -->
-            </div>
+            
       </div>
  
 @endsection

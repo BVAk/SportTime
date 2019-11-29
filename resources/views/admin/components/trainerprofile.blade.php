@@ -91,6 +91,22 @@
 
 <div class="container">
   <div class="row justify-content-center text-center">
+  
+              
+              
+              <div class="col">
+                    {!! $percentchart->html() !!}
+                
+            </div>
+              
+
+              {!! Charts::scripts() !!}
+{!! $percentchart->script() !!}<!-- /.card-body -->
+            </div>
+</div>
+
+<div class="container">
+  <div class="row justify-content-center text-center">
     <div id='wrap'>
 
 
