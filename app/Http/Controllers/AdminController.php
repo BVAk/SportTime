@@ -59,15 +59,20 @@ class AdminController extends Controller
         ->dimensions(1000,500)
         ->responsive(false);  
         
+        $date1 = strtotime("now");
+        $end = date('Y-m-d H:i:s', strtotime('-1 month', $date1));
+        $privateschedulechart = DB::table('privateschedule')->where('date','<=',new \DateTime('now'))->where('date','>=',$end)->count();
+        $abonnementchart = DB::table('usersabonnements')->where('date','<=',new \DateTime('now'))->where('date','>=',$end)->count();
         $percentchart=Charts::create('percentage', 'justgage')
-        ->title('My nice chart')
-        ->elementLabel('My nice label')
-        ->values([65,0,100])
+        ->title('Виконання плану індивідуальних тренувань')
+        ->elementLabel('%')
+        ->values([$privateschedulechart/$abonnementchart*100,0,100])
         ->responsive(false)
         ->height(300)
         ->width(0);
 
-        return view('admin.components.statistic', compact('chart','chart2','linechart','percentchart'));
+
+        return view('admin.components.statistic', compact('chart','chart2','linechart','percentchart','abonnementchart','privateschedulechart'));
 
         
     }
@@ -151,16 +156,21 @@ class AdminController extends Controller
     {
         $trainers = Trainer::where('id', '=', $id->id)->get();
         $privateschedule = DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('users', 'privateschedule.user_id', '=', 'users.id')->where('privateschedule.trainer_id', '=', $id->id)->select('trainings.name as training_name', 'users.name as user_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->get();
-
+        $date1 = strtotime("now");
+        $end = date('Y-m-d H:i:s', strtotime('-1 month', $date1));
+        $privateschedulechart = DB::table('privateschedule')->where('privateschedule.trainer_id', '=', $id->id)->where('date','<=',new \DateTime('now'))->where('date','>=',$end)->count();
+        $abonnementchart = DB::table('usersabonnements')->where('date','<=',new \DateTime('now'))->where('date','>=',$end)->count();
         $percentchart=Charts::create('percentage', 'justgage')
         ->title('Виконання плану індивідуальних тренувань')
         ->elementLabel('%')
-        ->values([65,0,100])
+        ->values([$privateschedulechart/$abonnementchart*100,0,100])
         ->responsive(false)
         ->height(300)
         ->width(0);
 
-        return view('admin.components.trainerprofile', compact('trainers','percentchart', 'privateschedule'));
+
+       
+        return view('admin.components.trainerprofile', compact('trainers','percentchart', 'privateschedule','privateschedulechart'));
     }
 
     public function editprofiletrainers(Trainer $id)

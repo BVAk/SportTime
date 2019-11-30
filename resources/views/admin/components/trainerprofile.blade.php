@@ -85,6 +85,7 @@
 
       {{$user->birth}}
 
+
     </div>
   </div>
 </div>
@@ -98,8 +99,6 @@
                     {!! $percentchart->html() !!}
                 
             </div>
-              
-
               {!! Charts::scripts() !!}
 {!! $percentchart->script() !!}<!-- /.card-body -->
             </div>

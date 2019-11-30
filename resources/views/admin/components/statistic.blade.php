@@ -56,6 +56,26 @@
 
 {!! $linechart->script() !!}<!-- /.card-body -->
             </div>
+
+            <div class="card">
+              
+              <div class="card-body">
+              <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Персональні тренування</div>
+
+                <div class="panel-body">
+               Кількість індивідуальних тренувань: {{$privateschedulechart}}<br>
+               Кількість діючих клієнтів:{{$abonnementchart}}<br>
+               Відсоток індивідуальних тренувань: {{round($privateschedulechart/$abonnementchart*100,2)}}%
+            {!! $percentchart->html() !!}
+                
+            </div>
+            </div>
+        </div>
+              </div>
+    {!! $percentchart->script() !!}
+            </div>
             
       </div>
  
