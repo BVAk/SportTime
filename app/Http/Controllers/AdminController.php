@@ -48,23 +48,45 @@ class AdminController extends Controller
             ->title("Поповнення новими клієнтами")
             ->elementLabel("К-сть нових клієнтів")
             ->dimensions(1000, 500)
+            ->colors(['#C5CAE9', '#283593'])
             ->responsive(false)
             ->groupByDay(date('d'), true);
 
+        //Середня кількість відвідувань
+        $visit = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%Y-%m') new_visit_date"))
+            ->groupBy('new_visit_date')->orderBy('new_visit_date')->get();
+
+        $abonnement = DB::table('usersabonnements')->select(DB::raw('count(DISTINCT user_id) as `data`'), DB::raw("DATE_FORMAT(date, '%Y-%m') new_date"))
+            ->groupBy('new_date')->orderBy('new_date')->get();
+
+
+
+        foreach ($visit as $visit1) {
+            foreach ($abonnement as $abonnement1) {
+                if ($abonnement1->new_date == $visit1->new_visit_date) {
+
+                    $count[] = (round($visit1->visit_data / $abonnement1->data, 0) . ' ');
+                    $date[] = ($visit1->new_visit_date);
+                }
+            }
+        }
         $linechart = Charts::create('line', 'highcharts')
-            ->title('My nice chart')
-            ->elementLabel('My nice label')
-            ->labels(['First', 'Second', 'Third'])
-            ->values([5, 10, 20])
+            ->title('Середня кількість відвідувань')
+            ->elementLabel('Середня кількість відвідувань 1 людини в місяць')
+            ->labels($date)
+            ->values($count)
             ->dimensions(1000, 500)
             ->responsive(false);
-        
+
+
+
+        // Індивідуальні тренування
         $date1 = strtotime("now");
         $end = date('Y-m-d H:i:s', strtotime('-3 month', $date1));
         $privateschedulechart = DB::table('privateschedule')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->count(DB::raw('DISTINCT user_id'));
         $abonnementchart = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->count(DB::raw('DISTINCT user_id'));
         $percentchart = Charts::create('percentage', 'justgage')
-            ->title('Виконання плану індивідуальних тренувань')
+            ->title('Відсоток індивідуальних тренувань')
             ->elementLabel('%')
             ->values([$privateschedulechart / $abonnementchart * 100, 0, 100])
             ->responsive(false)
@@ -159,7 +181,7 @@ class AdminController extends Controller
         $privateschedulechart = DB::table('privateschedule')->where('privateschedule.trainer_id', '=', $id->id)->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->count(DB::raw('DISTINCT privateschedule.user_id'));
         $abonnementchart = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->count(DB::raw('DISTINCT user_id'));
         $percentchart = Charts::create('percentage', 'justgage')
-            ->title('Виконання плану індивідуальних тренувань')
+            ->title('Відсоток індивідуальних тренувань')
             ->elementLabel('%')
             ->values([$privateschedulechart / $abonnementchart * 100, 0, 100])
             ->responsive(false)
@@ -168,7 +190,7 @@ class AdminController extends Controller
 
 
 
-        return view('admin.components.trainerprofile', compact('trainers', 'percentchart', 'privateschedule', 'privateschedulechart','abonnementchart'));
+        return view('admin.components.trainerprofile', compact('trainers', 'percentchart', 'privateschedule', 'privateschedulechart', 'abonnementchart'));
     }
 
     public function editprofiletrainers(Trainer $id)
