@@ -65,7 +65,7 @@
                 <div class="panel-heading">Персональні тренування</div>
 
                 <div class="panel-body">
-               Кількість індивідуальних тренувань: {{$privateschedulechart}}<br>
+               Кількість клієнтів, що займаються індивідуальними тренуваннями з тренерами: {{$privateschedulechart}}<br>
                Кількість діючих клієнтів:{{$abonnementchart}}<br>
                Відсоток індивідуальних тренувань: {{round($privateschedulechart/$abonnementchart*100,2)}}%
             {!! $percentchart->html() !!}

@@ -8,7 +8,7 @@
 <link href="{{asset('packages/list/main.css')}}" rel="stylesheet" />
 <style>
   #wrap {
-    
+
     margin: 0 auto;
   }
 
@@ -44,7 +44,7 @@
   }
 
   #calendar {
-    
+
     width: 900px;
   }
 </style>
@@ -92,16 +92,27 @@
 
 <div class="container">
   <div class="row justify-content-center text-center">
-  
-              
-              
-              <div class="col">
-                    {!! $percentchart->html() !!}
-                
-            </div>
-              {!! Charts::scripts() !!}
-{!! $percentchart->script() !!}<!-- /.card-body -->
-            </div>
+
+
+
+    <div class="col">
+      <div class="panel panel-default">
+        <div class="panel-heading"></div>
+
+        <div class="panel-body">
+        
+          {!! $percentchart->html() !!}
+        <br>  Кількість клієнтів, що займаються індивідуальними тренуваннями з тренерами: <b>{{$privateschedulechart}}</b><br>
+          Кількість діючих клієнтів: <b>{{$abonnementchart}}</b><br>
+         
+        </div>
+
+      </div>
+    </div>
+    {!! Charts::scripts() !!}
+    {!! $percentchart->script() !!}
+    <!-- /.card-body -->
+  </div>
 </div>
 
 <div class="container">
@@ -116,7 +127,7 @@
       </div>
 
       <form>
-        <div id='calendar' ></div>
+        <div id='calendar'></div>
         <div class="form-group">
 
         </div>
@@ -135,7 +146,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-    
+
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         var Calendar = FullCalendar.Calendar;
