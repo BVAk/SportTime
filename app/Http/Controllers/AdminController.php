@@ -42,6 +42,28 @@ class AdminController extends Controller
             ->dimensions(1000, 500)
             ->responsive(false)
             ->groupByMonth(date('Y'), true);
+           
+           // Темп приросту  
+            $users = User::select(DB::raw('count(id) as `count_user`'), DB::raw("DATE_FORMAT(created_at, '%Y-%m') new_user_date"))->groupBy('new_user_date')->orderBy('new_user_date')->get();
+            $count=0;
+            foreach ($users as $user) {
+                $count+=$user->count_user;     
+                
+                if($count-$user->count_user!=0){      
+                   $percent[] = (round(((($count) / ($count-$user->count_user))*100-100), 0));
+                    $date[] = ($user->new_user_date);}
+                
+          }
+          $chart2 = Charts::database($users, 'bar', 'highcharts')
+                ->title("Поповнення новими клієнтами у %")
+                ->elementLabel("% нових клієнтів")
+                ->dimensions(1000, 500)
+                ->responsive(false)
+                ->groupByMonth(date('Y'), true)
+                ->labels($date)
+            ->values($percent);
+            
+    
 
         //Середня кількість відвідувань
         $visit = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%Y-%m') new_visit_date"))
@@ -50,13 +72,14 @@ class AdminController extends Controller
         $abonnement = DB::table('usersabonnements')->select(DB::raw('count(DISTINCT user_id) as `data`'), DB::raw("DATE_FORMAT(date, '%Y-%m') new_date"))
             ->groupBy('new_date')->orderBy('new_date')->get();
 
-
+$count=array();
+$date=array();
 
         foreach ($visit as $visit1) {
             foreach ($abonnement as $abonnement1) {
                 if ($abonnement1->new_date == $visit1->new_visit_date) {
 
-                    $count[] = (round($visit1->visit_data / $abonnement1->data, 0) . ' ');
+                    $count[] = (round($visit1->visit_data / $abonnement1->data, 0));
                     $date[] = ($visit1->new_visit_date);
                 }
             }
@@ -85,7 +108,7 @@ class AdminController extends Controller
             ->width(0);
 
 
-        return view('admin.components.statistic', compact('chart', 'linechart', 'percentchart', 'abonnementchart', 'privateschedulechart'));
+        return view('admin.components.statistic', compact('chart','chart2', 'linechart', 'percentchart', 'abonnementchart', 'privateschedulechart'));
     }
     public function welcome()
     {

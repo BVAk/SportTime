@@ -13,6 +13,8 @@
 
                     <div class="panel-body">
                         {!! $chart->html() !!}
+                    </div> <div class="panel-body">
+                        {!! $chart2->html() !!}
                     </div>
 
                 </div>
@@ -21,6 +23,7 @@
 
         {!! Charts::scripts() !!}
         {!! $chart->script() !!}
+        {!! $chart2->script() !!}
         <!-- /.card-body -->
     </div>
     <div class="card">
@@ -57,26 +60,8 @@
 
                     </div>
                     <?php
-                  
-                                   
-                  $visit = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%Y-%m') new_visit_date"))
-                  ->groupBy('new_visit_date')->orderBy('new_visit_date')->get();
-      
-              $abonnement = DB::table('usersabonnements')->select(DB::raw('count(DISTINCT user_id) as `data`'), DB::raw("DATE_FORMAT(date, '%Y-%m') new_date"))
-                  ->groupBy('new_date')->orderBy('new_date')->get();
-      
-      
-      
-              foreach ($visit as $visit1) {
-                  foreach ($abonnement as $abonnement1) {
-                      if ($abonnement1->new_date == $visit1->new_visit_date) {
-      echo ($visit1->visit_data.'/ ');
-      echo($abonnement1->data.'= ');
-                          echo (round($visit1->visit_data / $abonnement1->data, 0) . ' in ');
-                          echo ($visit1->new_visit_date.' ');
-                      }
-                  }
-              }
+                         
+                
               
                     ?>
 
