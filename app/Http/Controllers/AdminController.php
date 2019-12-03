@@ -72,8 +72,8 @@ class AdminController extends Controller
 
 
         // Індивідуальні тренування
-        $date1 = strtotime("now");
-        $end = date('Y-m-d H:i:s', strtotime('-1 month', $date1));
+        
+        $end = date('Y-m-d H:i:s', strtotime('-1 month'));
         $privateschedulechart = DB::table('privateschedule')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->count(DB::raw('DISTINCT user_id'));
         $abonnementchart = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->count(DB::raw('DISTINCT user_id'));
         $percentchart = Charts::create('percentage', 'justgage')

@@ -16,14 +16,16 @@ class UsersTableSeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i <= 100; $i++) {
+        for ($i = 0; $i <= 1000; $i++) {
+            
+            $email = $faker->unique()->freeEmail;
             User::create([
                 'name' => $faker->name,
-                'email' => $faker->unique()->freeEmail,
+                'email' => $email,
                 'phone' => $faker->unique()->phoneNumber,
-                'card' => $faker->unique()->numberBetween(1, 999),
-                'password' => bcrypt($faker->password()),
-                'created_at' => $faker->dateTimeBetween('-9 month', 'now'),
+                'card' => $faker->unique()->numberBetween(1, 9999),
+                'password' => bcrypt($email),
+                'created_at' => $faker->dateTimeBetween('-3 years', 'now'),
             ]);
         }
     }

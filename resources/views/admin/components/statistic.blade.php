@@ -57,29 +57,27 @@
 
                     </div>
                     <?php
+                  
                                    
-                
-                    $user = DB::table('usersabonnements')->get();
-                    $groupschedule = DB::table('groupshedule')->where('room_id', '=', '2')->get();
-                    foreach ($user as $user1) {
-                        if ($user1->abonnement_id == '1' or '2' or '4' or '5') {
-                            $start = strtotime($user1->date);
-                            $end = ($user1->end);
-                            $train = rand(0, 23);
-                            $groupschedule = DB::table('groupshedule')->where('room_id', '=', '2')->where('id', '=', $train)->first();
-                            $starttrain = strtotime($groupschedule->start);
-                            $endtrain = strtotime($groupschedule->end);
-
-                            $countweek = '-' . date('w', $starttrain - $start) . ' week';
-                            $date = date('Y-m-d H:i:s', strtotime($countweek, $starttrain));
-                            echo ('Skolko nedel ' . $countweek . ' ');
-                            echo ('Trenirovka ' . $groupschedule->id . ' ');
-                            echo ('Nomer abonementa' . $user1->id . ' ');
-                            echo ('Visiting data' . $date . '');
-                            break;
-                        }
-                    }
-
+                  $visit = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%Y-%m') new_visit_date"))
+                  ->groupBy('new_visit_date')->orderBy('new_visit_date')->get();
+      
+              $abonnement = DB::table('usersabonnements')->select(DB::raw('count(DISTINCT user_id) as `data`'), DB::raw("DATE_FORMAT(date, '%Y-%m') new_date"))
+                  ->groupBy('new_date')->orderBy('new_date')->get();
+      
+      
+      
+              foreach ($visit as $visit1) {
+                  foreach ($abonnement as $abonnement1) {
+                      if ($abonnement1->new_date == $visit1->new_visit_date) {
+      echo ($visit1->visit_data.'/ ');
+      echo($abonnement1->data.'= ');
+                          echo (round($visit1->visit_data / $abonnement1->data, 0) . ' in ');
+                          echo ($visit1->new_visit_date.' ');
+                      }
+                  }
+              }
+              
                     ?>
 
 

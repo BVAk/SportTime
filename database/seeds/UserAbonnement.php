@@ -16,12 +16,14 @@ class UserAbonnement extends Seeder
         $user = User::get();
         for($i=0;$i<5;$i++){
         foreach ($user as $user1) {
-            $start = strtotime('-3 years');
+            $abonnement = rand(1, 17);
+           
+            $start = strtotime($user1->created_at);
             $end = strtotime('now');
             $date1 = mt_rand($start, $end);
             $date = date('Y-m-d H:i:s', strtotime('+1day', $date1));
-            $abonnement = rand(1, 17);
-
+            
+if(date('H',strtotime($date))>9 and date('H',strtotime($date))<20){
             if (DB::table('usersabonnements')->where('user_id', '=', $user1->id)->where('abonnement_id', '=', $abonnement)->where('end', '>=', $date)->exists()) {
                 $userabomalready = DB::table('usersabonnements')->where('user_id', '=', $user1->id)->where('abonnement_id', '=', $abonnement)->where('end', '>=', $date)->first();
                 $date = $userabomalready->end;
@@ -83,4 +85,5 @@ class UserAbonnement extends Seeder
         }
     }
     }
-}
+}}
+
