@@ -43,15 +43,6 @@ class AdminController extends Controller
             ->responsive(false)
             ->groupByMonth(date('Y'), true);
 
-        $visit = Visit::where(DB::raw("(DATE_FORMAT(date,'%d'))"), date('Y'))->get();;
-        $chart2 = Charts::database($visit, 'line', 'highcharts')
-            ->title("Поповнення новими клієнтами")
-            ->elementLabel("К-сть нових клієнтів")
-            ->dimensions(1000, 500)
-            ->colors(['#C5CAE9', '#283593'])
-            ->responsive(false)
-            ->groupByDay(date('d'), true);
-
         //Середня кількість відвідувань
         $visit = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%Y-%m') new_visit_date"))
             ->groupBy('new_visit_date')->orderBy('new_visit_date')->get();
@@ -82,7 +73,7 @@ class AdminController extends Controller
 
         // Індивідуальні тренування
         $date1 = strtotime("now");
-        $end = date('Y-m-d H:i:s', strtotime('-3 month', $date1));
+        $end = date('Y-m-d H:i:s', strtotime('-1 month', $date1));
         $privateschedulechart = DB::table('privateschedule')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->count(DB::raw('DISTINCT user_id'));
         $abonnementchart = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->count(DB::raw('DISTINCT user_id'));
         $percentchart = Charts::create('percentage', 'justgage')
@@ -94,7 +85,7 @@ class AdminController extends Controller
             ->width(0);
 
 
-        return view('admin.components.statistic', compact('chart', 'chart2', 'linechart', 'percentchart', 'abonnementchart', 'privateschedulechart'));
+        return view('admin.components.statistic', compact('chart', 'linechart', 'percentchart', 'abonnementchart', 'privateschedulechart'));
     }
     public function welcome()
     {
@@ -177,7 +168,7 @@ class AdminController extends Controller
         $trainers = Trainer::where('id', '=', $id->id)->get();
         $privateschedule = DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('users', 'privateschedule.user_id', '=', 'users.id')->where('privateschedule.trainer_id', '=', $id->id)->select('trainings.name as training_name', 'users.name as user_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->get();
         $date1 = strtotime("now");
-        $end = date('Y-m-d H:i:s', strtotime('-3 month', $date1));
+        $end = date('Y-m-d H:i:s', strtotime('-1 month', $date1));
         $privateschedulechart = DB::table('privateschedule')->where('privateschedule.trainer_id', '=', $id->id)->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->count(DB::raw('DISTINCT privateschedule.user_id'));
         $abonnementchart = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->count(DB::raw('DISTINCT user_id'));
         $percentchart = Charts::create('percentage', 'justgage')
@@ -322,9 +313,10 @@ class AdminController extends Controller
      */
     public function profileClients(User $id)
     {
+      //  ->where('usersabonnements.end', '>=', new \DateTime('now'))->where('usersabonnements.amount', '=', NULL)->orwhere('usersabonnements.amount', '>', 0)
         $users = User::where('id', '=', $id->id)->get();
-        $userabonnement = DB::table('usersabonnements')->where('usersabonnements.user_id', '=', $id->id)->join('abonnements', 'abonnements.id', '=', 'usersabonnements.abonnement_id')->where('usersabonnements.end', '>=', new \DateTime('now'))->orwhere('usersabonnements.amount', '>', 0)->get();
-        $privateschedule = DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('trainers', 'privateschedule.trainer_id', '=', 'trainers.id')->where('user_id', '=', $id->id)->where('date', '>=', new \DateTime('now'))->select('trainings.name as training_name', 'trainers.name as trainer_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->get();
+        $userabonnement = DB::table('usersabonnements')->join('abonnements', 'usersabonnements.abonnement_id','=', 'abonnements.id')->where('usersabonnements.user_id', '=', $id->id)->get();
+        $privateschedule = DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('trainers', 'privateschedule.trainer_id', '=', 'trainers.id')->where('user_id', '=', $id->id)->select('trainings.name as training_name', 'trainers.name as trainer_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->get();
         $trainergym2 = DB::table('traintrain')->join('trainers', 'traintrain.trainer_id', '=', 'trainers.id')->join('trainings', 'traintrain.training_id', '=', 'trainings.id')->where('training_id', '=', '1')->orwhere('training_id', '=', '2')->select('trainers.id as id', 'trainers.name as trainer_name', 'start', 'image', 'trainings.name as training_name')->get();
         $abonnement = DB::table('abonnements')->get();
 
