@@ -93,13 +93,15 @@
     </div>
     <div class="col">
       <!-- small box -->
-      @foreach ($userabonnement as $userabonnement)
+     @foreach ($userabonnement as $userabonnement1)
+      <?if ($userabonnement1->end >new \Date('now') or ($userabonnement1->amount!=0)){?>
       <div class="row">
-      {{$userabonnement->name}}
-     <?if ($userabonnement->amount==NULL){?>
-      до {{$userabonnement->end}}
-     <? }else {?> {{$userabonnement->amount}} тренувань(ння) <?}?>
+      {{$userabonnement1->name}}
+     <?if ($userabonnement1->amount==NULL){?>
+      до {{$userabonnement1->end}}
+     <? }else {?> {{$userabonnement1->amount}} тренувань(ння) <?}?>
      </div>
+      <? } else { ?><div class="row">Абонементів нема </div> @break<?}?>
      @endforeach
     </div>
   </div>
@@ -130,7 +132,7 @@
         <input id="datetrain" name="datetrain" type="datetime-local" class="form-control" value="" required>
       </div>
       <div class="form-group">
-        Підтвердити тренування
+        
         <input id="checked" name="checked" type="hidden" value="1">
       </div>
       <input id="user" name="user" type="hidden" class="form-control" value="{{$user->id }}" required>
