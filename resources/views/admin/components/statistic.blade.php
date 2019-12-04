@@ -36,12 +36,24 @@
                     <div class="panel-body">
                         {!! $linechart->html() !!}
                     </div>
+                    <div class="panel-body">
+                        {!! $chart3->html() !!}
+                    </div>
+                    <div class="panel-body">
+                        {!! $chart4->html() !!}
+                    </div>
+                    <div class="panel-body">
+                        {!! $chart5->html() !!}
+                    </div>
                 </div>
             </div>
         </div>
 
 
         {!! $linechart->script() !!}
+        {!! $chart3->script() !!}
+        {!! $chart4->script() !!}
+        {!! $chart5->script() !!}
         <!-- /.card-body -->
     </div>
 
