@@ -101,7 +101,7 @@
       до {{$userabonnement1->end}}
      <? }else {?> {{$userabonnement1->amount}} тренувань(ння) <?}?>
      </div>
-      <? } else { ?><div class="row">Абонементів нема </div> @break<?}?>
+      <? } ?>
      @endforeach
     </div>
   </div>

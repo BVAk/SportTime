@@ -168,7 +168,7 @@
         <div class="container-fluid">
           <div class="site-section bg-light">
             <div class="container">
-              <div class="row justify-content-center text-center mb-5">
+              <div class="row justify-content-center text-center">
                 <div class="col-7 text-center mb-5">
                   <h2 class="section-heading text-center"> @foreach ($users as $user)
                     {{$user->name}}
@@ -180,11 +180,11 @@
                     <span>Email клієнта: {{$user->email}}</span><br>
                     <span>Стан здоров'я:{{$user->health}}</span></p><br>
                 </div>
-                <div class="row">
+              </div>
+               
 
-
-                  @foreach ($userabonnement as $userabonnement)
-                  <div class="row justify-content-center">
+                 
+                  <div class="row justify-content-center text-center">
                     <div class="col-lg-6 mb-6 mb-lg-0">
                       <div class="testimonial-2 text-center">
                         <div class="v-card mb-6 text-center">
@@ -192,20 +192,24 @@
                           <span>Діючий абонемент:</span>
                         </div>
                         <blockquote>
-                          <div class="row ">
-                            <div class="text-center">
-                               {{$userabonnement->name}}<br>
-                              <? if ($userabonnement->amount == 0) { ?>
-                                до {{$userabonnement->end}}
-                              <? } else { ?> {{$userabonnement->amount}} тренувань(ння) <? } ?>
-                            </div>
-                          </div>
+                        @foreach ($userabonnement as $userabonnement1)
+                  <?if ($userabonnement1->end >new \Date('now') or ($userabonnement1->amount!=0)){?>
+                          
+                            
+                               {{$userabonnement1->name}}<br>
+                              <? if ($userabonnement1->amount == 0) { ?>
+                                до {{$userabonnement1->end}}
+                              <? } else { ?> {{$userabonnement1->amount}} тренувань(ння) <? } ?>
+                            
+                          
+                          
+                  <? } ?>
+                  <br>
+                  @endforeach
                         </blockquote>
                       </div>
                     </div>
                   </div>
-
-                  @endforeach
                 </div>
               </div>
 

@@ -9,12 +9,8 @@ use App\PrivateTraining;
 use App\Visit;
 use Illuminate\Support\Facades\DB;
 use ConsoleTVs\Charts\Facades\Charts;
-use Carbon\Carbon;
-use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use App\Admin;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
