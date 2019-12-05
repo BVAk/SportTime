@@ -18,7 +18,7 @@
       <div class="inner">
         <h2>{{$check1->user_name}}</h2>
 
-        <p>Зворотній зв'язок: <b>{{$check1->user_phone}}</b><br> Ім'я тренера: <b> {{$check1->trainer_name}}</b><br> Обраний час тренування: <b>{{$check1->privateschedule_date}}</b></p>
+        <p>Зворотній зв'язок: <b>{{$check1->user_phone}}</b><br> Ім'я тренера: <b><a href="admin/trainers/{{$check1->trainer_id}}"> {{$check1->trainer_name}}</a></b><br> Обраний час тренування: <b>{{$check1->privateschedule_date}}</b></p>
       </div>
       <a href="/admin/clients/private/{{$check1->privateschedule_id}}" class="small-box-footer">Підтвердити тренування <i class="fas fa-arrow-circle-right"></i></a>
       <a id="functionEdit" class="small-box-footer" type="button" data-toggle="modal" data-target="#myModal-{{ $check1->privateschedule_id }}">Редагувати тренування <i class="fas fa-arrow-circle-right"></i></a>
