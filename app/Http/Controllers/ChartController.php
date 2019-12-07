@@ -185,7 +185,7 @@ class ChartController extends Controller
             ->responsive(false)
             ->height(300)
             ->width(0);
-        $privateschedulecharttrainers = DB::table('privateschedule')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->where('checked', '=', 1)->select(DB::raw('count(DISTINCT user_id) as `count`'), DB::raw('trainer_id'))->groupBy('trainer_id')->orderby('count')->get();
+        $privateschedulecharttrainers = DB::table('privateschedule')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->where('checked', '=', 1)->select(DB::raw('count(DISTINCT user_id) as `count`'), DB::raw('trainer_id'))->groupBy('trainer_id')->orderbyDESC('count')->get();
         foreach ($privateschedulecharttrainers as $privateschedulecharttrainers1) {
             $trainer[] = $privateschedulecharttrainers1->count;
             $trainer_name = DB::table('trainers')->where('id', '=', $privateschedulecharttrainers1->trainer_id)->get();
