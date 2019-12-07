@@ -66,7 +66,8 @@
                         Кількість діючих клієнтів:{{$abonnementchart}}<br>
                   
                         {!! $percentchart->html() !!}
-
+                        {!!$trainerchart->html()!!}
+      
                     </div>
                     <?php
                          
@@ -80,6 +81,7 @@
             </div>
         </div>
         {!! $percentchart->script() !!}
+        {!! $trainerchart->script() !!}
     </div>
 
 </div>
