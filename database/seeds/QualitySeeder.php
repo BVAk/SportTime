@@ -19,7 +19,7 @@ class QualitySeeder extends Seeder
             $end = strtotime('now');
             $date1 = mt_rand($start, $end);
             $date = date('Y-m-d H:i:s', strtotime('+1day', $date1));
-            Quality::create(['user_id' => $user1->id, 'place' => rand(0, 10), 'organization' => rand(0, 10), 'cost' => rand(0, 10), 'assortment' => rand(0, 10), 'hygiene' => rand(0, 10), 'material' => rand(0, 10), 'quality_lesson' => rand(0, 10), 'created_at' => $date]);
+            Quality::create(['user_id' => $user1->id, 'place' => rand(5, 10), 'organization' => rand(5, 10), 'cost' => rand(5, 10), 'assortment' => rand(5, 10), 'hygiene' => rand(5, 10), 'material' => rand(5, 10), 'quality_lesson' => rand(5, 10), 'created_at' => $date]);
         }
         //
     }

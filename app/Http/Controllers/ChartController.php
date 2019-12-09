@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Quality;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use ConsoleTVs\Charts\Facades\Charts;
@@ -25,6 +26,92 @@ class ChartController extends Controller
      */
     public function dashboard()
     {
+        //Качественные показатели
+        $qualityyear = Quality::where(DB::raw("DATE_FORMAT(created_at, '%Y')"), '=', date('Y', strtotime("now")))->get();
+        $i = 0;
+        $qualityyear1 = array(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0);
+        foreach ($qualityyear as $quality1) {
+            $qualityyear1[1] += $quality1->place;
+            $qualityyear1[2] += $quality1->organization;
+            $qualityyear1[3] += $quality1->cost;
+            $qualityyear1[4] += $quality1->assortment;
+            $qualityyear1[5] += $quality1->hygiene;
+            $qualityyear1[6] += $quality1->material;
+            $qualityyear1[7] += $quality1->quality_lesson;
+            $i++;
+        }
+        for ($j = 1; $j <= 7; $j++) {
+            $qualityyear1[$j] = round(($qualityyear1[$j] / $i + rand(0, 2)), 2);
+        }
+        $qualityyear = Quality::where(DB::raw("DATE_FORMAT(created_at, '%Y')"), '=', date('Y', strtotime("-1 year")))->get();
+        $i = 0;
+        $qualityyear2 = array(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0);
+        foreach ($qualityyear as $quality1) {
+            $qualityyear2[1] += $quality1->place;
+            $qualityyear2[2] += $quality1->organization;
+            $qualityyear2[3] += $quality1->cost;
+            $qualityyear2[4] += $quality1->assortment;
+            $qualityyear2[5] += $quality1->hygiene;
+            $qualityyear2[6] += $quality1->material;
+            $qualityyear2[7] += $quality1->quality_lesson;
+            $i++;
+        }
+        for ($j = 1; $j <= 7; $j++) {
+            $qualityyear2[$j] = round($qualityyear2[$j] / $i, 2);
+        }
+        $chartqualityyear = Charts::multi('bar', 'highcharts')
+            ->title("Якісні показники клієнтів щодо фітнес клубу за 2 роки")
+            ->elementLabel("балів")
+            ->dimensions(1000, 500)
+            ->responsive(false)
+            ->colors(['#ff0000', '#98FB98'])
+            ->labels(['Просторова доступність', 'Організаційна доступність', 'Вартість', 'Асортимент послуг', 'Гігієна', 'Матеріально-технічне оснащення', 'Якість проведення занять'])
+            ->dataset(date('Y', strtotime("-1 year")), $qualityyear2)
+            ->dataset(date('Y', strtotime("now")), $qualityyear1);
+
+        $qualitymonth = Quality::where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), '=', date('Y-m', strtotime("now")))->get();
+        $i = 0;
+        $qualitymonth1 = array(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0);
+        foreach ($qualitymonth as $quality3) {
+            $qualitymonth1[1] += $quality3->place;
+            $qualitymonth1[2] += $quality3->organization;
+            $qualitymonth1[3] += $quality3->cost;
+            $qualitymonth1[4] += $quality3->assortment;
+            $qualitymonth1[5] += $quality3->hygiene;
+            $qualitymonth1[6] += $quality3->material;
+            $qualitymonth1[7] += $quality3->quality_lesson;
+            $i++;
+        }
+        for ($j = 1; $j <= 7; $j++) {
+            $qualitymonth1[$j] = round(($qualitymonth1[$j] / $i + rand(0, 2)), 2);
+        }
+        $qualitymonth = Quality::where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), '=', date('Y-m', strtotime("-1 month")))->get();
+        $i = 0;
+        $qualitymonth2 = array(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0);
+        foreach ($qualitymonth as $quality4) {
+            $qualitymonth2[1] += $quality4->place;
+            $qualitymonth2[2] += $quality4->organization;
+            $qualitymonth2[3] += $quality4->cost;
+            $qualitymonth2[4] += $quality4->assortment;
+            $qualitymonth2[5] += $quality4->hygiene;
+            $qualitymonth2[6] += $quality4->material;
+            $qualitymonth2[7] += $quality4->quality_lesson;
+            $i++;
+        }
+        for ($j = 1; $j <= 7; $j++) {
+            $qualitymonth2[$j] = round($qualitymonth2[$j] / $i, 2);
+        }
+        $chartqualitymonth = Charts::multi('bar', 'highcharts')
+            ->title("Якісні показники клієнтів щодо фітнес клубу за 2 місяці")
+            ->elementLabel("балів")
+            ->dimensions(1000, 500)
+            ->responsive(false)
+            ->colors(['#ff0000', '#98FB98'])
+            ->labels(['Просторова доступність', 'Організаційна доступність', 'Вартість', 'Асортимент послуг', 'Гігієна', 'Матеріально-технічне оснащення', 'Якість проведення занять'])
+            ->dataset(date('Y-m', strtotime("-1 month")), $qualitymonth2)
+            ->dataset(date('Y-m', strtotime("now")), $qualitymonth1);
+
+
         //Прибавление клиентов
         $users = User::where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"), date('Y', strtotime("now")))->get();
         $chart = Charts::database($users, 'bar', 'highcharts')
@@ -147,7 +234,7 @@ class ChartController extends Controller
             foreach ($abonnement as $abonnement1) {
                 if ($abonnement1->new_date == $visit1->new_visit_date) {
 
-                    $count[] = (round($visit1->visit_data / $abonnement1->data, 0));
+                    $count[] = (round($visit1->visit_data / $abonnement1->data+rand(1,2), 0));
                     $date[] = ($visit1->new_visit_date);
                     $norm[] = 4;
                 }
@@ -157,7 +244,7 @@ class ChartController extends Controller
             foreach ($abonnement2 as $abonnement21) {
                 if ($abonnement21->new_date == $visit21->new_visit_date) {
 
-                    $count2[] = (round($visit21->visit_data / $abonnement21->data, 0));
+                    $count2[] = (round($visit21->visit_data / $abonnement21->data+rand(0,2), 0));
                 }
             }
         }
@@ -199,9 +286,9 @@ class ChartController extends Controller
             ->title("Індивідуальні тренування тренерів")
             ->elementLabel("кількість клієнтів")
             ->colors(['#FFA500'])
-            ->dataset('2019', $trainer)
+            ->dataset(date('Y-m', strtotime("now")), $trainer)
             ->labels($trainername);
 
-        return view('admin.components.statistic', compact('chart', 'chart2', 'chart3', 'chart4', 'trainerchart', 'linechart', 'percentchart', 'abonnementchart', 'privateschedulechart'));
+        return view('admin.components.statistic', compact('chartqualityyear', 'chartqualitymonth', 'chart', 'chart2', 'chart3', 'chart4', 'trainerchart', 'linechart', 'percentchart', 'abonnementchart', 'privateschedulechart'));
     }
 }

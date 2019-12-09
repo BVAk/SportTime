@@ -20,12 +20,37 @@
                 </div>
             </div>
         </div>
+        
 
         {!! Charts::scripts() !!}
         {!! $chart->script() !!}
         {!! $chart2->script() !!}
         <!-- /.card-body -->
     </div>
+    <div class="card">
+
+<div class="card-body">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Якісні показники</div>
+
+            <div class="panel-body">
+                {!! $chartqualityyear->html() !!}
+            </div><div class="panel-body">
+                {!! $chartqualitymonth->html() !!}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{!! Charts::scripts() !!}
+{!! $chartqualityyear->script() !!}
+{!! $chartqualitymonth->script()!!}
+
+<!-- /.card-body -->
+</div>
     <div class="card">
 
         <div class="card-body">
