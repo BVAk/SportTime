@@ -13,14 +13,15 @@
 
                     <div class="panel-body">
                         {!! $chart->html() !!}
-                    </div> <div class="panel-body">
+                    </div>
+                    <div class="panel-body">
                         {!! $chart2->html() !!}
                     </div>
 
                 </div>
             </div>
         </div>
-        
+
 
         {!! Charts::scripts() !!}
         {!! $chart->script() !!}
@@ -29,28 +30,29 @@
     </div>
     <div class="card">
 
-<div class="card-body">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">Якісні показники</div>
+        <div class="card-body">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Якісні показники</div>
 
-            <div class="panel-body">
-                {!! $chartqualityyear->html() !!}
-            </div><div class="panel-body">
-                {!! $chartqualitymonth->html() !!}
+                    <div class="panel-body">
+                        {!! $chartqualityyear->html() !!}
+                    </div>
+                    <div class="panel-body">
+                        {!! $chartqualitymonth->html() !!}
+                    </div>
+
+                </div>
             </div>
-
         </div>
+
+
+        {!! Charts::scripts() !!}
+        {!! $chartqualityyear->script() !!}
+        {!! $chartqualitymonth->script()!!}
+
+        <!-- /.card-body -->
     </div>
-</div>
-
-
-{!! Charts::scripts() !!}
-{!! $chartqualityyear->script() !!}
-{!! $chartqualitymonth->script()!!}
-
-<!-- /.card-body -->
-</div>
     <div class="card">
 
         <div class="card-body">
@@ -75,7 +77,7 @@
         {!! $linechart->script() !!}
         {!! $chart3->script() !!}
         {!! $chart4->script() !!}
-        
+
         <!-- /.card-body -->
     </div>
 
@@ -89,15 +91,15 @@
                     <div class="panel-body">
                         Кількість клієнтів, що займаються індивідуальними тренуваннями з тренерами: {{$privateschedulechart}}<br>
                         Кількість діючих клієнтів:{{$abonnementchart}}<br>
-                  
+
                         {!! $percentchart->html() !!}
                         {!!$trainerchart->html()!!}
-      
+
                     </div>
                     <?php
-                         
-                
-              
+
+
+
                     ?>
 
 
@@ -107,6 +109,35 @@
         </div>
         {!! $percentchart->script() !!}
         {!! $trainerchart->script() !!}
+    </div>
+
+    <div class="card">
+
+        <div class="card-body">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Втримання клієнтів</div>
+
+                    <div class="panel-body">
+
+                        {!! $percentrepeatabonnementchart->html() !!}
+                        {!! $percentrepeatabonnementcharttype->html() !!}
+                    
+                    </div>
+                    <?php
+
+
+
+                    ?>
+
+
+
+                </div>
+            </div>
+        </div>
+        {!! $percentrepeatabonnementchart->script() !!}
+        {!! $percentrepeatabonnementcharttype->script() !!}
+
     </div>
 
 </div>

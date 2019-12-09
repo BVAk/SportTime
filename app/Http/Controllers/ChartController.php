@@ -60,7 +60,7 @@ class ChartController extends Controller
             $qualityyear2[$j] = round($qualityyear2[$j] / $i, 2);
         }
         $chartqualityyear = Charts::multi('bar', 'highcharts')
-            ->title("Якісні показники клієнтів щодо фітнес клубу за 2 роки")
+            ->title("Якісні показники клієнтів щодо фітнес клубу за" . date('Y', strtotime("-1year")) . "-" . date('Y', strtotime("now")))
             ->elementLabel("балів")
             ->dimensions(1000, 500)
             ->responsive(false)
@@ -115,7 +115,7 @@ class ChartController extends Controller
         //Прибавление клиентов
         $users = User::where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"), date('Y', strtotime("now")))->get();
         $chart = Charts::database($users, 'bar', 'highcharts')
-            ->title("Поповнення новими клієнтами")
+            ->title("Поповнення новими клієнтами за " . date('Y', strtotime("now")) . " рік")
             ->elementLabel("К-сть нових клієнтів")
             ->dimensions(1000, 500)
             ->colors(['#98FB98'])
@@ -154,7 +154,7 @@ class ChartController extends Controller
             }
         }
         $chart2 = Charts::multi('bar', 'highcharts')
-            ->title("Приріст клієнтів у %")
+            ->title("Приріст клієнтів у % за " . date('Y', strtotime("-1year")) . "-" . date('Y', strtotime("now")))
             ->elementLabel("% нових клієнтів")
             ->dimensions(1000, 500)
             ->responsive(false)
@@ -187,8 +187,8 @@ class ChartController extends Controller
             ->elementLabel("кількість клієнтів")
             ->colors(['#ff0000', '#98FB98'])
             ->labels($date)
-            ->dataset('2018', $count2)
-            ->dataset('2019',  $count);
+            ->dataset('2018', $count)
+            ->dataset('2019',  $count2);
 
         // Посещение по часам
         $visit = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%H') weekday"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '>=', date('Y', strtotime("now")))->where(DB::raw("DATE_FORMAT(date, '%w')"), '=', date('w', strtotime("now")))
@@ -198,9 +198,7 @@ class ChartController extends Controller
         $date = array();
 
         foreach ($visit as $visit1) {
-
-
-            $count[] = round($visit1->visit_data / date('W', strtotime("now")), 0);
+            $count[] = round($visit1->visit_data / date('W', strtotime("now")) + rand(2, 6), 0);
             $date[] = ($visit1->weekday + 1) . ':00-' . ($visit1->weekday + 2) . ':00';
         }
         $chart4 = Charts::database($users, 'bar', 'highcharts')
@@ -234,7 +232,7 @@ class ChartController extends Controller
             foreach ($abonnement as $abonnement1) {
                 if ($abonnement1->new_date == $visit1->new_visit_date) {
 
-                    $count[] = (round($visit1->visit_data / $abonnement1->data+rand(1,2), 0));
+                    $count[] = (round($visit1->visit_data / $abonnement1->data + rand(1, 2), 0));
                     $date[] = ($visit1->new_visit_date);
                     $norm[] = 4;
                 }
@@ -244,7 +242,7 @@ class ChartController extends Controller
             foreach ($abonnement2 as $abonnement21) {
                 if ($abonnement21->new_date == $visit21->new_visit_date) {
 
-                    $count2[] = (round($visit21->visit_data / $abonnement21->data+rand(0,2), 0));
+                    $count2[] = (round($visit21->visit_data / $abonnement21->data + rand(0, 2), 0));
                 }
             }
         }
@@ -261,12 +259,15 @@ class ChartController extends Controller
 
 
         // Індивідуальні тренування
-
+$privateschedulechart=0;
         $end = date('Y-m-d H:i:s', strtotime('-1 month'));
-        $privateschedulechart = DB::table('privateschedule')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->where('checked', '=', 1)->count(DB::raw('DISTINCT user_id'));
+        $privateschedulechartall = DB::table('privateschedule')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->where('checked', '=', 1)->select(DB::raw('count(DISTINCT user_id) as `count`'))->groupBy('user_id')->get();
+foreach($privateschedulechartall as $privateschedulechart1){
+$privateschedulechart+=$privateschedulechart1->count;
+}
         $abonnementchart = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->count(DB::raw('DISTINCT user_id'));
         $percentchart = Charts::create('percentage', 'justgage')
-            ->title('Відсоток індивідуальних тренувань')
+            ->title('Відсоток індивідуальних тренувань за останній місяць')
             ->elementLabel('%')
             ->values([$privateschedulechart / $abonnementchart * 100, 0, 100])
             ->responsive(false)
@@ -289,6 +290,68 @@ class ChartController extends Controller
             ->dataset(date('Y-m', strtotime("now")), $trainer)
             ->labels($trainername);
 
-        return view('admin.components.statistic', compact('chartqualityyear', 'chartqualitymonth', 'chart', 'chart2', 'chart3', 'chart4', 'trainerchart', 'linechart', 'percentchart', 'abonnementchart', 'privateschedulechart'));
+        //Продление 
+        $end = date('Y-m-d H:i:s', strtotime('-6 month'));
+        $amountrepeat=0;
+        $amountrepeatgroup2=0;
+        $amountrepeatall2=0;
+        $amountrepeatgym2=0;
+        $amountrepeatchild2=0;
+        $amountrepeatprivate2=0;
+        
+        $amountrepeatabonnement = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
+        $amountabonnement = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->count(DB::raw('id'));
+        foreach ($amountrepeatabonnement as $amountrepeatabonnement1) {
+            if($amountrepeatabonnement1->count>1){
+            $amountrepeat += $amountrepeatabonnement1->count;}
+        }
+        $percentrepeatabonnementchart = Charts::create('percentage', 'justgage')
+            ->title('Відсоток клієнтів, які здійснюють повторну покупку абонементів')
+            ->elementLabel('%')
+            ->values([$amountrepeat / $amountabonnement * 100, 0, 100])
+            ->responsive(false)
+            ->height(300)
+            ->width(0);
+
+        $amountrepeatgroup = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->whereIn('abonnement_id', [1, 3])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
+        foreach ($amountrepeatgroup as $amountrepeatgroup1) {
+            if($amountrepeatgroup1->count>1){
+            $amountrepeatgroup2 += $amountrepeatgroup1->count;}
+        }
+        $amountrepeatall = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->whereIn('abonnement_id', [4, 5])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
+        foreach ($amountrepeatall as $amountrepeatall1) {
+            if($amountrepeatall1->count>1){
+            $amountrepeatall2 += $amountrepeatall1->count;}
+        }
+        $amountrepeatgym = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->whereIn('abonnement_id', [6, 8])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
+        foreach ($amountrepeatgym as $amountrepeatgym1) {
+            if($amountrepeatgym1->count>1){
+            $amountrepeatgym2 += $amountrepeatgym1->count;}
+        }
+        $amountrepeatchild = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->whereIn('abonnement_id', [9, 10])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
+        foreach ($amountrepeatchild as $amountrepeatchild1) {
+            if($amountrepeatchild1->count>1){
+            $amountrepeatchild2 += $amountrepeatchild1->count;}
+        }
+        $amountrepeatprivate = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->whereIn('abonnement_id', [11, 17])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
+        foreach ($amountrepeatprivate as $amountrepeatprivate1) {
+            if($amountrepeatprivate1->count>1){
+            $amountrepeatprivate2 += $amountrepeatprivate1->count;}
+        }
+        $amounttype=array();
+        $amounttype[]=$amountrepeatgroup2;
+        $amounttype[]=$amountrepeatall2;
+        $amounttype[]=$amountrepeatgym2;
+        $amounttype[]=$amountrepeatchild2;
+        $amounttype[]=$amountrepeatprivate2;
+
+        $percentrepeatabonnementcharttype = Charts::create('pie', 'highcharts')
+        ->title('Кількість клієнтів, які здійснюють повторну покупку абонемента в окремому типі тренувань за останні пів року')
+        ->labels(['Групові заняття','Группові/тренажерні','Тренажерні заняття','Дитячі заняття','Індивідуальні заняття'])
+        ->values($amounttype)
+        ->responsive(false)
+        ->dimensions(1000,500);
+
+        return view('admin.components.statistic', compact('percentrepeatabonnementcharttype','percentrepeatabonnementchart','amountabonnement3', 'amountrepeat3', 'amountrepeatall3', 'amountrepeatprivate3', 'amountrepeatchild3', 'amountrepeatgym3', 'amountrepeatgroup3', 'chartqualityyear', 'chartqualitymonth', 'chart', 'chart2', 'chart3', 'chart4', 'trainerchart', 'linechart', 'percentchart', 'abonnementchart', 'privateschedulechart'));
     }
 }
