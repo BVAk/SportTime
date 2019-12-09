@@ -26,6 +26,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/fitness/trainers/privatetrainer', 'FitnessController@insertprivate');
+Route::post('/quality', 'HomeController@quality');
 
 
 

@@ -181,180 +181,241 @@
                     <span>Стан здоров'я:{{$user->health}}</span></p><br>
                 </div>
               </div>
-               
 
-                 
-                  <div class="row justify-content-center text-center">
-                    <div class="col-lg-6 mb-6 mb-lg-0">
-                      <div class="testimonial-2 text-center">
-                        <div class="v-card mb-6 text-center">
 
-                          <span>Діючий абонемент:</span>
-                        </div>
-                        <blockquote>
-                        @foreach ($userabonnement as $userabonnement1)
-                  <?if ($userabonnement1->end >new \Date('now') or ($userabonnement1->amount!=0)){?>
-                          
-                            
-                               {{$userabonnement1->name}}<br>
-                              <? if ($userabonnement1->amount == 0) { ?>
-                                до {{$userabonnement1->end}}
-                              <? } else { ?> {{$userabonnement1->amount}} тренувань(ння) <? } ?>
-                            
-                          
-                          
-                  <? } ?>
-                  <br>
-                  @endforeach
-                        </blockquote>
-                      </div>
+
+              <div class="row justify-content-center text-center">
+                <div class="col-lg-6 mb-6 mb-lg-0">
+                  <div class="testimonial-2 text-center">
+                    <div class="v-card mb-6 text-center">
+
+                      <span>Діючий абонемент:</span>
                     </div>
+                    <blockquote>
+                      @foreach ($userabonnement as $userabonnement1)
+                      <? if ($userabonnement1->end > new \Date('now') or ($userabonnement1->amount != 0)) { ?>
+
+
+                        {{$userabonnement1->name}}<br>
+                        <? if ($userabonnement1->amount == 0) { ?>
+                          до {{$userabonnement1->end}}
+                        <? } else { ?> {{$userabonnement1->amount}} тренувань(ння) <? } ?>
+
+
+
+                      <? } ?>
+                      <br>
+                      @endforeach
+                    </blockquote>
                   </div>
                 </div>
               </div>
-
             </div>
-
-
-
           </div>
 
-
-
-
-
-          <div class="container">
-            <div class="row justify-content-center text-center">
-              <div id='wrap'>
-
-
-                <h2>Індивідуальні заняття</h2>
-
-                <div id='external-events-list'>
-
-                </div>
-
-                <form>
-                  <div id='calendar'></div>
-                  <div class="form-group">
-
-                  </div>
-                </form>
-                <div style='clear:both'></div>
-
-              </div>
-
-
-
-            </div>
-
-
-
-
-          </div>
         </div>
 
 
-        <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-        <script src="{{ asset('js/jquery-migrate-3.0.0.js') }}"></script>
-        <script src="{{ asset('js/popper.min.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
-        <script src="{{ asset('js/jquery.sticky.js') }}"></script>
-        <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
-        <script src="{{ asset('js/jquery.animateNumber.min.js') }}"></script>
-        <script src="{{ asset('js/jquery.fancybox.min.js') }}"></script>
-        <script src="{{ asset('js/jquery.stellar.min.js') }}"></script>
-        <script src="{{ asset('js/jquery.easing.1.3.js') }}"></script>
-        <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
-        <script src="{{ asset('js/aos.js') }}"></script>
-        <script src="{{ asset('js/main.js') }}"></script>
 
-
-        <script crossorigin="anonymous" integrity="sha512-pLb0KdGv98tBKuIktAXgkkzj5YctsASlAaHp9M28BRo766KtsWiUbAQ9ApBTVhBbJftX2yrrHYAilPdc8JPZ2w==" type="application/javascript" src="https://github.githubassets.com/assets/frameworks-62db07b3.js"></script>
-
-        <script crossorigin="anonymous" async="async" integrity="sha512-nITnsRZNziONp9Rn/73yyNlra8L1nPXp13ejdl0hm3Exs0hYsTtfScepr51Ga7I/SQYW7kDTYconHohkEPgtlQ==" type="application/javascript" src="https://github.githubassets.com/assets/github-bootstrap-eafec0d4.js"></script>
-        <script src="{{asset('packages/core/main.js')}}"></script>
-        <script src="{{asset('packages/interaction/main.js')}}"></script>
-        <script src="{{asset('packages/daygrid/main.js')}}"></script>
-        <script src="{{asset('packages/timegrid/main.js')}}"></script>
-        <script src="{{asset('packages/list/main.js')}}"></script>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
-
-        <script>
-          document.addEventListener('DOMContentLoaded', function() {
-            var Calendar = FullCalendar.Calendar;
-            var Draggable = FullCalendarInteraction.Draggable
-
-            /* initialize the external events
-            -----------------------------------------------------------------*/
-
-            var containerEl = document.getElementById('external-events-list');
-            new Draggable(containerEl, {
-              itemSelector: '.fc-event',
-              eventData: function(eventEl) {
-                return {
-                  title: eventEl.innerText.trim()
-                }
-              }
-            });
-
-            //// the individual way to do it
-            // var containerEl = document.getElementById('external-events-list');
-            // var eventEls = Array.prototype.slice.call(
-            //   containerEl.querySelectorAll('.fc-event')
-            // );
-            // eventEls.forEach(function(eventEl) {
-            //   new Draggable(eventEl, {
-            //     eventData: {
-            //       title: eventEl.innerText.trim(),
-            //     }
-            //   });
-            // });
-
-            /* initialize the calendar
-            -----------------------------------------------------------------*/
-
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new Calendar(calendarEl, {
-              plugins: ['interaction', 'timeGridWeek', 'timeGrid', 'list'],
-              header: {
-                left: '',
-                right: '',
-                center: 'title',
-              },
-              minTime: "09:00:00",
-
-              maxTime: "23:00:00",
-              editable: false,
-              droppable: false, // this allows things to be dropped onto the calendar
-              eventSources: [{
-                events: [
-                  @foreach($privateschedule as $privateschedule) {
-
-                    id: '{{$privateschedule->privateschedule_id}}',
-                    title: '{{$privateschedule->trainer_name}}',
-                    start: '{{$privateschedule->privateschedule_date}}',
-                    end: '{{$privateschedule->privateschedule_endtrain}}',
-                    allDay: false
-                  },
-                  @endforeach
-                ],
-                color: 'greenyellow', // an option!
-                textColor: 'black' // an option!
-              }],
-              eventDrop: function(event, delta, revertFunc) { // si changement de position
+      </div>
 
 
 
-              },
-            });
-            calendar.render();
 
-          });
-        </script>
+      <div class="site-section section-3" data-stellar-background-ratio="0.5" style="background-image: url('/images/hero_2.jpg');">
+
+        <div class="container">
+          <div class="row justify-content-center text-center">
+
+            @if(!empty($quality))
+            @else
+            <form role="form" class="col-md-6 col-lg-4 mb-4 go-right" action="{{ url('/quality') }}" method="post" enctype="multipart/form-data">
+              {{ csrf_field() }}
+              <div class="form-group">
+                <div class="form-group">
+                  <h2 class="text-white">Допоможіть оцінити якість роботи фітнес клуба</h2>
+                  <div class="form-group">
+                    <input type="hidden" name="user_id" value="{{ Auth::user()->id}}">
+                  </div>
+                  <div class="form-group">
+                    <h4 class="text-white"> Оцініть просторову доступність фітнес клуба від 0 до 10, де 0-найнижча оцінка</h4>
+                    <input type="range" name="place" min="0" max="10" step="1" onchange="document.getElementById('rangeValue').innerHTML = this.value;" list="rangeList"> <span id="rangeValue" class="text-white">5</span>
+                  </div>
+                  <div class="form-group">
+                    <h4 class="text-white"> Оцініть організаційну доступність фітнес клуба від 0 до 10, де 0-найнижча оцінка</h4>
+                    <input type="range" name="organization" min="0" max="10" step="1" onchange="document.getElementById('rangeValue2').innerHTML = this.value;" list="rangeList"> <span id="rangeValue2" class="text-white">5</span>
+                  </div>
+                  <div class="form-group">
+                    <h4 class="text-white"> Оцініть вартісну доступність фітнес клуба від 0 до 10, де 0-найнижча оцінка</h4>
+                    <input type="range" name="cost" min="0" max="10" step="1" onchange="document.getElementById('rangeValue3').innerHTML = this.value;" list="rangeList"> <span id="rangeValue3" class="text-white">5</span>
+                  </div>
+                  <div class="form-group">
+                    <h4 class="text-white"> Оцініть асортимент послуг від 0 до 10, де 0-найнижча оцінка</h4>
+                    <input type="range" name="assortment" min="0" max="10" step="1" onchange="document.getElementById('rangeValue4').innerHTML = this.value;" list="rangeList"> <span id="rangeValue4" class="text-white">5</span>
+                  </div>
+                  <div class="form-group">
+                    <h4 class="text-white"> Оцініть гігєну фітнес клуба від 0 до 10, де 0-найнижча оцінка</h4>
+                    <input type="range" name="hygiene" min="0" max="10" step="1" onchange="document.getElementById('rangeValue5').innerHTML = this.value;" list="rangeList"> <span id="rangeValue5" class="text-white">5</span>
+                  </div>
+                  <div class="form-group">
+                    <h4 class="text-white"> Оцініть матеріально-технічне оснащення фітнес клуба від 0 до 10, де 0-найнижча оцінка</h4>
+                    <input type="range" name="material" min="0" max="10" step="1" onchange="document.getElementById('rangeValue6').innerHTML = this.value;" list="rangeList"> <span id="rangeValue6" class="text-white">5</span>
+                  </div>
+                  <div class="form-group">
+                    <h4 class="text-white"> Оцініть якість проведення тренувань від 0 до 10, де 0-найнижча оцінка</h4>
+                    <input type="range" name="quality_lesson" min="0" max="10" step="1" onchange="document.getElementById('rangeValue7').innerHTML = this.value;" list="rangeList"> <span id="rangeValue7" class="text-white">5</span>
+                  </div>
+                </div>
+                <datalist id="rangeList">
+                  <option value="0" label="0">
+                  <option value="1" label="1">
+                  <option value="2" label="2">
+                  <option value="3" label="3">
+                  <option value="4" label="4">
+                  <option value="5" label="5">
+                  <option value="6" label="6">
+                  <option value="7" label="7">
+                  <option value="8" label="8">
+                  <option value="9" label="9">
+                  <option value="10" label="10">
+                </datalist>
+                <input class="btn btn-success center-block btn-lg" type="submit" value="Відправити дані">
+            </form> @endif </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div id='wrap'>
+
+
+          <h2>Індивідуальні заняття</h2>
+
+          <div id='external-events-list'>
+
+          </div>
+
+          <form>
+            <div id='calendar'></div>
+            <div class="form-group">
+
+            </div>
+          </form>
+          <div style='clear:both'></div>
+
+        </div>
+
+
+
+      </div>
+
+
+
+
+    </div>
+  </div>
+
+
+  <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+  <script src="{{ asset('js/jquery-migrate-3.0.0.js') }}"></script>
+  <script src="{{ asset('js/popper.min.js') }}"></script>
+  <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.sticky.js') }}"></script>
+  <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.animateNumber.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.fancybox.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.stellar.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.easing.1.3.js') }}"></script>
+  <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+  <script src="{{ asset('js/aos.js') }}"></script>
+  <script src="{{ asset('js/main.js') }}"></script>
+
+
+  <script crossorigin="anonymous" integrity="sha512-pLb0KdGv98tBKuIktAXgkkzj5YctsASlAaHp9M28BRo766KtsWiUbAQ9ApBTVhBbJftX2yrrHYAilPdc8JPZ2w==" type="application/javascript" src="https://github.githubassets.com/assets/frameworks-62db07b3.js"></script>
+
+  <script crossorigin="anonymous" async="async" integrity="sha512-nITnsRZNziONp9Rn/73yyNlra8L1nPXp13ejdl0hm3Exs0hYsTtfScepr51Ga7I/SQYW7kDTYconHohkEPgtlQ==" type="application/javascript" src="https://github.githubassets.com/assets/github-bootstrap-eafec0d4.js"></script>
+  <script src="{{asset('packages/core/main.js')}}"></script>
+  <script src="{{asset('packages/interaction/main.js')}}"></script>
+  <script src="{{asset('packages/daygrid/main.js')}}"></script>
+  <script src="{{asset('packages/timegrid/main.js')}}"></script>
+  <script src="{{asset('packages/list/main.js')}}"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var Calendar = FullCalendar.Calendar;
+      var Draggable = FullCalendarInteraction.Draggable
+
+      /* initialize the external events
+      -----------------------------------------------------------------*/
+
+      var containerEl = document.getElementById('external-events-list');
+      new Draggable(containerEl, {
+        itemSelector: '.fc-event',
+        eventData: function(eventEl) {
+          return {
+            title: eventEl.innerText.trim()
+          }
+        }
+      });
+
+      //// the individual way to do it
+      // var containerEl = document.getElementById('external-events-list');
+      // var eventEls = Array.prototype.slice.call(
+      //   containerEl.querySelectorAll('.fc-event')
+      // );
+      // eventEls.forEach(function(eventEl) {
+      //   new Draggable(eventEl, {
+      //     eventData: {
+      //       title: eventEl.innerText.trim(),
+      //     }
+      //   });
+      // });
+
+      /* initialize the calendar
+      -----------------------------------------------------------------*/
+
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new Calendar(calendarEl, {
+        plugins: ['interaction', 'timeGridWeek', 'timeGrid', 'list'],
+        header: {
+          left: '',
+          right: '',
+          center: 'title',
+        },
+        minTime: "09:00:00",
+
+        maxTime: "23:00:00",
+        editable: false,
+        droppable: false, // this allows things to be dropped onto the calendar
+        eventSources: [{
+          events: [
+            @foreach($privateschedule as $privateschedule) {
+
+              id: '{{$privateschedule->privateschedule_id}}',
+              title: '{{$privateschedule->trainer_name}}',
+              start: '{{$privateschedule->privateschedule_date}}',
+              end: '{{$privateschedule->privateschedule_endtrain}}',
+              allDay: false
+            },
+            @endforeach
+          ],
+          color: 'greenyellow', // an option!
+          textColor: 'black' // an option!
+        }],
+        eventDrop: function(event, delta, revertFunc) { // si changement de position
+
+
+
+        },
+      });
+      calendar.render();
+
+    });
+  </script>
 
 
 </body>
