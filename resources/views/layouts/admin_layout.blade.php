@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+<?php
+                                    use App\Trainer;
+                                    $train_id = Trainer::where('name', '=', Auth::user()->name)->first();
+
+                                    ?>
+                                    <!DOCTYPE html>
 <html>
 
 <head>
@@ -41,7 +46,11 @@
             </a>
 
 
-            <!-- Sidebar -->
+         
+
+                <!-- Sidebar Menu -->
+                <?php if (Auth::user()->role == 'admin') { ?>
+                       <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -53,119 +62,210 @@
                         <a href="/admin" class="d-block">{{ Auth::user()->name }}</a>
                     </div>
                 </div>
-
-                <!-- Sidebar Menu -->
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
+                    <nav class="mt-2">
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                            <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
-                        <li class="nav-item">
-                            <a href="/admin" class="nav-link {{request()->path() == 'admin' ? 'active' : ''}}">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Dashboard
-                                </p>
-                            </a>
+                            <li class="nav-item">
+                                <a href="/admin" class="nav-link {{request()->path() == 'admin' ? 'active' : ''}}">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Dashboard
+                                    </p>
+                                </a>
 
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link {{in_array(request()->path(), ['admin/clients', 'admin/clients/add']) ? 'active' : ''}}">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>
-                                    Клієнти
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="/admin/clients" class="nav-link {{request()->path() == 'admin/clients' ? 'active' : ''}}">
-                                        <i class="fas fa-address-card"></i>
-                                        <p>Перегляд клієнтів</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/admin/clients/add" class="nav-link {{request()->path() == 'admin/clients/add' ? 'active' : ''}}">
-                                        <i class="fas fa-user-plus"></i>
-                                        <p>Створити нового клієнта</p>
-                                    </a>
-                                </li>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link {{in_array(request()->path(), ['admin/clients', 'admin/clients/add']) ? 'active' : ''}}">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>
+                                        Клієнти
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="/admin/clients" class="nav-link {{request()->path() == 'admin/clients' ? 'active' : ''}}">
+                                            <i class="fas fa-address-card"></i>
+                                            <p>Перегляд клієнтів</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/admin/clients/add" class="nav-link {{request()->path() == 'admin/clients/add' ? 'active' : ''}}">
+                                            <i class="fas fa-user-plus"></i>
+                                            <p>Створити нового клієнта</p>
+                                        </a>
+                                    </li>
 
-                            </ul>
-                        </li>
+                                </ul>
+                            </li>
 
-                        <li class="nav-item has-treeview ">
-                            <a href="#" class="nav-link {{in_array(request()->path(), ['admin/trainers', 'admin/trainers/add']) ? 'active' : ''}}">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>Тренери<i class="fas fa-angle-left right"></i></p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="/admin/trainers" class="nav-link {{request()->path() == 'admin/trainers' ? 'active' : ''}}">
-                                        <i class="fas fa-address-card"></i>
-                                        <p>Перегляд тренерів</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/admin/trainers/add" class="nav-link {{request()->path() == 'admin/trainers/add' ? 'active' : ''}}">
-                                        <i class="fas fa-user-plus"></i>
-                                        <p>Створити нового тренера</p>
-                                    </a>
-                                </li>
+                            <li class="nav-item has-treeview ">
+                                <a href="#" class="nav-link {{in_array(request()->path(), ['admin/trainers', 'admin/trainers/add']) ? 'active' : ''}}">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>Тренери<i class="fas fa-angle-left right"></i></p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="/admin/trainers" class="nav-link {{request()->path() == 'admin/trainers' ? 'active' : ''}}">
+                                            <i class="fas fa-address-card"></i>
+                                            <p>Перегляд тренерів</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/admin/trainers/add" class="nav-link {{request()->path() == 'admin/trainers/add' ? 'active' : ''}}">
+                                            <i class="fas fa-user-plus"></i>
+                                            <p>Створити нового тренера</p>
+                                        </a>
+                                    </li>
 
-                            </ul>
-                        </li>
+                                </ul>
+                            </li>
 
-                        <li class="nav-item has-treeview ">
-                            <a href="#" class="nav-link {{in_array(request()->path(), ['admin/schedule/private', 'admin/schedule/group', 'admin/schedule/child']) ? 'active' : ''}}">
-                                <i class="nav-icon fas fa-table"></i>
-                                <p>Розклад<i class="fas fa-angle-left right"></i></p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="/admin/schedule/group" class="nav-link {{request()->path() == 'admin/schedule/group' ? 'active' : ''}}">
-                                        <i class="fas fa-users"></i>
-                                        <p>Группові заняття</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/admin/schedule/private" class="nav-link {{request()->path() == 'admin/schedule/private' ? 'active' : ''}}">
-                                        <i class="fas fa-user"></i>
-                                        <p>Індивідуальні заняття</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/admin/schedule/child" class="nav-link {{request()->path() == 'admin/schedule/child' ? 'active' : ''}}">
-                                        <i class="fas fa-child"></i>
-                                        <p>Дитячі заняття</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-
-
-                        <li class="nav-item">
-                            <a href="/admin/statistic" class="nav-link {{request()->path() == 'admin/statistic' ? 'active' : ''}}">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                Статистика
-                            </a>
-
-                        </li>
+                            <li class="nav-item has-treeview ">
+                                <a href="#" class="nav-link {{in_array(request()->path(), ['admin/schedule/private', 'admin/schedule/group', 'admin/schedule/child']) ? 'active' : ''}}">
+                                    <i class="nav-icon fas fa-table"></i>
+                                    <p>Розклад<i class="fas fa-angle-left right"></i></p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="/admin/schedule/group" class="nav-link {{request()->path() == 'admin/schedule/group' ? 'active' : ''}}">
+                                            <i class="fas fa-users"></i>
+                                            <p>Группові заняття</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/admin/schedule/private" class="nav-link {{request()->path() == 'admin/schedule/private' ? 'active' : ''}}">
+                                            <i class="fas fa-user"></i>
+                                            <p>Індивідуальні заняття</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/admin/schedule/child" class="nav-link {{request()->path() == 'admin/schedule/child' ? 'active' : ''}}">
+                                            <i class="fas fa-child"></i>
+                                            <p>Дитячі заняття</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
 
 
-                        <li class="nav-item">
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
-                                <i class=" nav-icon fa fa-power-off"></i>
-                                <p>Вийти</p>
-                            </a>
 
-                        </li>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
+                            <li class="nav-item">
+                                <a href="/admin/statistic" class="nav-link {{request()->path() == 'admin/statistic' ? 'active' : ''}}">
+                                    <i class="nav-icon fas fa-chart-pie"></i>
+                                    Статистика
+                                </a>
 
-                    </ul>
-                </nav>
+                            </li>
+
+
+                            <li class="nav-item">
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
+                                    <i class=" nav-icon fa fa-power-off"></i>
+                                    <p>Вийти</p>
+                                </a>
+
+                            </li>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+
+                        </ul>
+                    </nav>
+                <?php } ?>
+                <!-- /.sidebar-menu -->
+                   <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <a href="/admin/trainers/{{$train_id->id}}"> <img src="/images/manager.png" class="img-circle elevation-2" alt="User Image">
+                        </a>
+                    </div>
+                    <div class="info">
+                        <a href="/admin/trainers/{{$train_id->id}}" class="d-block">{{ Auth::user()->name }}</a>
+                    </div>
+                </div>
+                <?php if (Auth::user()->role == 'trainer') { ?>
+                    <!-- Sidebar Menu -->
+                    <nav class="mt-2">
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                            <!-- Add icons to the links using the .nav-icon class
+                         with font-awesome or any other icon font library -->
+                            <li class="nav-item">
+                              
+                                <a href="/admin/trainers/{{$train_id->id}}" class="nav-link {{request()->path() == 'admin' ? 'active' : ''}}">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Dashboard
+                                    </p>
+                                </a>
+
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/clients" class="nav-link {{in_array(request()->path(), ['admin/clients']) ? 'active' : ''}}">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>
+                                        Клієнти
+                                       
+                                    </p>
+                                </a>
+
+                            </li>
+
+                            <li class="nav-item has-treeview ">
+                                <a href="#" class="nav-link {{in_array(request()->path(), ['admin/schedule/private', 'admin/schedule/group', 'admin/schedule/child']) ? 'active' : ''}}">
+                                    <i class="nav-icon fas fa-table"></i>
+                                    <p>Розклад<i class="fas fa-angle-left right"></i></p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="/admin/schedule/group" class="nav-link {{request()->path() == 'admin/schedule/group' ? 'active' : ''}}">
+                                            <i class="fas fa-users"></i>
+                                            <p>Группові заняття</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/admin/schedule/private" class="nav-link {{request()->path() == 'admin/schedule/private' ? 'active' : ''}}">
+                                            <i class="fas fa-user"></i>
+                                            <p>Індивідуальні заняття</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/admin/schedule/child" class="nav-link {{request()->path() == 'admin/schedule/child' ? 'active' : ''}}">
+                                            <i class="fas fa-child"></i>
+                                            <p>Дитячі заняття</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+
+                            <li class="nav-item">
+                                <a href="/admin/statistic" class="nav-link {{request()->path() == 'admin/statistic' ? 'active' : ''}}">
+                                    <i class="nav-icon fas fa-chart-pie"></i>
+                                    Статистика
+                                </a>
+
+                            </li>
+
+
+                            <li class="nav-item">
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
+                                    <i class=" nav-icon fa fa-power-off"></i>
+                                    <p>Вийти</p>
+                                </a>
+
+                            </li>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+
+                        </ul>
+                    </nav>
+                <?php } ?>
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->

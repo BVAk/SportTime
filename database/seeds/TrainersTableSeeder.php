@@ -1,6 +1,8 @@
 <?php
 
+use App\Trainer;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TrainersTableSeeder extends Seeder
 {
@@ -12,25 +14,12 @@ class TrainersTableSeeder extends Seeder
 
     public function run()
     {
-        $faker = \Faker\Factory::create();
-
-        for ($i = 0; $i <= 10; $i++){
-            $trainer = [
-                'name' => $faker->name($gender = 'male'),
-                'email' => $faker->unique()->freeEmail,
-                'birth' => $faker->dateTimeBetween('-30 years', '-18 years'),
-                'start' => $faker->dateTimeBetween('-5 years', 'now'),
-                'phone' => $faker->unique()->phoneNumber,
-                'image' => "images/trainers/man$i.jpg",
-                'salary'=>'7000'
-            ];
-            \App\Trainer::create($trainer);
-
-            $trainer['name'] = $faker->name($gender = 'female');
-            $trainer['email'] = $faker->unique()->freeEmail;
-            $trainer['image'] = "images/trainers/woman$i.jpg";
-            $trainer['phone'] = $faker->unique()->phoneNumber;
-            \App\Trainer::create($trainer);
+        
+        $trainer_id = Trainer::all();
+        foreach ($trainer_id as $trainer) {
+         
+            DB::table('admins')->insert(['name' => $trainer->name, 'email' => $trainer->email, 'phone' => $trainer->phone, 'password' => bcrypt($trainer->email), 'role' => 'trainer']);
+      
         }
     }
 }

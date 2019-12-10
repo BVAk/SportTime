@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use ConsoleTVs\Charts\Facades\Charts;
 use Illuminate\Http\Request;
 use App\Admin;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -40,7 +41,13 @@ class AdminController extends Controller
             $checkme = "Всі персональні тренування підтвердженні";
             $check = [];
         }
-        return view('admin.welcomeadmin', compact('check', 'trainergym2', 'checkme'));
+        if(Auth::user()->role=='admin'){
+        return view('admin.welcomeadmin', compact('check', 'trainergym2', 'checkme'));}
+        else if(Auth::user()->role=='trainer'){
+            $train_id = Trainer::where('name', '=', Auth::user()->name)->first();
+        
+        return $this->profileTrainers($train_id);
+        }
     }
 
     /**
