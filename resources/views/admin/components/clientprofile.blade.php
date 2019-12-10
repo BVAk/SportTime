@@ -109,8 +109,8 @@
 </div>
 
 <div class="container-fluid">
-  <div class="row  text-center">
-    <form role="form" class="col-6" action="{{ url('/fitness/trainers/privatetrainer') }}" method="post" enctype="multipart/form-data">
+  <div class="row justify-content-center text-center">
+    <form role="form" class="col col-6" action="{{ url('/fitness/trainers/privatetrainer') }}" method="post" enctype="multipart/form-data">
       {{ csrf_field() }}
       <div class="form-group">
         <h3>Обрати тренера</h3>
@@ -143,7 +143,8 @@
 
 
     </form>
-    <form role="form" class="col-6" action="{{ url('/admin/userabonnement') }}" method="post" enctype="multipart/form-data">
+    <?php if (Auth::user()->role == 'admin') { ?>
+    <form role="form" class="col col-6" action="{{ url('/admin/userabonnement') }}" method="post" enctype="multipart/form-data">
       {{ csrf_field() }}
       <div class="form-group">
         <h3>Обрати абонемент</h3>
@@ -168,6 +169,7 @@
 
 
     </form>
+    <? }?>
 
   </div>
   <!-- /.card -->
