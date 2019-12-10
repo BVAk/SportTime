@@ -1,9 +1,11 @@
 <?php
-                                    use App\Trainer;
-                                    $train_id = Trainer::where('name', '=', Auth::user()->name)->first();
 
-                                    ?>
-                                    <!DOCTYPE html>
+use App\Trainer;
+
+$train_id = Trainer::where('name', '=', Auth::user()->name)->first();
+
+?>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -46,22 +48,22 @@
             </a>
 
 
-         
 
-                <!-- Sidebar Menu -->
-                <?php if (Auth::user()->role == 'admin') { ?>
-                       <!-- Sidebar -->
-            <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <a href="/admin"> <img src="/images/manager.png" class="img-circle elevation-2" alt="User Image">
-                        </a>
+
+            <!-- Sidebar Menu -->
+            <?php if (Auth::user()->role == 'admin') { ?>
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <!-- Sidebar user panel (optional) -->
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        <div class="image">
+                            <a href="/admin"> <img src="/images/manager.png" class="img-circle elevation-2" alt="User Image">
+                            </a>
+                        </div>
+                        <div class="info">
+                            <a href="/admin" class="d-block">{{ Auth::user()->name }}</a>
+                        </div>
                     </div>
-                    <div class="info">
-                        <a href="/admin" class="d-block">{{ Auth::user()->name }}</a>
-                    </div>
-                </div>
                     <nav class="mt-2">
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <!-- Add icons to the links using the .nav-icon class
@@ -173,28 +175,31 @@
 
                         </ul>
                     </nav>
-                <?php } ?>
-                <!-- /.sidebar-menu -->
-                   <!-- Sidebar -->
-            <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <a href="/admin/trainers/{{$train_id->id}}"> <img src="/images/manager.png" class="img-circle elevation-2" alt="User Image">
-                        </a>
-                    </div>
-                    <div class="info">
-                        <a href="/admin/trainers/{{$train_id->id}}" class="d-block">{{ Auth::user()->name }}</a>
-                    </div>
                 </div>
-                <?php if (Auth::user()->role == 'trainer') { ?>
+            <?php } ?>
+
+            <!-- /.sidebar-menu -->
+            <!-- Sidebar -->
+            <?php if (Auth::user()->role == 'trainer') { ?>
+                <div class="sidebar">
+                    <!-- Sidebar user panel (optional) -->
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        <div class="image">
+                            <a href="/admin/trainers/{{$train_id->id}}"> <img src="/images/manager.png" class="img-circle elevation-2" alt="User Image">
+                            </a>
+                        </div>
+                        <div class="info">
+                            <a href="/admin/trainers/{{$train_id->id}}" class="d-block">{{ Auth::user()->name }}</a>
+                        </div>
+                    </div>
+
                     <!-- Sidebar Menu -->
                     <nav class="mt-2">
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                             <li class="nav-item">
-                              
+
                                 <a href="/admin/trainers/{{$train_id->id}}" class="nav-link {{request()->path() == 'admin' ? 'active' : ''}}">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
@@ -208,7 +213,7 @@
                                     <i class="nav-icon fas fa-user"></i>
                                     <p>
                                         Клієнти
-                                       
+
                                     </p>
                                 </a>
 
@@ -267,8 +272,8 @@
                     </nav>
                 <?php } ?>
                 <!-- /.sidebar-menu -->
-            </div>
-            <!-- /.sidebar -->
+                </div>
+                <!-- /.sidebar -->
         </aside>
 
 

@@ -54,6 +54,8 @@
 @section('content')
 
 <div class="container-fluid">
+<div class="row">
+  <div class="col">
   <div class="row">
     <div class="col-6">
       ФІО тренера:
@@ -66,14 +68,21 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-6">
+      Пошта тренера:
+    </div>
+    <div class="col-6">
+      <!-- small box -->
+      {{$user->email}}
+    </div>
+  </div>
+  <div class="row">
     <div class="col">
       Мобільний номер тренера:
     </div>
     <div class="col">
       <!-- small box -->
-
       {{$user->phone}}
-
     </div>
   </div>
   <div class="row">
@@ -82,12 +91,25 @@
     </div>
     <div class="col">
       <!-- small box -->
-
       {{$user->birth}}
-
-
     </div>
   </div>
+  <div class="row">
+    <div class="col-6">
+      Стаж тренера:
+    </div>
+    <div class="col-6">
+      <!-- small box -->
+      {{date('Y-m-d')-$user->start}} роки
+    </div>
+  </div>
+  </div>
+  <div class="col">
+    <div class="row justify-content-center">
+  <img src="{{asset($user->image)}}" height="100px">
+    </div>
+  </div>
+</div>
 </div>
 
 <div class="container">
@@ -100,17 +122,24 @@
         <div class="panel-heading"></div>
 
         <div class="panel-body">
-        
+
           {!! $percentchart->html() !!}
-        <br>  Кількість клієнтів, що займаються індивідуальними тренуваннями з тренерами: <b>{{$privateschedulechart}}</b><br>
+          <br> Кількість клієнтів, що займаються індивідуальними тренуваннями з тренерами: <b>{{$privateschedulechart}}</b><br>
           Кількість діючих клієнтів: <b>{{$abonnementchart}}</b><br>
+
+        </div>
+        <div class="panel-body">
+
+          {!! $percentrepeatabonnementcharttype->html() !!}
          
         </div>
+        
 
       </div>
     </div>
     {!! Charts::scripts() !!}
     {!! $percentchart->script() !!}
+    {!! $percentrepeatabonnementcharttype->script() !!}
     <!-- /.card-body -->
   </div>
 </div>

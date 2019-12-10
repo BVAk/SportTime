@@ -35,18 +35,18 @@ class AdminController extends Controller
         $trainergym2 = DB::table('traintrain')->join('trainers', 'traintrain.trainer_id', '=', 'trainers.id')->join('trainings', 'traintrain.training_id', '=', 'trainings.id')->where('training_id', '=', '1')->orwhere('training_id', '=', '2')->select('trainers.id as id', 'trainers.name as trainer_name', 'start', 'image', 'trainings.name as training_name')->get();
 
         if (DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('trainers', 'privateschedule.trainer_id', '=', 'trainers.id')->join('users', 'privateschedule.user_id', '=', 'users.id')->where('checked', '!=', '1')->where('date', '>=', new \DateTime('now'))->select('users.name as user_name', 'users.phone as user_phone', 'trainings.name as training_name', 'trainers.name as trainer_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'privateschedule.id as privateschedule_id')->exists()) {
-            $check = DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('trainers', 'privateschedule.trainer_id', '=', 'trainers.id')->join('users', 'privateschedule.user_id', '=', 'users.id')->where('checked', '!=', '1')->where('date', '>=', new \DateTime('now'))->select('users.name as user_name', 'users.phone as user_phone', 'trainings.name as training_name', 'trainers.name as trainer_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain','trainers.id as trainer_id', 'privateschedule.id as privateschedule_id')->get();
+            $check = DB::table('privateschedule')->join('trainings', 'privateschedule.training_id', '=', 'trainings.id')->join('trainers', 'privateschedule.trainer_id', '=', 'trainers.id')->join('users', 'privateschedule.user_id', '=', 'users.id')->where('checked', '!=', '1')->where('date', '>=', new \DateTime('now'))->select('users.name as user_name', 'users.phone as user_phone', 'trainings.name as training_name', 'trainers.name as trainer_name', 'privateschedule.date as privateschedule_date', 'privateschedule.endtrain as privateschedule_endtrain', 'trainers.id as trainer_id', 'privateschedule.id as privateschedule_id')->get();
             $checkme = NULL;
         } else {
             $checkme = "Всі персональні тренування підтвердженні";
             $check = [];
         }
-        if(Auth::user()->role=='admin'){
-        return view('admin.welcomeadmin', compact('check', 'trainergym2', 'checkme'));}
-        else if(Auth::user()->role=='trainer'){
+        if (Auth::user()->role == 'admin') {
+            return view('admin.welcomeadmin', compact('check', 'trainergym2', 'checkme'));
+        } else if (Auth::user()->role == 'trainer') {
             $train_id = Trainer::where('name', '=', Auth::user()->name)->first();
-        
-        return $this->profileTrainers($train_id);
+
+            return $this->profileTrainers($train_id);
         }
     }
 
@@ -121,16 +121,64 @@ class AdminController extends Controller
         $privateschedulechart = DB::table('privateschedule')->where('privateschedule.trainer_id', '=', $id->id)->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->where('checked', '=', 1)->count(DB::raw('DISTINCT privateschedule.user_id'));
         $abonnementchart = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->count(DB::raw('DISTINCT user_id'));
         $percentchart = Charts::create('percentage', 'justgage')
-            ->title('Відсоток індивідуальних тренувань')
+            ->title('Відсоток індивідуальних тренувань за останній місяць')
             ->elementLabel('%')
             ->values([$privateschedulechart / $abonnementchart * 100, 0, 100])
             ->responsive(false)
             ->height(300)
             ->width(0);
 
+        $amountrepeat = 0;
+        $amountrepeatgroup2 = 0;
+        $amountrepeatchild2 = 0;
+        $amountrepeatprivate2 = 0;
+        $end = date('Y-m-d H:i:s', strtotime('-6 month', $date1));
+        $trainertrainings = DB::table('traintrain')->where('trainer_id', '=', $id->id)->get();
+        foreach ($trainertrainings as $trainertraining) {
+            if ($trainertraining->training_id >= 3 && $trainertraining->training_id <= 14) {
+                $amountrepeatgroup = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->whereIn('abonnement_id', [1, 3])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
+                foreach ($amountrepeatgroup as $amountrepeatgroup1) {
+                    if ($amountrepeatgroup1->count > 1) {
+                        $amountrepeatgroup2 += $amountrepeatgroup1->count;
+                    }
+                }
+            }
+            if ($trainertraining->training_id >= 15 && $trainertraining->training_id <= 17) {
+                $amountrepeatchild = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->whereIn('abonnement_id', [9, 10])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
+                foreach ($amountrepeatchild as $amountrepeatchild1) {
+                    if ($amountrepeatchild1->count > 1) {
+                        $amountrepeatchild2 += $amountrepeatchild1->count;
+                    }
+                }
+            }
+            if ($trainertraining->training_id == 1 || $trainertraining->training_id == 2) {
+                $privatescheduletrainer = DB::table('privateschedule')->where('trainer_id', '=', $id->id)->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->select(DB::raw('DISTINCT user_id as `user_id`'))->get();
+                $amountrepeatprivate = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->whereIn('abonnement_id', [11, 17])->select(DB::raw('count(id) as `count`'), DB::raw('user_id as `user_id`'))->groupBy('user_id')->get();
+                foreach ($privatescheduletrainer as $privatescheduletrainer1) {
+                    foreach ($amountrepeatprivate as $amountrepeatprivate1) {
+                        if ($privatescheduletrainer1->user_id == $amountrepeatprivate1->user_id)
+                            if ($amountrepeatprivate1->count > 1) {
+                                $amountrepeatprivate2 += $amountrepeatprivate1->count;
+                            }
+                    }
+                }
+            }
+        }
+        $amounttype = array();
+        $amounttype[] = $amountrepeatgroup2;
+        $amounttype[] = $amountrepeatchild2;
+        $amounttype[] = $amountrepeatprivate2;
+
+        $percentrepeatabonnementcharttype = Charts::create('pie', 'highcharts')
+            ->title('Кількість клієнтів, які здійснюють повторну покупку абонемента в окремому типі тренувань за останні пів року')
+            ->labels(['Групові заняття', 'Дитячі заняття', 'Індивідуальні заняття'])
+            ->values($amounttype)
+            ->responsive(false)
+            ->dimensions(1000, 500);
 
 
-        return view('admin.components.trainerprofile', compact('trainers', 'percentchart', 'privateschedule', 'privateschedulechart', 'abonnementchart'));
+
+        return view('admin.components.trainerprofile', compact('percentrepeatabonnementcharttype', 'trainers', 'percentchart', 'privateschedule', 'privateschedulechart', 'abonnementchart'));
     }
 
     public function editprofiletrainers(Trainer $id)
