@@ -59,7 +59,16 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">Відвідування занять</div>
-
+                    <div class="panel-body">
+                    {!! $visitchart->html() !!}
+                    <br>
+                    Максимальна пропускна здатність спортивного об'єкта {{$EPSmax}} люд/місяць<br>
+                    Планова пропускна здатність спортивного об'єкта {{$EPSplan}} люд/місяць<br>
+                    Фактична пропускна здатність спортивного об'єкта {{$fact}} люд/місяць<br>
+                    Оцінка завантаження {{$mark}}<br>
+                    
+                    </div>
+                    
                     <div class="panel-body">
                         {!! $linechart->html() !!}
                     </div>
@@ -77,6 +86,7 @@
         {!! $linechart->script() !!}
         {!! $chart3->script() !!}
         {!! $chart4->script() !!}
+        {!! $visitchart->script()!!}
 
         <!-- /.card-body -->
     </div>

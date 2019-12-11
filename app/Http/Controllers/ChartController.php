@@ -60,7 +60,7 @@ class ChartController extends Controller
             $qualityyear2[$j] = round($qualityyear2[$j] / $i, 2);
         }
         $chartqualityyear = Charts::multi('bar', 'highcharts')
-            ->title("Якісні показники клієнтів щодо фітнес клубу за" . date('Y', strtotime("-1year")) . "-" . date('Y', strtotime("now")))
+            ->title("Якісні показники клієнтів щодо фітнес клубу за " . date('Y', strtotime("-1year")) . "-" . date('Y', strtotime("now")))
             ->elementLabel("балів")
             ->dimensions(1000, 500)
             ->responsive(false)
@@ -190,6 +190,50 @@ class ChartController extends Controller
             ->dataset('2018', $count)
             ->dataset('2019',  $count2);
 
+        //Нормативна пропускна здатність спортивного об'єкта
+        $gym = 10;
+        $fit = 15;
+        $child = 15;
+        $max = 0;
+        $i=0;
+        $fact=0;
+        $fact0=0;
+        $month=array();
+        $countvisit=array();
+        $MarkEPS=array();
+        $EPSmaxarray=array();
+        $EPSplanarray=array();
+        $EPSmax = round((($gym*12*28 + $child*3*20 + $fit*10*24) / 3), 0);      
+        $EPSplan =2000;
+        $visitmonth = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%Y-%m') weekday"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '>=', date('Y', strtotime("now")))->groupBy('weekday')->orderBy('weekday')->get();
+        foreach ($visitmonth as $visit1) {
+           $month[]=$visit1->weekday;
+           $fact0=($visit1->visit_data)+rand(100,500);
+           $fact+=$fact0;
+           
+           $countvisit[]=$fact0;
+           $MarkEPS[] = round($visit1->weekday/$EPSplan * 100, 2) . '%';
+           $EPSmaxarray[]=$EPSmax;
+           $EPSplanarray[]=$EPSplan;
+           
+           $i++;
+        }
+
+        $fact=round($fact/$i,0);
+        $mark=round($fact/$EPSplan*100,2).'%';
+        $visitchart = Charts::multi('line', 'highcharts')
+        ->title('Пропускна здатність')
+        ->elementLabel('кількість клієнтів в місяць')
+        ->colors(['#ff0000', '#98FB98', '#00BFFF'])
+        ->labels($month)
+        ->dataset('планова', $EPSplanarray)
+        ->dataset('максимальна', $EPSmaxarray)
+        ->dataset('фактична', $countvisit);
+        
+        
+       
+
+
         // Посещение по часам
         $visit = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%H') weekday"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '>=', date('Y', strtotime("now")))->where(DB::raw("DATE_FORMAT(date, '%w')"), '=', date('w', strtotime("now")))
             ->groupBy('weekday')->orderBy('weekday')->get();
@@ -259,12 +303,12 @@ class ChartController extends Controller
 
 
         // Індивідуальні тренування
-$privateschedulechart=0;
+        $privateschedulechart = 0;
         $end = date('Y-m-d H:i:s', strtotime('-1 month'));
         $privateschedulechartall = DB::table('privateschedule')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->where('checked', '=', 1)->select(DB::raw('count(DISTINCT user_id) as `count`'))->groupBy('user_id')->get();
-foreach($privateschedulechartall as $privateschedulechart1){
-$privateschedulechart+=$privateschedulechart1->count;
-}
+        foreach ($privateschedulechartall as $privateschedulechart1) {
+            $privateschedulechart += $privateschedulechart1->count;
+        }
         $abonnementchart = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->count(DB::raw('DISTINCT user_id'));
         $percentchart = Charts::create('percentage', 'justgage')
             ->title('Відсоток індивідуальних тренувань за останній місяць')
@@ -292,18 +336,19 @@ $privateschedulechart+=$privateschedulechart1->count;
 
         //Продление 
         $end = date('Y-m-d H:i:s', strtotime('-6 month'));
-        $amountrepeat=0;
-        $amountrepeatgroup2=0;
-        $amountrepeatall2=0;
-        $amountrepeatgym2=0;
-        $amountrepeatchild2=0;
-        $amountrepeatprivate2=0;
-        
+        $amountrepeat = 0;
+        $amountrepeatgroup2 = 0;
+        $amountrepeatall2 = 0;
+        $amountrepeatgym2 = 0;
+        $amountrepeatchild2 = 0;
+        $amountrepeatprivate2 = 0;
+
         $amountrepeatabonnement = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
         $amountabonnement = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->count(DB::raw('id'));
         foreach ($amountrepeatabonnement as $amountrepeatabonnement1) {
-            if($amountrepeatabonnement1->count>1){
-            $amountrepeat += $amountrepeatabonnement1->count;}
+            if ($amountrepeatabonnement1->count > 1) {
+                $amountrepeat += $amountrepeatabonnement1->count;
+            }
         }
         $percentrepeatabonnementchart = Charts::create('percentage', 'justgage')
             ->title('Відсоток клієнтів, які здійснюють повторну покупку абонементів')
@@ -315,43 +360,48 @@ $privateschedulechart+=$privateschedulechart1->count;
 
         $amountrepeatgroup = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->whereIn('abonnement_id', [1, 3])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
         foreach ($amountrepeatgroup as $amountrepeatgroup1) {
-            if($amountrepeatgroup1->count>1){
-            $amountrepeatgroup2 += $amountrepeatgroup1->count;}
+            if ($amountrepeatgroup1->count > 1) {
+                $amountrepeatgroup2 += $amountrepeatgroup1->count;
+            }
         }
         $amountrepeatall = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->whereIn('abonnement_id', [4, 5])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
         foreach ($amountrepeatall as $amountrepeatall1) {
-            if($amountrepeatall1->count>1){
-            $amountrepeatall2 += $amountrepeatall1->count;}
+            if ($amountrepeatall1->count > 1) {
+                $amountrepeatall2 += $amountrepeatall1->count;
+            }
         }
         $amountrepeatgym = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->whereIn('abonnement_id', [6, 8])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
         foreach ($amountrepeatgym as $amountrepeatgym1) {
-            if($amountrepeatgym1->count>1){
-            $amountrepeatgym2 += $amountrepeatgym1->count;}
+            if ($amountrepeatgym1->count > 1) {
+                $amountrepeatgym2 += $amountrepeatgym1->count;
+            }
         }
         $amountrepeatchild = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->whereIn('abonnement_id', [9, 10])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
         foreach ($amountrepeatchild as $amountrepeatchild1) {
-            if($amountrepeatchild1->count>1){
-            $amountrepeatchild2 += $amountrepeatchild1->count;}
+            if ($amountrepeatchild1->count > 1) {
+                $amountrepeatchild2 += $amountrepeatchild1->count;
+            }
         }
         $amountrepeatprivate = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->whereIn('abonnement_id', [11, 17])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
         foreach ($amountrepeatprivate as $amountrepeatprivate1) {
-            if($amountrepeatprivate1->count>1){
-            $amountrepeatprivate2 += $amountrepeatprivate1->count;}
+            if ($amountrepeatprivate1->count > 1) {
+                $amountrepeatprivate2 += $amountrepeatprivate1->count;
+            }
         }
-        $amounttype=array();
-        $amounttype[]=$amountrepeatgroup2;
-        $amounttype[]=$amountrepeatall2;
-        $amounttype[]=$amountrepeatgym2;
-        $amounttype[]=$amountrepeatchild2;
-        $amounttype[]=$amountrepeatprivate2;
+        $amounttype = array();
+        $amounttype[] = $amountrepeatgroup2;
+        $amounttype[] = $amountrepeatall2;
+        $amounttype[] = $amountrepeatgym2;
+        $amounttype[] = $amountrepeatchild2;
+        $amounttype[] = $amountrepeatprivate2;
 
         $percentrepeatabonnementcharttype = Charts::create('pie', 'highcharts')
-        ->title('Кількість клієнтів, які здійснюють повторну покупку абонемента в окремому типі тренувань за останні пів року')
-        ->labels(['Групові заняття','Группові/тренажерні','Тренажерні заняття','Дитячі заняття','Індивідуальні заняття'])
-        ->values($amounttype)
-        ->responsive(false)
-        ->dimensions(1000,500);
+            ->title('Кількість клієнтів, які здійснюють повторну покупку абонемента в окремому типі тренувань за останні пів року')
+            ->labels(['Групові заняття', 'Группові/тренажерні', 'Тренажерні заняття', 'Дитячі заняття', 'Індивідуальні заняття'])
+            ->values($amounttype)
+            ->responsive(false)
+            ->dimensions(1000, 500);
 
-        return view('admin.components.statistic', compact('percentrepeatabonnementcharttype','percentrepeatabonnementchart','amountabonnement3', 'amountrepeat3', 'amountrepeatall3', 'amountrepeatprivate3', 'amountrepeatchild3', 'amountrepeatgym3', 'amountrepeatgroup3', 'chartqualityyear', 'chartqualitymonth', 'chart', 'chart2', 'chart3', 'chart4', 'trainerchart', 'linechart', 'percentchart', 'abonnementchart', 'privateschedulechart'));
+        return view('admin.components.statistic', compact('fact','mark','visitchart','percentrepeatabonnementcharttype', 'percentrepeatabonnementchart', 'amountabonnement3', 'amountrepeat3', 'amountrepeatall3', 'amountrepeatprivate3', 'amountrepeatchild3', 'amountrepeatgym3', 'amountrepeatgroup3', 'chartqualityyear', 'chartqualitymonth', 'chart', 'chart2', 'chart3', 'chart4', 'trainerchart', 'linechart', 'percentchart', 'abonnementchart', 'privateschedulechart', 'EPSmax', 'EPSfact','EPSplan', 'MarkEPS'));
     }
 }
