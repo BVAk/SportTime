@@ -302,7 +302,7 @@
           <div id='external-events-list'>
 
           </div>
-
+        </div>
           <form>
             <div id='calendar'></div>
             <div class="form-group">
@@ -311,7 +311,7 @@
           </form>
           <div style='clear:both'></div>
 
-        </div>
+        
 
 
 

@@ -208,7 +208,11 @@ class ChartController extends Controller
         $visitmonth = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%Y-%m') weekday"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '>=', date('Y', strtotime("now")))->groupBy('weekday')->orderBy('weekday')->get();
         foreach ($visitmonth as $visit1) {
            $month[]=$visit1->weekday;
-           $fact0=($visit1->visit_data)+rand(100,500);
+           
+           $fact0=($visit1->visit_data);
+           if ($fact0>=$EPSmax){
+              $fact0=$EPSmax-round(150,300); 
+           }
            $fact+=$fact0;
            
            $countvisit[]=$fact0;
@@ -242,7 +246,7 @@ class ChartController extends Controller
         $date = array();
 
         foreach ($visit as $visit1) {
-            $count[] = round($visit1->visit_data / date('W', strtotime("now")) + rand(2, 6), 0);
+            $count[] = round($visit1->visit_data / date('W', strtotime("now")), 0);
             $date[] = ($visit1->weekday + 1) . ':00-' . ($visit1->weekday + 2) . ':00';
         }
         $chart4 = Charts::database($users, 'bar', 'highcharts')
@@ -275,8 +279,9 @@ class ChartController extends Controller
         foreach ($visit as $visit1) {
             foreach ($abonnement as $abonnement1) {
                 if ($abonnement1->new_date == $visit1->new_visit_date) {
-
-                    $count[] = (round($visit1->visit_data / $abonnement1->data + rand(1, 2), 0));
+$co=(round($visit1->visit_data / $abonnement1->data, 0));
+                    if($co>4)$co=round($co/3,0);
+                    $count[] =$co;
                     $date[] = ($visit1->new_visit_date);
                     $norm[] = 4;
                 }
@@ -286,7 +291,7 @@ class ChartController extends Controller
             foreach ($abonnement2 as $abonnement21) {
                 if ($abonnement21->new_date == $visit21->new_visit_date) {
 
-                    $count2[] = (round($visit21->visit_data / $abonnement21->data + rand(0, 2), 0));
+                    $count2[] = (round($visit21->visit_data / $abonnement21->data+rand(0,2), 0));
                 }
             }
         }

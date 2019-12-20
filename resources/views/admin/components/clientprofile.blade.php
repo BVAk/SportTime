@@ -256,7 +256,7 @@
           minTime: "09:00:00",
 
           maxTime: "23:00:00",
-          editable: false,
+          editable: true,
           droppable: false, // this allows things to be dropped onto the calendar
           eventSources: [{
             events: [
