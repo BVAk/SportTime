@@ -16,60 +16,68 @@
   <link href="{{ asset('css/aos.css') }}" rel="stylesheet">
   <link href="{{ asset('css/welcome.css') }}" rel="stylesheet">
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+  
+  
+<link href="{{asset('packages/core/main.css')}}" rel="stylesheet"/>
+<link href="{{asset('packages/daygrid/main.css')}}" rel="stylesheet" />
+<link href="{{asset('packages/timegrid/main.css')}}" rel="stylesheet" />
+<link href="{{asset('packages/list/main.css')}}" rel="stylesheet" />
 
-  <link crossorigin="anonymous" media="all" integrity="sha512-/YEVWs7BzxfKyUd6zVxjEQcXRWsLbcEjv045Rq8DSoipySmQblhVKxlXLva2GtNd5DhwCxHwW1RM0N9I7S2Vew==" rel="stylesheet" href="https://github.githubassets.com/assets/frameworks-481a47a96965f6706fb41bae0d14b09a.css" />
-  <link crossorigin="anonymous" media="all" integrity="sha512-8yRKCmpBPsIyuLQNxQmP0kBfYdvNOz5EkCagWypV27znz6gRd0tHzdbCb2P/9XXEQcXFRMXC2olX8bhjTjbTYA==" rel="stylesheet" href="https://github.githubassets.com/assets/github-d12aa61f11c1ece71b4c19b1ba4dac4a.css" />
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
-  <link href="{{asset('packages/core/main.css')}}" rel="stylesheet" />
-  <link href="{{asset('packages/daygrid/main.css')}}" rel="stylesheet" />
-  <link href="{{asset('packages/timegrid/main.css')}}" rel="stylesheet" />
-  <link href="{{asset('packages/list/main.css')}}" rel="stylesheet" />
   <style>
-    #wrap {
+#wrap {
+    width: 1100px;
+    margin: 0 auto;
+  }
+  .text-block {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: black;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+}
 
-      margin: 0 auto;
-    }
+  #external-events {
+    float: left;
+    width: 150px;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    background: #eee;
+    text-align: left;
+  }
 
-    #external-events {
-      float: left;
-      width: 150px;
-      padding: 0 10px;
-      border: 1px solid #ccc;
-      background: #eee;
-      text-align: left;
-    }
+  #external-events h4 {
+    font-size: 16px;
+    margin-top: 0;
+    padding-top: 1em;
+  }
 
-    #external-events h4 {
-      font-size: 16px;
-      margin-top: 0;
-      padding-top: 1em;
-    }
+  #external-events .fc-event {
+    margin: 10px 0;
+    cursor: pointer;
+  }
 
-    #external-events .fc-event {
-      margin: 10px 0;
-      cursor: pointer;
-    }
+  #external-events p {
+    margin: 1.5em 0;
+    font-size: 11px;
+    color: #666;
+  }
 
-    #external-events p {
-      margin: 1.5em 0;
-      font-size: 11px;
-      color: #666;
-    }
+  #external-events p input {
+    margin: 0;
+    vertical-align: middle;
+  }
 
-    #external-events p input {
-      margin: 0;
-      vertical-align: middle;
-    }
+  #calendar {
+    float: right;
+    width: 900px;
+  }
 
-    #calendar {
-
-      width: 900px;
-    }
-  </style>
-
-
+</style>
 </head>
-
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
 
