@@ -119,7 +119,7 @@
 
     <div class="col">
       <div class="panel panel-default">
-        
+
         @if(@isset($percentchart))
         <div class="panel-body">
 
@@ -146,7 +146,7 @@
     <!-- /.card-body -->
   </div>
 </div>
-
+@if(@isset($percentchart))
 <div class="container">
   <div class="row justify-content-center text-center">
     <div id='wrap'>
@@ -167,104 +167,107 @@
       <div style='clear:both'></div>
 
     </div>
+  </div>
+</div>
+@endif
 
-    @endsection
-    @section('script')
-    <script src="{{asset('packages/core/main.js')}}"></script>
-    <script src="{{asset('packages/interaction/main.js')}}"></script>
-    <script src="{{asset('packages/daygrid/main.js')}}"></script>
-    <script src="{{asset('packages/timegrid/main.js')}}"></script>
-    <script src="{{asset('packages/list/main.js')}}"></script>
+@endsection
+@section('script')
+<script src="{{asset('packages/core/main.js')}}"></script>
+<script src="{{asset('packages/interaction/main.js')}}"></script>
+<script src="{{asset('packages/daygrid/main.js')}}"></script>
+<script src="{{asset('packages/timegrid/main.js')}}"></script>
+<script src="{{asset('packages/list/main.js')}}"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        var Calendar = FullCalendar.Calendar;
-        var Draggable = FullCalendarInteraction.Draggable
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var Calendar = FullCalendar.Calendar;
+    var Draggable = FullCalendarInteraction.Draggable
 
-        /* initialize the external events
-        -----------------------------------------------------------------*/
+    /* initialize the external events
+    -----------------------------------------------------------------*/
 
-        var containerEl = document.getElementById('external-events-list');
-        new Draggable(containerEl, {
-          itemSelector: '.fc-event',
-          eventData: function(eventEl) {
-            return {
-              title: eventEl.innerText.trim()
-            }
-          }
-        });
-
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new Calendar(calendarEl, {
-          plugins: ['interaction', 'timeGridWeek', 'timeGrid', 'list'],
-          header: {
-            left: '',
-            right: 'today prev,next',
-            center: 'title',
-          },
-          minTime: "09:00:00",
-
-          maxTime: "23:00:00",
-          editable: true,
-          droppable: false, // this allows things to be dropped onto the calendar
-          eventSources: [{
-            events: [
-              @foreach($privateschedule as $privateschedule) {
-
-                id: '{{$privateschedule->privateschedule_id}}',
-                title: '{{$privateschedule->user_name}}',
-                start: '{{$privateschedule->privateschedule_date}}',
-                end: '{{$privateschedule->privateschedule_endtrain}}',
-                allDay: false
-              },
-              @endforeach
-            ],
-            color: 'greenyellow', // an option!
-            textColor: 'black' // an option!
-          }],
-          eventDrop: function(event, delta, revertFunc) { // si changement de position
-
-            edit(event);
-
-          },
-        });
-        calendar.render();
-
-      });
-
-      function edit(event) {
-        start = event.start.format('YYYY-MM-DD HH:mm:ss');
-        if (event.end) {
-          end = event.end.format('YYYY-MM-DD HH:mm:ss');
-        } else {
-          end = start;
+    var containerEl = document.getElementById('external-events-list');
+    new Draggable(containerEl, {
+      itemSelector: '.fc-event',
+      eventData: function(eventEl) {
+        return {
+          title: eventEl.innerText.trim()
         }
-
-        id = event.id;
-
-        Event = [];
-        Event[0] = id;
-        Event[1] = start;
-        Event[2] = end;
-
-        $.ajax({
-          url: 'admin/schedule/group',
-          type: "POST",
-          data: {
-            Event: Event
-          },
-          success: function(rep) {
-            if (rep == 'OK') {
-              alert('Saved');
-            } else {
-              alert('Could not be saved. try again.');
-            }
-          }
-        });
       }
-    </script>
+    });
 
-    @endsection
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new Calendar(calendarEl, {
+      plugins: ['interaction', 'timeGridWeek', 'timeGrid', 'list'],
+      header: {
+        left: '',
+        right: 'today prev,next',
+        center: 'title',
+      },
+      minTime: "09:00:00",
+
+      maxTime: "23:00:00",
+      editable: true,
+      droppable: false, // this allows things to be dropped onto the calendar
+      eventSources: [{
+        events: [
+          @foreach($privateschedule as $privateschedule) {
+
+            id: '{{$privateschedule->privateschedule_id}}',
+            title: '{{$privateschedule->user_name}}',
+            start: '{{$privateschedule->privateschedule_date}}',
+            end: '{{$privateschedule->privateschedule_endtrain}}',
+            allDay: false
+          },
+          @endforeach
+        ],
+        color: 'greenyellow', // an option!
+        textColor: 'black' // an option!
+      }],
+      eventDrop: function(event, delta, revertFunc) { // si changement de position
+
+        edit(event);
+
+      },
+    });
+    calendar.render();
+
+  });
+
+  function edit(event) {
+    start = event.start.format('YYYY-MM-DD HH:mm:ss');
+    if (event.end) {
+      end = event.end.format('YYYY-MM-DD HH:mm:ss');
+    } else {
+      end = start;
+    }
+
+    id = event.id;
+
+    Event = [];
+    Event[0] = id;
+    Event[1] = start;
+    Event[2] = end;
+
+    $.ajax({
+      url: 'admin/schedule/group',
+      type: "POST",
+      data: {
+        Event: Event
+      },
+      success: function(rep) {
+        if (rep == 'OK') {
+          alert('Saved');
+        } else {
+          alert('Could not be saved. try again.');
+        }
+      }
+    });
+  }
+</script>
+
+@endsection
