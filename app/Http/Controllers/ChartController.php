@@ -27,7 +27,7 @@ class ChartController extends Controller
     public function dashboard()
     {
         //Качественные показатели
-        $qualityyear = Quality::where(DB::raw("DATE_FORMAT(created_at, '%Y')"), '=', date('Y', strtotime("now")))->get();
+        $qualityyear = Quality::where(DB::raw("DATE_FORMAT(created_at, '%Y')"), '=', date('Y', strtotime("-1 year")))->get();
         $i = 0;
         $qualityyear1 = array(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0);
         foreach ($qualityyear as $quality1) {
@@ -43,7 +43,7 @@ class ChartController extends Controller
         for ($j = 1; $j <= 7; $j++) {
             $qualityyear1[$j] = round(($qualityyear1[$j] / $i + rand(0, 2)), 2);
         }
-        $qualityyear = Quality::where(DB::raw("DATE_FORMAT(created_at, '%Y')"), '=', date('Y', strtotime("-1 year")))->get();
+        $qualityyear = Quality::where(DB::raw("DATE_FORMAT(created_at, '%Y')"), '=', date('Y', strtotime("-2 year")))->get();
         $i = 0;
         $qualityyear2 = array(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0);
         foreach ($qualityyear as $quality1) {
@@ -60,16 +60,16 @@ class ChartController extends Controller
             $qualityyear2[$j] = round($qualityyear2[$j] / $i, 2);
         }
         $chartqualityyear = Charts::multi('bar', 'highcharts')
-            ->title("Якісні показники клієнтів щодо фітнес клубу за " . date('Y', strtotime("-1year")) . "-" . date('Y', strtotime("now")))
+            ->title("Якісні показники клієнтів щодо фітнес клубу за " . date('Y', strtotime("-1year")) . "-" . date('Y', strtotime("-1 year")))
             ->elementLabel("балів")
             ->dimensions(1000, 500)
             ->responsive(false)
             ->colors(['#ff0000', '#98FB98'])
             ->labels(['Просторова доступність', 'Організаційна доступність', 'Вартість', 'Асортимент послуг', 'Гігієна', 'Матеріально-технічне оснащення', 'Якість проведення занять'])
-            ->dataset(date('Y', strtotime("-1 year")), $qualityyear2)
-            ->dataset(date('Y', strtotime("now")), $qualityyear1);
+            ->dataset(date('Y', strtotime("-2 year")), $qualityyear2)
+            ->dataset(date('Y', strtotime("-1 year")), $qualityyear1);
 
-        $qualitymonth = Quality::where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), '=', date('Y-m', strtotime("now")))->get();
+        $qualitymonth = Quality::where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), '=', date('Y-m', strtotime("-1 year")))->get();
         $i = 0;
         $qualitymonth1 = array(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0);
         foreach ($qualitymonth as $quality3) {
@@ -85,7 +85,7 @@ class ChartController extends Controller
         for ($j = 1; $j <= 7; $j++) {
             $qualitymonth1[$j] = round(($qualitymonth1[$j] / $i + rand(0, 2)), 2);
         }
-        $qualitymonth = Quality::where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), '=', date('Y-m', strtotime("-1 month")))->get();
+        $qualitymonth = Quality::where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), '=', date('Y-m', strtotime("-1 month -1 year")))->get();
         $i = 0;
         $qualitymonth2 = array(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0);
         foreach ($qualitymonth as $quality4) {
@@ -108,14 +108,14 @@ class ChartController extends Controller
             ->responsive(false)
             ->colors(['#ff0000', '#98FB98'])
             ->labels(['Просторова доступність', 'Організаційна доступність', 'Вартість', 'Асортимент послуг', 'Гігієна', 'Матеріально-технічне оснащення', 'Якість проведення занять'])
-            ->dataset(date('Y-m', strtotime("-1 month")), $qualitymonth2)
-            ->dataset(date('Y-m', strtotime("now")), $qualitymonth1);
+            ->dataset(date('Y-m', strtotime("-1 month -1 year")), $qualitymonth2)
+            ->dataset(date('Y-m', strtotime("-1 year")), $qualitymonth1);
 
 
         //Прибавление клиентов
-        $users = User::where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"), date('Y', strtotime("now")))->get();
+        $users = User::where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"), date('Y', strtotime("-1 year")))->get();
         $chart = Charts::database($users, 'bar', 'highcharts')
-            ->title("Поповнення новими клієнтами за " . date('Y', strtotime("now")) . " рік")
+            ->title("Поповнення новими клієнтами за " . date('Y', strtotime("-1 year")) . " рік")
             ->elementLabel("К-сть нових клієнтів")
             ->dimensions(1000, 500)
             ->colors(['#98FB98'])
@@ -124,13 +124,13 @@ class ChartController extends Controller
 
         // Темп приросту  
         //в 2019
-        $users2019 = User::select(DB::raw('count(id) as `count_user`'), DB::raw("DATE_FORMAT(created_at, '%m-%M') new_user_date"))->groupBy('new_user_date')->orderBy('new_user_date')->where(DB::raw("DATE_FORMAT(created_at, '%Y')"), '=', date('Y', strtotime("now")))->get();
+        $users2019 = User::select(DB::raw('count(id) as `count_user`'), DB::raw("DATE_FORMAT(created_at, '%m-%M') new_user_date"))->groupBy('new_user_date')->orderBy('new_user_date')->where(DB::raw("DATE_FORMAT(created_at, '%Y')"), '=', date('Y', strtotime("-1 year")))->get();
         //до 2019
-        $users20192 = User::select(DB::raw('count(id) as `count_user`'), DB::raw("DATE_FORMAT(created_at, '%m-%M') new_user_date"))->groupBy('new_user_date')->orderBy('new_user_date')->where(DB::raw("DATE_FORMAT(created_at, '%Y')"), '<', date('Y', strtotime("now")))->get();
+        $users20192 = User::select(DB::raw('count(id) as `count_user`'), DB::raw("DATE_FORMAT(created_at, '%m-%M') new_user_date"))->groupBy('new_user_date')->orderBy('new_user_date')->where(DB::raw("DATE_FORMAT(created_at, '%Y')"), '<', date('Y', strtotime("-1 year")))->get();
         //в 2018
-        $users2018 = User::select(DB::raw('count(id) as `count_user`'), DB::raw("DATE_FORMAT(created_at, '%m-%M') new_user_date"))->groupBy('new_user_date')->orderBy('new_user_date')->where(DB::raw("DATE_FORMAT(created_at, '%Y')"), '=', date('Y', strtotime("-1 year")))->get();
+        $users2018 = User::select(DB::raw('count(id) as `count_user`'), DB::raw("DATE_FORMAT(created_at, '%m-%M') new_user_date"))->groupBy('new_user_date')->orderBy('new_user_date')->where(DB::raw("DATE_FORMAT(created_at, '%Y')"), '=', date('Y', strtotime("-2 year")))->get();
         //до 2018
-        $users20182 = User::select(DB::raw('count(id) as `count_user`'), DB::raw("DATE_FORMAT(created_at, '%m-%M') new_user_date"))->groupBy('new_user_date')->orderBy('new_user_date')->where(DB::raw("DATE_FORMAT(created_at, '%Y')"), '<', date('Y', strtotime("-1 year")))->get();
+        $users20182 = User::select(DB::raw('count(id) as `count_user`'), DB::raw("DATE_FORMAT(created_at, '%m-%M') new_user_date"))->groupBy('new_user_date')->orderBy('new_user_date')->where(DB::raw("DATE_FORMAT(created_at, '%Y')"), '<', date('Y', strtotime("-2 year")))->get();
 
         $count = 0;
         foreach ($users20192 as $user20192) {
@@ -154,7 +154,7 @@ class ChartController extends Controller
             }
         }
         $chart2 = Charts::multi('bar', 'highcharts')
-            ->title("Приріст клієнтів у % за " . date('Y', strtotime("-1year")) . "-" . date('Y', strtotime("now")))
+            ->title("Приріст клієнтів у % за " . date('Y', strtotime("-2year")) . "-" . date('Y', strtotime("-1 year")))
             ->elementLabel("% нових клієнтів")
             ->dimensions(1000, 500)
             ->responsive(false)
@@ -164,9 +164,9 @@ class ChartController extends Controller
             ->dataset('2019',  $percent);
 
         // Посещение по дням
-        $visit = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%w-%W') weekday"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '>=', date('Y', strtotime("now")))
+        $visit = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%w-%W') weekday"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '>=', date('Y', strtotime("-1 year")))
             ->groupBy('weekday')->orderBy('weekday')->get();
-        $visit2 = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%w-%W') weekday"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '>=', date('Y', strtotime("-1 year")))
+        $visit2 = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%w-%W') weekday"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '>=', date('Y', strtotime("-2 year")))
             ->groupBy('weekday')->orderBy('weekday')->get();
         foreach ($visit2 as $visit21) {
 
@@ -179,7 +179,7 @@ class ChartController extends Controller
         foreach ($visit as $visit1) {
 
 
-            $count[] = round($visit1->visit_data / date('W', strtotime("now")), 0);
+            $count[] = round($visit1->visit_data / date('W', strtotime("-1 year")), 0);
             $date[] = ($visit1->weekday);
         }
         $chart3 =  Charts::multi('bar', 'highcharts')
@@ -205,7 +205,7 @@ class ChartController extends Controller
         $EPSplanarray=array();
         $EPSmax = round((($gym*12*28 + $child*3*20 + $fit*10*24) / 3), 0);      
         $EPSplan =2000;
-        $visitmonth = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%Y-%m') weekday"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '>=', date('Y', strtotime("now")))->groupBy('weekday')->orderBy('weekday')->get();
+        $visitmonth = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%Y-%m') weekday"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '>=', date('Y', strtotime("-1 year")))->groupBy('weekday')->orderBy('weekday')->get();
         foreach ($visitmonth as $visit1) {
            $month[]=$visit1->weekday;
            
@@ -239,18 +239,18 @@ class ChartController extends Controller
 
 
         // Посещение по часам
-        $visit = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%H') weekday"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '>=', date('Y', strtotime("now")))->where(DB::raw("DATE_FORMAT(date, '%w')"), '=', date('w', strtotime("now")))
+        $visit = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%H') weekday"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '>=', date('Y', strtotime("-1 year")))->where(DB::raw("DATE_FORMAT(date, '%w')"), '=', date('w', strtotime("-1 year")))
             ->groupBy('weekday')->orderBy('weekday')->get();
 
         $count = array();
         $date = array();
 
         foreach ($visit as $visit1) {
-            $count[] = round($visit1->visit_data / date('W', strtotime("now")), 0);
+            $count[] = round($visit1->visit_data / date('W', strtotime("-1 year")), 0);
             $date[] = ($visit1->weekday + 1) . ':00-' . ($visit1->weekday + 2) . ':00';
         }
         $chart4 = Charts::database($users, 'bar', 'highcharts')
-            ->title("Зайнятість по годинам у " . date('D', strtotime("now")) . "  за 2019 рік")
+            ->title("Зайнятість по годинам у " . date('D', strtotime("-1 year")) . "  за 2019 рік")
             ->elementLabel("кількість клієнтів")
             ->dimensions(1000, 500)
             ->responsive(false)
@@ -261,12 +261,12 @@ class ChartController extends Controller
 
 
         //Середня кількість відвідувань
-        $visit = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%m-%M') new_visit_date"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '=', date('Y', strtotime("now")))
+        $visit = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%m-%M') new_visit_date"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '=', date('Y', strtotime("-1 year")))
             ->groupBy('new_visit_date')->orderBy('new_visit_date')->get();
 
-        $abonnement = DB::table('usersabonnements')->select(DB::raw('count(DISTINCT user_id) as `data`'), DB::raw("DATE_FORMAT(date, '%m-%M') new_date"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '=', date('Y', strtotime("now")))
+        $abonnement = DB::table('usersabonnements')->select(DB::raw('count(DISTINCT user_id) as `data`'), DB::raw("DATE_FORMAT(date, '%m-%M') new_date"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '=', date('Y', strtotime("-1 year")))
             ->groupBy('new_date')->orderBy('new_date')->get();
-        $visit2 = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%m-%M') new_visit_date"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '=', date('Y', strtotime("-1 year")))
+        $visit2 = DB::table('visiting')->select(DB::raw('count(id) as `visit_data`'), DB::raw("DATE_FORMAT(date, '%m-%M') new_visit_date"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '=', date('Y', strtotime("-2 year")))
             ->groupBy('new_visit_date')->orderBy('new_visit_date')->get();
 
         $abonnement2 = DB::table('usersabonnements')->select(DB::raw('count(DISTINCT user_id) as `data`'), DB::raw("DATE_FORMAT(date, '%m-%M') new_date"))->where(DB::raw("DATE_FORMAT(date, '%Y')"), '=', date('Y', strtotime("-1 year")))
@@ -309,12 +309,12 @@ $co=(round($visit1->visit_data / $abonnement1->data, 0));
 
         // Індивідуальні тренування
         $privateschedulechart = 0;
-        $end = date('Y-m-d H:i:s', strtotime('-1 month'));
-        $privateschedulechartall = DB::table('privateschedule')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->where('checked', '=', 1)->select(DB::raw('count(DISTINCT user_id) as `count`'))->groupBy('user_id')->get();
+        $end = date('Y-m-d H:i:s', strtotime('-1 month -1 year'));
+        $privateschedulechartall = DB::table('privateschedule')->where('date', '<=', new \DateTime('-1 year'))->where('date', '>=', $end)->where('checked', '=', 1)->select(DB::raw('count(DISTINCT user_id) as `count`'))->groupBy('user_id')->get();
         foreach ($privateschedulechartall as $privateschedulechart1) {
             $privateschedulechart += $privateschedulechart1->count;
         }
-        $abonnementchart = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->count(DB::raw('DISTINCT user_id'));
+        $abonnementchart = DB::table('usersabonnements')->where('date', '<=', new \DateTime('-1 year'))->where('date', '>=', $end)->count(DB::raw('DISTINCT user_id'));
         $percentchart = Charts::create('percentage', 'justgage')
             ->title('Відсоток індивідуальних тренувань за останній місяць')
             ->elementLabel('%')
@@ -322,7 +322,7 @@ $co=(round($visit1->visit_data / $abonnement1->data, 0));
             ->responsive(false)
             ->height(300)
             ->width(0);
-        $privateschedulecharttrainers = DB::table('privateschedule')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->where('checked', '=', 1)->select(DB::raw('count(DISTINCT user_id) as `count`'), DB::raw('trainer_id'))->groupBy('trainer_id')->orderbyDESC('count')->get();
+        $privateschedulecharttrainers = DB::table('privateschedule')->where('date', '<=', new \DateTime('-1 year'))->where('date', '>=', $end)->where('checked', '=', 1)->select(DB::raw('count(DISTINCT user_id) as `count`'), DB::raw('trainer_id'))->groupBy('trainer_id')->orderbyDESC('count')->get();
         foreach ($privateschedulecharttrainers as $privateschedulecharttrainers1) {
             $trainer[] = $privateschedulecharttrainers1->count;
             $trainer_name = DB::table('trainers')->where('id', '=', $privateschedulecharttrainers1->trainer_id)->get();
@@ -336,7 +336,7 @@ $co=(round($visit1->visit_data / $abonnement1->data, 0));
             ->title("Індивідуальні тренування тренерів")
             ->elementLabel("кількість клієнтів")
             ->colors(['#FFA500'])
-            ->dataset(date('Y-m', strtotime("now")), $trainer)
+            ->dataset(date('Y-m', strtotime("-1 year")), $trainer)
             ->labels($trainername);
 
         //Продление 
@@ -363,31 +363,31 @@ $co=(round($visit1->visit_data / $abonnement1->data, 0));
             ->height(300)
             ->width(0);
 
-        $amountrepeatgroup = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->whereIn('abonnement_id', [1, 3])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
+        $amountrepeatgroup = DB::table('usersabonnements')->where('date', '<=', new \DateTime('-1 year'))->where('date', '>=', $end)->whereIn('abonnement_id', [1, 3])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
         foreach ($amountrepeatgroup as $amountrepeatgroup1) {
             if ($amountrepeatgroup1->count > 1) {
                 $amountrepeatgroup2 += $amountrepeatgroup1->count;
             }
         }
-        $amountrepeatall = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->whereIn('abonnement_id', [4, 5])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
+        $amountrepeatall = DB::table('usersabonnements')->where('date', '<=', new \DateTime('-1 year'))->where('date', '>=', $end)->whereIn('abonnement_id', [4, 5])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
         foreach ($amountrepeatall as $amountrepeatall1) {
             if ($amountrepeatall1->count > 1) {
                 $amountrepeatall2 += $amountrepeatall1->count;
             }
         }
-        $amountrepeatgym = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->whereIn('abonnement_id', [6, 8])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
+        $amountrepeatgym = DB::table('usersabonnements')->where('date', '<=', new \DateTime('-1 year'))->where('date', '>=', $end)->whereIn('abonnement_id', [6, 8])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
         foreach ($amountrepeatgym as $amountrepeatgym1) {
             if ($amountrepeatgym1->count > 1) {
                 $amountrepeatgym2 += $amountrepeatgym1->count;
             }
         }
-        $amountrepeatchild = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->whereIn('abonnement_id', [9, 10])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
+        $amountrepeatchild = DB::table('usersabonnements')->where('date', '<=', new \DateTime('-1 year'))->where('date', '>=', $end)->whereIn('abonnement_id', [9, 10])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
         foreach ($amountrepeatchild as $amountrepeatchild1) {
             if ($amountrepeatchild1->count > 1) {
                 $amountrepeatchild2 += $amountrepeatchild1->count;
             }
         }
-        $amountrepeatprivate = DB::table('usersabonnements')->where('date', '<=', new \DateTime('now'))->where('date', '>=', $end)->whereIn('abonnement_id', [11, 17])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
+        $amountrepeatprivate = DB::table('usersabonnements')->where('date', '<=', new \DateTime('-1 year'))->where('date', '>=', $end)->whereIn('abonnement_id', [11, 17])->select(DB::raw('count(id) as `count`'))->groupBy('user_id')->get();
         foreach ($amountrepeatprivate as $amountrepeatprivate1) {
             if ($amountrepeatprivate1->count > 1) {
                 $amountrepeatprivate2 += $amountrepeatprivate1->count;
