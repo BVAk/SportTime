@@ -220,21 +220,22 @@
           </div>
         </div>
         <div class="row">
-        @foreach($trainergym as $trainergym)
-        <?php if (date('Y-m-d')-($trainergym->start)>1){?>
+        @for($i=0;$i<4;$i++)
+        
+        <?php if (date('Y-m-d')-($trainergym[$i]->start)>1){?>
           <div class="col-lg-4 mb-4 mb-lg-0">
             <div class="testimonial-2 text-center">
               <div class="v-card mb-4 text-center">
-                <img src="{{asset($trainergym->image)}}" alt="Image" class="img-fluid mx-auto d-block">
-                <span>{{$trainergym->name}}</span>
+                <img src="{{asset($trainergym[$i]->image)}}" alt="Image" class="img-fluid mx-auto d-block">
+                <span>{{$trainergym[$i]->name}}</span>
               </div>
               <blockquote>
-                <p>{{date('Y-m-d')-($trainergym->start)}} років стажу</p>
+                <p>{{date('Y-m-d')-($trainergym[$i]->start)}} роки стажу</p>
               </blockquote> 
             </div>
           </div>
         <?php }?>
-          @endforeach
+          @endfor
       </div>
     </div>
 
